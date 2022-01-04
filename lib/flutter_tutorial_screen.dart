@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FlutterTutorialScreen extends StatelessWidget {
-  FlutterTutorialScreen({Key? key}) : super(key: key);
+  const FlutterTutorialScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -72,10 +73,10 @@ class FlutterTutorialScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.push<void>(
                     context,
-                    MaterialPageRoute(builder: (context) => LogoApp()),
+                    MaterialPageRoute(builder: (context) => const LogoApp()),
                   );
                 },
-                icon: Icon(Icons.arrow_forward_ios))
+                icon: const Icon(Icons.arrow_forward_ios))
           ],
         ),
         body: ListView(
@@ -89,6 +90,7 @@ class FlutterTutorialScreen extends StatelessWidget {
             titleSection,
             buttonSection,
             textSection,
+            Text(AppLocalizations.of(context)!.helloWorld),
           ],
         ));
   }
