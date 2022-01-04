@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -39,7 +40,7 @@ class Home extends StatelessWidget {
                 Navigator.push<void>(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const FlutterTutorialScreen()),
+                      builder: (context) => FlutterTutorialScreen()),
                 );
               },
               child: const Text('Flutter tutorial'),
