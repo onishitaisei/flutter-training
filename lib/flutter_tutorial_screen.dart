@@ -1,11 +1,17 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
 
 class FlutterTutorialScreen extends StatelessWidget {
   const FlutterTutorialScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Locale myLocale = Localizations.localeOf(context); // デバイスのロケールを取得する。
+    var test =
+        Localizations.of<MaterialLocalizations>(context, MaterialLocalizations);
+
     Widget titleSection = Container(
       padding: const EdgeInsets.all(32),
       child: Row(
@@ -91,6 +97,7 @@ class FlutterTutorialScreen extends StatelessWidget {
             buttonSection,
             textSection,
             Text(AppLocalizations.of(context)!.helloWorld),
+            Text(myLocale.toString()),
           ],
         ));
   }
@@ -289,4 +296,37 @@ class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin {
     controller.dispose();
     super.dispose();
   }
+}
+
+class DemoLocalizations {
+  DemoLocalizations(this.localeName);
+
+  static Future<DemoLocalizations> load(Locale locale) {
+    final String name =
+        locale.countryCode == null || locale.countryCode!.isEmpty
+            ? locale.languageCode
+            : locale.toString();
+    final String localeName = Intl.canonicalizedLocale(name);
+
+    return initializeMessages(localeName).then((_) {
+      return DemoLocalizations(localeName);
+    });
+  }
+
+  static DemoLocalizations of(BuildContext context) {
+    return Localizations.of<DemoLocalizations>(context, DemoLocalizations)!;
+  }
+
+  final String localeName;
+
+  String get title {
+    return Intl.message(
+      'Hello World',
+      name: 'title',
+      desc: 'Title for the Demo application',
+      locale: localeName,
+    );
+  }
+
+  static initializeMessages(String localeName) {}
 }
