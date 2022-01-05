@@ -3,6 +3,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'flutter_tutorial_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import 'youtube/youtube_screen.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -82,10 +84,10 @@ class Home extends StatelessWidget {
                 Navigator.push<void>(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const FlutterTutorialScreen()),
+                      builder: (context) => const YoutubeScreenPage()),
                 );
               },
-              child: const Text('Youtube screen'),
+              child: const Text('Youtube'),
             ),
           ],
         ),
