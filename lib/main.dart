@@ -77,6 +77,16 @@ class Home extends StatelessWidget {
               },
               child: const Text('Flutter tutorial'),
             ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push<void>(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const FlutterTutorialScreen()),
+                );
+              },
+              child: const Text('Youtube screen'),
+            ),
           ],
         ),
       ),
