@@ -1,10 +1,50 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class YoutubeScreenPage extends StatelessWidget {
   YoutubeScreenPage({Key? key}) : super(key: key);
   final backgroundColor = const Color(0xff2B272C);
   final userIconColor = const Color(0xffA435F0);
   final gridMenuColor = const Color(0xff1D191E);
+  final movieTextColor = const Color(0xffA59FA5);
+  List<IconData> gridIcon = [
+    Icons.local_fire_department,
+    Icons.music_note,
+    Icons.gamepad,
+    Icons.article,
+    Icons.highlight_rounded,
+    Icons.live_tv,
+    Icons.sports
+  ];
+  List<String> gridText = ['急上昇', '音楽', 'ゲーム', 'ニュース', '学び', 'ライブ', 'スポーツ'];
+  List<Color> gridColor = [
+    const Color(0xff851A36),
+    const Color(0xff339988),
+    const Color(0xffA6706C),
+    const Color(0xff104A80),
+    const Color(0xff147B50),
+    const Color(0xffE26E34),
+    const Color(0xff0A7792)
+  ];
+
+  List<String> movieText = [
+    '"This is ARASHI LIVE 2020.12.31" Digest\nMovie',
+    '"This is ARASHI LIVE 2020.12.31" Digest\nMovie',
+  ];
+
+  List<String> movieImg = [
+    'images/arashi.jpg',
+    'images/arashi.jpg',
+  ];
+
+  List<String> channelName = [
+    'ARASHI',
+    'ARASHI',
+  ];
+
+  List<int> views = [127, 127];
+
+  List<int> dayPrevious = [1, 1];
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +55,7 @@ class YoutubeScreenPage extends StatelessWidget {
           children: [
             header(),
             gridMenus(),
+            mainScreen(),
           ],
         ),
       ),
@@ -97,7 +138,8 @@ class YoutubeScreenPage extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(15.0),
         child: GridView.count(
-          physics: NeverScrollableScrollPhysics(), // GridViewをスクロールしないようにする
+          physics:
+              const NeverScrollableScrollPhysics(), // GridViewをスクロールしないようにする
           crossAxisSpacing: 10.0,
           mainAxisSpacing: 10.0,
           scrollDirection: Axis.vertical,
@@ -111,26 +153,6 @@ class YoutubeScreenPage extends StatelessWidget {
       ),
     );
   }
-
-  List<IconData> gridIcon = [
-    Icons.local_fire_department,
-    Icons.music_note,
-    Icons.gamepad,
-    Icons.article,
-    Icons.highlight_rounded,
-    Icons.live_tv,
-    Icons.sports
-  ];
-  List<String> gridText = ['急上昇', '音楽', 'ゲーム', 'ニュース', '学び', 'ライブ', 'スポーツ'];
-  List<Color> gridColor = [
-    Color(0xff851A36),
-    Color(0xff339988),
-    Color(0xffA6706C),
-    Color(0xff104A80),
-    Color(0xff147B50),
-    Color(0xffE26E34),
-    Color(0xff0A7792)
-  ];
 
   Widget gridMenu(int index) {
     return GridTile(
@@ -147,16 +169,154 @@ class YoutubeScreenPage extends StatelessWidget {
                 gridIcon[index],
                 color: Colors.white,
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Text(
                 gridText[index],
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget mainScreen() {
+    return Expanded(
+      // Column内にLisiViewを入れている場合はExpandedでラップする。この場合は親WidgetのこのColumnもExpandedでラップすることでエラー解決
+      child: Column(
+        children: [
+          const Padding(
+            padding: EdgeInsets.only(top: 15.0, bottom: 15.0, left: 15.0),
+            child: SizedBox(
+              width: double.infinity,
+              child: Text(
+                '急上昇動画',
+                textAlign: TextAlign.left,
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+            ),
+          ),
+          mainMovies(),
+        ],
+      ),
+    );
+  }
+
+  Widget mainMovies() {
+    return Expanded(
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: movieText.length,
+        itemBuilder: (context, index) {
+          return SizedBox(
+            width: double.infinity,
+            child: Column(
+              children: [
+                Stack(alignment: Alignment.bottomRight, children: [
+                  Image.asset(
+                    movieImg[index],
+                    fit: BoxFit.cover,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        const Icon(
+                          Icons.leaderboard,
+                          color: Colors.white,
+                        ),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: const Padding(
+                            padding: EdgeInsets.all(2.0),
+                            child: Text(
+                              '9:49',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ]),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CircleAvatar(
+                        radius: 18,
+                        backgroundColor: userIconColor,
+                        backgroundImage: const NetworkImage(
+                            'https://yt3.ggpht.com/ytc/AKedOLTrHCr-o1_G03azTDjkocuI4vGwBRpoeNUWtC6oew=s900-c-k-c0x00ffffff-no-rj'),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            movieText[index],
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                          SizedBox(
+                            width: 180,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  channelName[index],
+                                  style: TextStyle(
+                                      color: movieTextColor, fontSize: 13),
+                                ),
+                                Icon(
+                                  Icons.fiber_manual_record,
+                                  size: 3,
+                                  color: movieTextColor,
+                                ),
+                                Text(
+                                  '${views[index]}万 回視聴',
+                                  style: TextStyle(
+                                      color: movieTextColor, fontSize: 13),
+                                ),
+                                Icon(
+                                  Icons.fiber_manual_record,
+                                  size: 3,
+                                  color: movieTextColor,
+                                ),
+                                Text(
+                                  '${dayPrevious[index]}日前',
+                                  style: TextStyle(
+                                      color: movieTextColor, fontSize: 13),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                      const Spacer(),
+                      const Icon(
+                        Icons.more_vert,
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          );
+        },
       ),
     );
   }

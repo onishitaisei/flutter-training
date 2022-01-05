@@ -23,5 +23,7 @@ flutter:
   uses-material-design: true
   assets:
     - images/lake.jpeg
+    - images/arashi.jpeg
+    - images/arashi.jpg
     - images/youtube_img.png
 
