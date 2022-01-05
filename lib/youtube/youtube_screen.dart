@@ -46,10 +46,76 @@ class YoutubeScreenPage extends StatelessWidget {
 
   List<int> dayPrevious = [1, 1];
 
+  int _selectedIndex = 0;
+  static const TextStyle optionStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const List<Widget> _widgetOptions = <Widget>[
+    Text(
+      'Index 0: Home',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 1: Business',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 2: School',
+      style: optionStyle,
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: backgroundColor,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home_outlined,
+              color: Colors.white,
+            ),
+            label: 'ホーム',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.explore,
+              color: Colors.white,
+            ),
+            label: '検索',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.control_point_outlined,
+              size: 40,
+              color: Colors.white,
+            ),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.slow_motion_video_outlined,
+              color: Colors.white,
+            ),
+            label: '登録チャンネル',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.slideshow,
+              color: Colors.white,
+            ),
+            label: 'ライブラリ',
+          ),
+        ],
+
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white,
+        selectedFontSize: 10,
+        unselectedFontSize: 10,
+        type: BottomNavigationBarType
+            .fixed, // bottomnavigationが4つ以上の時は見えなくなってしまうため、type: BottomNavigationBarType.fixed,を追加
+      ),
       body: SafeArea(
         child: Column(
           children: [
