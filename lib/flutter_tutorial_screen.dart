@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
@@ -9,10 +8,8 @@ class FlutterTutorialScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Locale myLocale = Localizations.localeOf(context); // デバイスのロケールを取得する。
-    var test =
-        Localizations.of<MaterialLocalizations>(context, MaterialLocalizations);
 
-    Widget titleSection = Container(
+    Widget titleSection = Padding(
       padding: const EdgeInsets.all(32),
       child: Row(
         children: [
