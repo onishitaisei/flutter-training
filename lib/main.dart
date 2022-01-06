@@ -83,7 +83,7 @@ class Home extends StatelessWidget {
               onPressed: () {
                 Navigator.push<void>(
                   context,
-                  MaterialPageRoute(builder: (context) => YoutubeScreenPage()),
+                  MaterialPageRoute(builder: (context) => YoutubeScreen()),
                 );
               },
               child: const Text('Youtube'),
