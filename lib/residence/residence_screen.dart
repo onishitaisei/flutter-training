@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class ResidenceScreen extends StatelessWidget {
   final _headerColor = const Color(0xffFFFFFF);
+  final _footerIconColor = const Color(0xffCECECE);
   final _backgroundColor = const Color(0xffF7F5F2);
   final _primaryColor = const Color(0xff5BADA1);
 
@@ -18,6 +19,73 @@ class ResidenceScreen extends StatelessWidget {
         actions: [
           _buildHeaderIcon(),
         ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: _backgroundColor,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home_filled,
+              color: _primaryColor,
+              size: 35,
+            ),
+            label: 'ホーム',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.favorite_border,
+              color: _footerIconColor,
+              size: 35,
+            ),
+            label: 'お気に入り',
+          ),
+          BottomNavigationBarItem(
+            icon: Stack(
+              alignment: Alignment.topRight,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                    right: 5.0,
+                    left: 3.0,
+                  ),
+                  child: Icon(
+                    Icons.chat_bubble_outline,
+                    color: _footerIconColor,
+                    size: 35,
+                  ),
+                ),
+                const CircleAvatar(
+                  child: Text(
+                    '1',
+                    style: TextStyle(
+                      fontSize: 15,
+                    ),
+                  ),
+                  radius: 10,
+                  backgroundColor: Color(0xffE2554A),
+                  foregroundColor: Colors.white,
+                )
+              ],
+            ),
+            label: 'メッセージ',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.manage_accounts_outlined,
+              color: _footerIconColor,
+              size: 35,
+            ),
+            label: 'マイページ',
+          ),
+        ],
+
+        selectedItemColor: _primaryColor,
+        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
+        unselectedItemColor: Colors.grey[600],
+        selectedFontSize: 13,
+        unselectedFontSize: 10,
+        type: BottomNavigationBarType
+            .fixed, // bottomnavigationが4つ以上の時は見えなくなってしまうため、type: BottomNavigationBarType.fixed,を追加
       ),
     );
   }
