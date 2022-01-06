@@ -9,7 +9,7 @@ class FlutterTutorialScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Locale myLocale = Localizations.localeOf(context); // デバイスのロケールを取得する。
 
-    Widget titleSection = Container(
+    Widget titleSection = Padding(
       padding: const EdgeInsets.all(32),
       child: Row(
         children: [
