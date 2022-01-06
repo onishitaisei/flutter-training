@@ -62,7 +62,6 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // タイトルテキスト
         title: const Text('メイン画面'),
       ),
       body: Center(

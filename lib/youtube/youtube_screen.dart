@@ -67,7 +67,6 @@ class YoutubeScreen extends StatelessWidget {
         actions: [
           _buildHeaderIcons(),
         ],
-        // タイトルテキスト
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: _backgroundColor,
