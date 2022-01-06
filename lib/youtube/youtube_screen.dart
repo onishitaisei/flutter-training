@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class YoutubeScreenPage extends StatelessWidget {
-  YoutubeScreenPage({Key? key}) : super(key: key);
+class YoutubeScreen extends StatelessWidget {
+  YoutubeScreen({Key? key}) : super(key: key);
   final _backgroundColor = const Color(0xff2B272C);
   final _userIconColor = const Color(0xffA435F0);
   final _gridMenuColor = const Color(0xff1D191E);
