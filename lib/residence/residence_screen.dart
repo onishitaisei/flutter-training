@@ -87,6 +87,20 @@ class ResidenceScreen extends StatelessWidget {
         type: BottomNavigationBarType
             .fixed, // bottomnavigationが4つ以上の時は見えなくなってしまうため、type: BottomNavigationBarType.fixed,を追加
       ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: _primaryColor,
+        onPressed: () {},
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.search),
+            const Text(
+              '物件',
+              style: TextStyle(fontWeight: FontWeight.w900, fontSize: 10),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
