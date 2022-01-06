@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class ResidenceScreen extends StatelessWidget {
   final _whiteColor = const Color(0xffFFFFFF);
-  final _footerIconColor = const Color(0xffCECECE);
+  final _footerUnselectedIconColor = const Color(0xffCECECE);
   final _backgroundColor = const Color(0xffF5F0E9);
   final _primaryColor = const Color(0xff5BADA1);
 
@@ -35,7 +35,7 @@ class ResidenceScreen extends StatelessWidget {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.favorite_border,
-              color: _footerIconColor,
+              color: _footerUnselectedIconColor,
               size: 35,
             ),
             label: 'お気に入り',
@@ -51,7 +51,7 @@ class ResidenceScreen extends StatelessWidget {
                   ),
                   child: Icon(
                     Icons.chat_bubble_outline,
-                    color: _footerIconColor,
+                    color: _footerUnselectedIconColor,
                     size: 35,
                   ),
                 ),
@@ -63,9 +63,7 @@ class ResidenceScreen extends StatelessWidget {
                     ),
                   ),
                   radius: 10,
-                  backgroundColor: Color(
-                    0xffE2554A,
-                  ),
+                  backgroundColor: Color(0xffE2554A),
                   foregroundColor: Colors.white,
                 )
               ],
@@ -75,7 +73,7 @@ class ResidenceScreen extends StatelessWidget {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.manage_accounts_outlined,
-              color: _footerIconColor,
+              color: _footerUnselectedIconColor,
               size: 35,
             ),
             label: 'マイページ',
@@ -102,11 +100,11 @@ class ResidenceScreen extends StatelessWidget {
             const SizedBox(
               height: 15,
             ),
-            _mainContents(mediaSize),
+            _buildmainContents(mediaSize),
             const SizedBox(
               height: 15,
             ),
-            _mainContents(mediaSize),
+            _buildmainContents(mediaSize),
           ],
         ),
       ),
@@ -139,9 +137,7 @@ class ResidenceScreen extends StatelessWidget {
           alignment: Alignment.center,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20.0),
-            color: const Color(
-              0xffE9EFEE,
-            ),
+            color: const Color(0xffE9EFEE),
           ),
           child: Text(
             'カウルのおすすめ',
@@ -212,11 +208,11 @@ class ResidenceScreen extends StatelessWidget {
         ));
   }
 
-  Widget _buildPropertyConditions(Size size) {
+  Widget _buildPropertyConditions(Size mediaSize) {
     return Center(
       child: Container(
-        width: size.width * 0.97,
-        height: size.height * 0.15,
+        width: mediaSize.width * 0.97,
+        height: mediaSize.height * 0.15,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
           color: _whiteColor,
@@ -232,7 +228,7 @@ class ResidenceScreen extends StatelessWidget {
         child: Column(
           children: [
             _buildHeaderPropertyConditions(),
-            _buildContents0fProperty(size),
+            _buildContents0fPropertyConditions(mediaSize),
           ],
         ),
       ),
@@ -285,10 +281,10 @@ class ResidenceScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildContents0fProperty(size) {
+  Widget _buildContents0fPropertyConditions(Size mediaSize) {
     return Container(
-      width: size.width * 0.93,
-      height: size.height * 0.09,
+      width: mediaSize.width * 0.93,
+      height: mediaSize.height * 0.09,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
         color: _backgroundColor,
@@ -367,11 +363,11 @@ class ResidenceScreen extends StatelessWidget {
     );
   }
 
-  Widget _mainContents(size) {
+  Widget _buildmainContents(Size mediaSize) {
     return Center(
       child: Container(
-        width: size.width * 0.97,
-        height: size.height * 0.45,
+        width: mediaSize.width * 0.97,
+        height: mediaSize.height * 0.45,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
           color: _whiteColor,
@@ -386,22 +382,22 @@ class ResidenceScreen extends StatelessWidget {
         ),
         child: Column(
           children: [
-            _contentsImage(size),
+            _contentsImage(mediaSize),
             _contentsDetail(),
-            _contentsBtn(size),
+            _contentsBtn(mediaSize),
           ],
         ),
       ),
     );
   }
 
-  Widget _contentsImage(size) {
+  Widget _contentsImage(Size mediaSize) {
     return SizedBox(
-      height: size.height * 0.23,
+      height: mediaSize.height * 0.23,
       child: Row(
         children: [
           Container(
-            width: size.width * 0.5,
+            width: mediaSize.width * 0.5,
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10.0),
@@ -429,7 +425,7 @@ class ResidenceScreen extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: size.width * 0.45,
+            width: mediaSize.width * 0.45,
             child: const Image(
               image: AssetImage('images/house_layout.png'),
             ),
@@ -530,13 +526,13 @@ class ResidenceScreen extends StatelessWidget {
     );
   }
 
-  Widget _contentsBtn(size) {
+  Widget _contentsBtn(Size mediaSize) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          width: size.width * 0.45,
-          height: size.height * 0.05,
+          width: mediaSize.width * 0.45,
+          height: mediaSize.height * 0.05,
           decoration: BoxDecoration(
             border: Border.all(
               color: const Color(
@@ -566,8 +562,8 @@ class ResidenceScreen extends StatelessWidget {
           width: 10,
         ),
         Container(
-          width: size.width * 0.45,
-          height: size.height * 0.05,
+          width: mediaSize.width * 0.45,
+          height: mediaSize.height * 0.05,
           decoration: BoxDecoration(
             border: Border.all(
               color: const Color(0xffC9C9C9),
