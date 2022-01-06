@@ -3,6 +3,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'flutter_tutorial_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import 'youtube/youtube_screen.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -60,7 +62,6 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // タイトルテキスト
         title: const Text('メイン画面'),
       ),
       body: Center(
@@ -76,6 +77,15 @@ class Home extends StatelessWidget {
                 );
               },
               child: const Text('Flutter tutorial'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push<void>(
+                  context,
+                  MaterialPageRoute(builder: (context) => YoutubeScreen()),
+                );
+              },
+              child: const Text('Youtube'),
             ),
           ],
         ),
