@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'flutter_tutorial_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import 'residence/residence_screen.dart';
 import 'youtube/youtube_screen.dart';
 
 void main() {
@@ -86,6 +87,15 @@ class Home extends StatelessWidget {
                 );
               },
               child: const Text('Youtube'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push<void>(
+                  context,
+                  MaterialPageRoute(builder: (context) => ResidenceScreen()),
+                );
+              },
+              child: const Text('Residence'),
             ),
           ],
         ),
