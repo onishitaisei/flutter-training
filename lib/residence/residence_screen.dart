@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ResidenceScreen extends StatelessWidget {
   final _whiteColor = const Color(0xffFFFFFF);
   final _footerUnselectedIconColor = const Color(0xffCECECE);
-  final _backgroundColor = const Color(0xffF5F0E9);
+  final _backgroundColor = const Color(0xffFAF8F5);
   final _primaryColor = const Color(0xff5BADA1);
 
   const ResidenceScreen({Key? key}) : super(key: key);
