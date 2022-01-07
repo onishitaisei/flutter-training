@@ -5,6 +5,7 @@ class MercariScreen extends StatelessWidget {
 
   final _footerIconAndTextColor = const Color(0xff222222);
   final double _footerIconSize = 30.0;
+  final double _floatingActionButtonSize = 70.0;
 
   @override
   Widget build(BuildContext context) {
@@ -78,6 +79,27 @@ class MercariScreen extends StatelessWidget {
         ),
         type: BottomNavigationBarType
             .fixed, // bottomnavigationが4つ以上の時は見えなくなってしまうため、type: BottomNavigationBarType.fixed,を追加
+      ),
+      floatingActionButton: SizedBox(
+        width: _floatingActionButtonSize,
+        height: _floatingActionButtonSize,
+        child: FloatingActionButton(
+          backgroundColor: Color(0xffD25244),
+          onPressed: () {},
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Icon(Icons.camera_alt),
+              Text(
+                '出品',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 10,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
       body: Container(),
     );
