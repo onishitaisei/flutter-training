@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
 class MercariScreen extends StatelessWidget {
-  MercariScreen({Key? key}) : super(key: key);
+  const MercariScreen({Key? key}) : super(key: key);
 
-  final _footerIconAndTextColor = const Color(0xff222222);
+  // ignore: non_constant_identifier_names
+  final _IconAndTextColor = const Color(0xff222222);
   final double _footerIconSize = 30.0;
   final double _floatingActionButtonSize = 70.0;
+  final double _shortCutBtnWidth = 85.0;
+  final double _shortCutBtnHeight = 100.0;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +31,7 @@ class MercariScreen extends StatelessWidget {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.home_outlined,
-              color: _footerIconAndTextColor,
+              color: _IconAndTextColor,
               size: _footerIconSize,
             ),
             label: 'ホーム',
@@ -36,7 +39,7 @@ class MercariScreen extends StatelessWidget {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.notifications_outlined,
-              color: _footerIconAndTextColor,
+              color: _IconAndTextColor,
               size: _footerIconSize,
             ),
             label: 'お知らせ',
@@ -44,7 +47,7 @@ class MercariScreen extends StatelessWidget {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.camera_alt,
-              color: _footerIconAndTextColor,
+              color: _IconAndTextColor,
               size: _footerIconSize,
             ),
             label: '出品',
@@ -52,7 +55,7 @@ class MercariScreen extends StatelessWidget {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.qr_code,
-              color: _footerIconAndTextColor,
+              color: _IconAndTextColor,
               size: _footerIconSize,
             ),
             label: 'メルペイ',
@@ -60,15 +63,15 @@ class MercariScreen extends StatelessWidget {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.person_outline,
-              color: _footerIconAndTextColor,
+              color: _IconAndTextColor,
               size: _footerIconSize,
             ),
             label: 'マイページ',
           ),
         ],
 
-        selectedItemColor: _footerIconAndTextColor,
-        unselectedItemColor: _footerIconAndTextColor,
+        selectedItemColor: _IconAndTextColor,
+        unselectedItemColor: _IconAndTextColor,
         selectedFontSize: 10,
         unselectedFontSize: 10,
         selectedLabelStyle: const TextStyle(
@@ -84,7 +87,7 @@ class MercariScreen extends StatelessWidget {
         width: _floatingActionButtonSize,
         height: _floatingActionButtonSize,
         child: FloatingActionButton(
-          backgroundColor: Color(0xffD25244),
+          backgroundColor: const Color(0xffD25244),
           onPressed: () {},
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -101,7 +104,187 @@ class MercariScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Container(),
+      body: Column(
+        children: [
+          _buildShortCutToSell(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildShortCutToSell() {
+    return Container(
+      padding: const EdgeInsets.only(
+        top: 20.0,
+        bottom: 20.0,
+        left: 15.0,
+        right: 15.0,
+      ),
+      color: const Color(0xffEFEFEF),
+      child: Column(
+        children: [
+          _buildStartGuideImg(),
+          _buildShortCutToSellContents(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStartGuideImg() {
+    return const SizedBox(
+      child: Image(
+        image: AssetImage('images/start_guide.png'),
+      ),
+    );
+  }
+
+  Widget _buildShortCutToSellContents() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Padding(
+          padding: EdgeInsets.only(
+            top: 16.0,
+            bottom: 16.0,
+          ),
+          child: Text(
+            '出品へのショートカット',
+            style: TextStyle(
+              color: Color(0xff868686),
+              fontSize: 13,
+              fontWeight: FontWeight.w900,
+            ),
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              width: _shortCutBtnWidth,
+              height: _shortCutBtnHeight,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  width: 2,
+                  color: const Color(0xffE9E9E9),
+                ),
+                borderRadius: BorderRadius.circular(4.0),
+                color: Colors.white,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.camera_alt_outlined,
+                    color: _IconAndTextColor,
+                    size: 35,
+                  ),
+                  Text(
+                    '写真を撮る',
+                    style: TextStyle(
+                      color: _IconAndTextColor,
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              width: _shortCutBtnWidth,
+              height: _shortCutBtnHeight,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  width: 2,
+                  color: const Color(0xffE9E9E9),
+                ),
+                borderRadius: BorderRadius.circular(4.0),
+                color: Colors.white,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.filter,
+                    color: _IconAndTextColor,
+                    size: 35,
+                  ),
+                  Text(
+                    'アルバム',
+                    style: TextStyle(
+                      color: _IconAndTextColor,
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              width: _shortCutBtnWidth,
+              height: _shortCutBtnHeight,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  width: 2,
+                  color: const Color(0xffE9E9E9),
+                ),
+                borderRadius: BorderRadius.circular(4.0),
+                color: Colors.white,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.qr_code_scanner_outlined,
+                    color: _IconAndTextColor,
+                    size: 35,
+                  ),
+                  Text(
+                    'バーコード',
+                    style: TextStyle(
+                      color: _IconAndTextColor,
+                      fontSize: 10,
+                    ),
+                  ),
+                  Text(
+                    '(本・コスメ)',
+                    style: TextStyle(
+                      color: _IconAndTextColor,
+                      fontSize: 10,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              width: _shortCutBtnWidth,
+              height: _shortCutBtnHeight,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  width: 2,
+                  color: const Color(0xffE9E9E9),
+                ),
+                borderRadius: BorderRadius.circular(4.0),
+                color: Colors.white,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.add_chart_sharp,
+                    color: _IconAndTextColor,
+                    size: 35,
+                  ),
+                  Text(
+                    '下書き一覧',
+                    style: TextStyle(
+                      color: _IconAndTextColor,
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      ],
     );
   }
 }
