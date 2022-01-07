@@ -7,6 +7,33 @@ class YoutubeScreen extends StatelessWidget {
   final _userIconColor = const Color(0xffA435F0);
   final _gridMenuColor = const Color(0xff1D191E);
   final _movieTextColor = const Color(0xffA59FA5);
+
+  // List<MovieInfo> _createDammyData() {
+  //   return [
+  //     MovieInfo('テスト', 'テスト', 'テスト', 'テスト', 'テスト', 'テスト'),
+  //     MovieInfo('テスト1', 'テスト1', 'テスト1', 'テスト1', 'テスト1', 'テスト1'),
+  //   ];
+  // }
+
+  List<MovieInfo> createDammyData = [
+    MovieInfo(
+      'images/arashi.jpg',
+      'https://yt3.ggpht.com/ytc/AKedOLTrHCr-o1_G03azTDjkocuI4vGwBRpoeNUWtC6oew=s900-c-k-c0x00ffffff-no-rj',
+      '"This is ARASHI LIVE 2020.12.31" Digest\nMovie',
+      'ARASHI',
+      100,
+      1,
+    ),
+    MovieInfo(
+      'images/arashi.jpg',
+      'https://yt3.ggpht.com/ytc/AKedOLTrHCr-o1_G03azTDjkocuI4vGwBRpoeNUWtC6oew=s900-c-k-c0x00ffffff-no-rj',
+      '"This is ARASHI LIVE 2020.12.31" Digest\nMovie',
+      'ARASHI',
+      200,
+      2,
+    ),
+  ];
+
   final List<IconData> _gridIcon = [
     Icons.local_fire_department,
     Icons.music_note,
@@ -34,25 +61,6 @@ class YoutubeScreen extends StatelessWidget {
     const Color(0xffE26E34),
     const Color(0xff0A7792)
   ];
-
-  final List<String> _movieText = [
-    '"This is ARASHI LIVE 2020.12.31" Digest\nMovie',
-    '"This is ARASHI LIVE 2020.12.31" Digest\nMovie',
-  ];
-
-  final List<String> _movieImg = [
-    'images/arashi.jpg',
-    'images/arashi.jpg',
-  ];
-
-  final List<String> _channelName = [
-    'ARASHI',
-    'ARASHI',
-  ];
-
-  final List<int> _numOfViews = [127, 127];
-
-  final List<int> _dayPrevious = [1, 1];
 
   @override
   Widget build(BuildContext context) {
@@ -255,7 +263,7 @@ class YoutubeScreen extends StatelessWidget {
     return Expanded(
       child: ListView.builder(
         shrinkWrap: true,
-        itemCount: _movieText.length,
+        itemCount: createDammyData.length,
         itemBuilder: (context, index) {
           return SizedBox(
             width: double.infinity,
@@ -265,7 +273,7 @@ class YoutubeScreen extends StatelessWidget {
                   alignment: Alignment.bottomRight,
                   children: [
                     Image.asset(
-                      _movieImg[index],
+                      createDammyData[index].imagePath,
                       fit: BoxFit.cover,
                     ),
                     Padding(
@@ -306,8 +314,8 @@ class YoutubeScreen extends StatelessWidget {
                       CircleAvatar(
                         radius: 18,
                         backgroundColor: _userIconColor,
-                        backgroundImage: const NetworkImage(
-                            'https://yt3.ggpht.com/ytc/AKedOLTrHCr-o1_G03azTDjkocuI4vGwBRpoeNUWtC6oew=s900-c-k-c0x00ffffff-no-rj'),
+                        backgroundImage:
+                            NetworkImage(createDammyData[index].iconPath),
                       ),
                       const SizedBox(
                         width: 10,
@@ -316,7 +324,7 @@ class YoutubeScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            _movieText[index],
+                            createDammyData[index].title,
                             style: const TextStyle(color: Colors.white),
                           ),
                           SizedBox(
@@ -325,7 +333,7 @@ class YoutubeScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  _channelName[index],
+                                  createDammyData[index].channelName,
                                   style: TextStyle(
                                     color: _movieTextColor,
                                     fontSize: 13,
@@ -337,7 +345,7 @@ class YoutubeScreen extends StatelessWidget {
                                   color: _movieTextColor,
                                 ),
                                 Text(
-                                  '${_numOfViews[index]}万 回視聴',
+                                  '${createDammyData[index].numOfViews}万 回視聴',
                                   style: TextStyle(
                                     color: _movieTextColor,
                                     fontSize: 13,
@@ -349,7 +357,7 @@ class YoutubeScreen extends StatelessWidget {
                                   color: _movieTextColor,
                                 ),
                                 Text(
-                                  '${_dayPrevious[index]}日前',
+                                  '${createDammyData[index].daysAgo}日前',
                                   style: TextStyle(
                                     color: _movieTextColor,
                                     fontSize: 13,
@@ -375,4 +383,23 @@ class YoutubeScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+class MovieInfo {
+  // 一つの動画に関するデータを管理
+  late final imagePath; // サムネイル画像パス
+  late final iconPath; // チャンネルのアイコン画像パス
+  late final title; // 動画タイトル
+  late final channelName; // チャンネル名
+  late final numOfViews; // 再生回数
+  late final daysAgo; // 何日前にアップロードされたか
+
+  MovieInfo(
+    this.imagePath,
+    this.iconPath,
+    this.title,
+    this.channelName,
+    this.numOfViews,
+    this.daysAgo,
+  );
 }
