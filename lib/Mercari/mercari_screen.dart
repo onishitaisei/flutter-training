@@ -4,7 +4,8 @@ class MercariScreen extends StatelessWidget {
   const MercariScreen({Key? key}) : super(key: key);
 
   // ignore: non_constant_identifier_names
-  final _IconAndTextColor = const Color(0xff222222);
+  final _iconAndTextColor = const Color(0xff222222);
+  final _dividerColor = const Color(0xffF1F1F2);
   final double _footerIconSize = 30.0;
   final double _floatingActionButtonSize = 70.0;
   final double _shortCutBtnWidth = 85.0;
@@ -31,7 +32,7 @@ class MercariScreen extends StatelessWidget {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.home_outlined,
-              color: _IconAndTextColor,
+              color: _iconAndTextColor,
               size: _footerIconSize,
             ),
             label: 'ホーム',
@@ -39,7 +40,7 @@ class MercariScreen extends StatelessWidget {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.notifications_outlined,
-              color: _IconAndTextColor,
+              color: _iconAndTextColor,
               size: _footerIconSize,
             ),
             label: 'お知らせ',
@@ -47,7 +48,7 @@ class MercariScreen extends StatelessWidget {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.camera_alt,
-              color: _IconAndTextColor,
+              color: _iconAndTextColor,
               size: _footerIconSize,
             ),
             label: '出品',
@@ -55,7 +56,7 @@ class MercariScreen extends StatelessWidget {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.qr_code,
-              color: _IconAndTextColor,
+              color: _iconAndTextColor,
               size: _footerIconSize,
             ),
             label: 'メルペイ',
@@ -63,15 +64,14 @@ class MercariScreen extends StatelessWidget {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.person_outline,
-              color: _IconAndTextColor,
+              color: _iconAndTextColor,
               size: _footerIconSize,
             ),
             label: 'マイページ',
           ),
         ],
-
-        selectedItemColor: _IconAndTextColor,
-        unselectedItemColor: _IconAndTextColor,
+        selectedItemColor: _iconAndTextColor,
+        unselectedItemColor: _iconAndTextColor,
         selectedFontSize: 10,
         unselectedFontSize: 10,
         selectedLabelStyle: const TextStyle(
@@ -80,8 +80,7 @@ class MercariScreen extends StatelessWidget {
         unselectedLabelStyle: const TextStyle(
           fontWeight: FontWeight.bold,
         ),
-        type: BottomNavigationBarType
-            .fixed, // bottomnavigationが4つ以上の時は見えなくなってしまうため、type: BottomNavigationBarType.fixed,を追加
+        type: BottomNavigationBarType.fixed,
       ),
       floatingActionButton: SizedBox(
         width: _floatingActionButtonSize,
@@ -104,10 +103,17 @@ class MercariScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          _buildShortCutToSell(),
-        ],
+      body: Scrollbar(
+        isAlwaysShown: true,
+        child: SingleChildScrollView(
+          // 端末サイズを超えた場合スクロール可能に
+          child: Column(
+            children: [
+              _buildShortCutToSell(),
+              _buildItemsEasyToSell(),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -117,14 +123,14 @@ class MercariScreen extends StatelessWidget {
       padding: const EdgeInsets.only(
         top: 20.0,
         bottom: 20.0,
-        left: 15.0,
-        right: 15.0,
+        left: 16.0,
+        right: 16.0,
       ),
       color: const Color(0xffEFEFEF),
       child: Column(
         children: [
           _buildStartGuideImg(),
-          _buildShortCutToSellContents(),
+          _buildShortCutToSellBtns(),
         ],
       ),
     );
@@ -138,7 +144,7 @@ class MercariScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildShortCutToSellContents() {
+  Widget _buildShortCutToSellBtns() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -175,13 +181,13 @@ class MercariScreen extends StatelessWidget {
                 children: [
                   Icon(
                     Icons.camera_alt_outlined,
-                    color: _IconAndTextColor,
+                    color: _iconAndTextColor,
                     size: 35,
                   ),
                   Text(
                     '写真を撮る',
                     style: TextStyle(
-                      color: _IconAndTextColor,
+                      color: _iconAndTextColor,
                       fontSize: 12,
                     ),
                   ),
@@ -204,13 +210,13 @@ class MercariScreen extends StatelessWidget {
                 children: [
                   Icon(
                     Icons.filter,
-                    color: _IconAndTextColor,
+                    color: _iconAndTextColor,
                     size: 35,
                   ),
                   Text(
                     'アルバム',
                     style: TextStyle(
-                      color: _IconAndTextColor,
+                      color: _iconAndTextColor,
                       fontSize: 12,
                     ),
                   ),
@@ -233,20 +239,20 @@ class MercariScreen extends StatelessWidget {
                 children: [
                   Icon(
                     Icons.qr_code_scanner_outlined,
-                    color: _IconAndTextColor,
+                    color: _iconAndTextColor,
                     size: 35,
                   ),
                   Text(
                     'バーコード',
                     style: TextStyle(
-                      color: _IconAndTextColor,
+                      color: _iconAndTextColor,
                       fontSize: 10,
                     ),
                   ),
                   Text(
                     '(本・コスメ)',
                     style: TextStyle(
-                      color: _IconAndTextColor,
+                      color: _iconAndTextColor,
                       fontSize: 10,
                     ),
                   ),
@@ -269,13 +275,13 @@ class MercariScreen extends StatelessWidget {
                 children: [
                   Icon(
                     Icons.add_chart_sharp,
-                    color: _IconAndTextColor,
+                    color: _iconAndTextColor,
                     size: 35,
                   ),
                   Text(
                     '下書き一覧',
                     style: TextStyle(
-                      color: _IconAndTextColor,
+                      color: _iconAndTextColor,
                       fontSize: 12,
                     ),
                   ),
@@ -283,6 +289,146 @@ class MercariScreen extends StatelessWidget {
               ),
             )
           ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildItemsEasyToSell() {
+    return Column(
+      children: [
+        _buildItemsEasyToSellTop(),
+        Divider(
+          thickness: 2,
+          indent: 15.0,
+          color: _dividerColor,
+        ),
+        _buildItems(),
+        Divider(
+          thickness: 2,
+          indent: 15.0,
+          color: _dividerColor,
+        ),
+        _buildItems(),
+        Divider(
+          thickness: 2,
+          indent: 15.0,
+          color: _dividerColor,
+        ),
+        _buildItems(),
+      ],
+    );
+  }
+
+  Widget _buildItemsEasyToSellTop() {
+    return Padding(
+      padding: const EdgeInsets.only(
+        top: 12.0,
+        bottom: 8.0,
+        left: 16.0,
+        right: 16.0,
+      ),
+      child: Row(
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                '売れやすい持ち物',
+                style: TextStyle(
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+              Text(
+                '使わないモノを出品してみよう！',
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.grey[600],
+                ),
+              ),
+            ],
+          ),
+          const Spacer(),
+          const Text(
+            'すべて見る',
+            style: TextStyle(
+              color: Color(0xff73B1ED),
+            ),
+          ),
+          const Icon(
+            Icons.arrow_forward_ios,
+            color: Color(0xff73B1ED),
+            size: 20,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildItems() {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(
+            top: 4.0,
+            bottom: 4.0,
+            left: 16.0,
+            right: 16.0,
+          ),
+          child: Row(
+            children: [
+              const Image(
+                width: 70,
+                image: AssetImage('images/camera.png'),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'NikonD5500',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
+                  ),
+                  const Text(
+                    '¥51,000',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
+                  ),
+                  Row(
+                    children: const [
+                      Icon(
+                        Icons.local_fire_department,
+                        color: Color(0xff4092E7),
+                        size: 20,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        '446人が探しています',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              const Spacer(),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: const Color(0xffD25244),
+                ),
+                onPressed: () {},
+                child: const Text('出品する'),
+              ),
+            ],
+          ),
         ),
       ],
     );
