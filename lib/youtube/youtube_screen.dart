@@ -8,13 +8,6 @@ class YoutubeScreen extends StatelessWidget {
   final _gridMenuColor = const Color(0xff1D191E);
   final _movieTextColor = const Color(0xffA59FA5);
 
-  // List<MovieInfo> _createDammyData() {
-  //   return [
-  //     MovieInfo('テスト', 'テスト', 'テスト', 'テスト', 'テスト', 'テスト'),
-  //     MovieInfo('テスト1', 'テスト1', 'テスト1', 'テスト1', 'テスト1', 'テスト1'),
-  //   ];
-  // }
-
   List<MovieInfo> createDammyData = [
     MovieInfo(
       'images/arashi.jpg',
