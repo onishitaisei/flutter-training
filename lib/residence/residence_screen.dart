@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 
 class ResidenceScreen extends StatelessWidget {
   final _whiteColor = const Color(0xffFFFFFF);
-  final _footerUnselectedIconColor = const Color(0xffCECECE);
+  final _footerUnselectedIconColor =
+      const Color(0xffCECECE); // ボトムナビゲーションのアクティブではないアイコンの色
   final _backgroundColor = const Color(0xffFAF8F5);
   final _primaryColor = const Color(0xff5BADA1);
+  final _mainBtnColor = const Color(0xffC9C9C9);
 
   const ResidenceScreen({Key? key}) : super(key: key);
   @override
@@ -96,15 +98,16 @@ class ResidenceScreen extends StatelessWidget {
             const SizedBox(
               height: 15,
             ),
-            _buildPropertyConditions(mediaSize),
+            _buildPropertyConditions(
+                mediaSize), // 物件の条件という意味で「PropertyConditions」にしました。
             const SizedBox(
               height: 15,
             ),
-            _buildmainContents(mediaSize),
+            _buildMainContents(mediaSize),
             const SizedBox(
               height: 15,
             ),
-            _buildmainContents(mediaSize),
+            _buildMainContents(mediaSize),
           ],
         ),
       ),
@@ -192,20 +195,21 @@ class ResidenceScreen extends StatelessWidget {
 
   Widget _buildHeaderIcon() {
     return Container(
-        width: 50,
-        padding: const EdgeInsets.only(
-          right: 15.0,
+      width: 50,
+      padding: const EdgeInsets.only(
+        right: 15.0,
+      ),
+      child: CircleAvatar(
+        // flatingActionbuttonだと影を削除する方法がわからなかったので、CircleAvatarを使用しました。
+        child: const Icon(
+          Icons.add,
+          size: 25,
         ),
-        child: CircleAvatar(
-          // flatingActionbuttonだと影を削除する方法がわからなかったので、CircleAvatarを使用しました。
-          child: const Icon(
-            Icons.add,
-            size: 25,
-          ),
-          radius: 10,
-          backgroundColor: _primaryColor,
-          foregroundColor: Colors.white,
-        ));
+        radius: 10,
+        backgroundColor: _primaryColor,
+        foregroundColor: Colors.white,
+      ),
+    );
   }
 
   Widget _buildPropertyConditions(Size mediaSize) {
@@ -363,7 +367,7 @@ class ResidenceScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildmainContents(Size mediaSize) {
+  Widget _buildMainContents(Size mediaSize) {
     return Center(
       child: Container(
         width: mediaSize.width * 0.97,
@@ -535,26 +539,24 @@ class ResidenceScreen extends StatelessWidget {
           height: mediaSize.height * 0.05,
           decoration: BoxDecoration(
             border: Border.all(
-              color: const Color(
-                0xffC9C9C9,
-              ),
+              color: _mainBtnColor,
             ),
             borderRadius: BorderRadius.circular(10.0),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: const [
-              SizedBox(
+            children: [
+              const SizedBox(
                 width: 10,
               ),
               Icon(
                 Icons.delete,
-                color: Color(0xffC9C9C9),
+                color: _mainBtnColor,
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
-              Text('興味なし'),
+              const Text('興味なし'),
             ],
           ),
         ),
@@ -566,27 +568,27 @@ class ResidenceScreen extends StatelessWidget {
           height: mediaSize.height * 0.05,
           decoration: BoxDecoration(
             border: Border.all(
-              color: const Color(0xffC9C9C9),
+              color: _mainBtnColor,
             ),
             borderRadius: BorderRadius.circular(10),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: const [
-              SizedBox(
+            children: [
+              const SizedBox(
                 width: 10,
               ),
               Icon(
                 Icons.favorite_border,
-                color: Color(0xffC9C9C9),
+                color: _mainBtnColor,
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
-              Text('お気に入り'),
+              const Text('お気に入り'),
             ],
           ),
-        )
+        ),
       ],
     );
   }
