@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -8,7 +10,7 @@ class YoutubeScreen extends StatelessWidget {
   final _gridMenuColor = const Color(0xff1D191E);
   final _movieTextColor = const Color(0xffA59FA5);
 
-  List<MovieInfo> createDammyData = [
+  final List<MovieInfo> _createDammyData = [
     MovieInfo(
       'images/arashi.jpg',
       'https://yt3.ggpht.com/ytc/AKedOLTrHCr-o1_G03azTDjkocuI4vGwBRpoeNUWtC6oew=s900-c-k-c0x00ffffff-no-rj',
@@ -256,7 +258,7 @@ class YoutubeScreen extends StatelessWidget {
     return Expanded(
       child: ListView.builder(
         shrinkWrap: true,
-        itemCount: createDammyData.length,
+        itemCount: _createDammyData.length,
         itemBuilder: (context, index) {
           return SizedBox(
             width: double.infinity,
@@ -266,7 +268,7 @@ class YoutubeScreen extends StatelessWidget {
                   alignment: Alignment.bottomRight,
                   children: [
                     Image.asset(
-                      createDammyData[index].imagePath,
+                      _createDammyData[index].imagePath,
                       fit: BoxFit.cover,
                     ),
                     Padding(
@@ -308,7 +310,7 @@ class YoutubeScreen extends StatelessWidget {
                         radius: 18,
                         backgroundColor: _userIconColor,
                         backgroundImage:
-                            NetworkImage(createDammyData[index].iconPath),
+                            NetworkImage(_createDammyData[index].iconPath),
                       ),
                       const SizedBox(
                         width: 10,
@@ -317,7 +319,7 @@ class YoutubeScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            createDammyData[index].title,
+                            _createDammyData[index].title,
                             style: const TextStyle(color: Colors.white),
                           ),
                           SizedBox(
@@ -326,7 +328,7 @@ class YoutubeScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  createDammyData[index].channelName,
+                                  _createDammyData[index].channelName,
                                   style: TextStyle(
                                     color: _movieTextColor,
                                     fontSize: 13,
@@ -338,7 +340,7 @@ class YoutubeScreen extends StatelessWidget {
                                   color: _movieTextColor,
                                 ),
                                 Text(
-                                  '${createDammyData[index].numOfViews}万 回視聴',
+                                  '${_createDammyData[index].numOfViews}万 回視聴',
                                   style: TextStyle(
                                     color: _movieTextColor,
                                     fontSize: 13,
@@ -350,7 +352,7 @@ class YoutubeScreen extends StatelessWidget {
                                   color: _movieTextColor,
                                 ),
                                 Text(
-                                  '${createDammyData[index].daysAgo}日前',
+                                  '${_createDammyData[index].daysAgo}日前',
                                   style: TextStyle(
                                     color: _movieTextColor,
                                     fontSize: 13,
@@ -378,6 +380,7 @@ class YoutubeScreen extends StatelessWidget {
   }
 }
 
+// ignore: duplicate_ignore
 class MovieInfo {
   // 一つの動画に関するデータを管理
   late final imagePath; // サムネイル画像パス
