@@ -6,6 +6,7 @@ class MercariScreen extends StatelessWidget {
   // ignore: non_constant_identifier_names
   final _iconAndTextColor = const Color(0xff222222);
   final _dividerColor = const Color(0xffF1F1F2);
+  final _shortCutBtnsColor = const Color(0xffE9E9E9);
   final double _footerIconSize = 30.0;
   final double _floatingActionButtonSize = 70.0;
   final double _shortCutBtnWidth = 85.0;
@@ -171,7 +172,7 @@ class MercariScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(
                   width: 2,
-                  color: const Color(0xffE9E9E9),
+                  color: _shortCutBtnsColor,
                 ),
                 borderRadius: BorderRadius.circular(4.0),
                 color: Colors.white,
@@ -200,7 +201,7 @@ class MercariScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(
                   width: 2,
-                  color: const Color(0xffE9E9E9),
+                  color: _shortCutBtnsColor,
                 ),
                 borderRadius: BorderRadius.circular(4.0),
                 color: Colors.white,
@@ -229,7 +230,7 @@ class MercariScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(
                   width: 2,
-                  color: const Color(0xffE9E9E9),
+                  color: _shortCutBtnsColor,
                 ),
                 borderRadius: BorderRadius.circular(4.0),
                 color: Colors.white,
@@ -265,7 +266,7 @@ class MercariScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(
                   width: 2,
-                  color: const Color(0xffE9E9E9),
+                  color: _shortCutBtnsColor,
                 ),
                 borderRadius: BorderRadius.circular(4.0),
                 color: Colors.white,
@@ -298,25 +299,21 @@ class MercariScreen extends StatelessWidget {
     return Column(
       children: [
         _buildItemsEasyToSellTop(),
-        Divider(
-          thickness: 2,
-          indent: 15.0,
-          color: _dividerColor,
-        ),
+        _itemDivider(),
         _buildItems(),
-        Divider(
-          thickness: 2,
-          indent: 15.0,
-          color: _dividerColor,
-        ),
+        _itemDivider(),
         _buildItems(),
-        Divider(
-          thickness: 2,
-          indent: 15.0,
-          color: _dividerColor,
-        ),
+        _itemDivider(),
         _buildItems(),
       ],
+    );
+  }
+
+  Widget _itemDivider() {
+    return Divider(
+      thickness: 2,
+      indent: 15.0,
+      color: _dividerColor,
     );
   }
 
