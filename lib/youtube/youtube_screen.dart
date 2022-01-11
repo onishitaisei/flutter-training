@@ -63,30 +63,25 @@ class YoutubeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: _backgroundColor,
-      appBar: PreferredSize(
-        // Appbarを切り出すときは高さの指定が必要？
-        // 切り出したWidget側にPreferredSizeWidgetを指定することが出来なかったので、コチラに指定しました。
-        preferredSize: const Size.fromHeight(50),
-        child: _buildAppbar(),
-      ),
+      appBar: _buildAppBar(),
       body: _buildBody(),
       bottomNavigationBar: _buildBottomNavigationBar(),
     );
   }
 
-  Widget _buildAppbar() {
+  AppBar _buildAppBar() {
     return AppBar(
       backgroundColor: _backgroundColor,
       elevation: 0, // Appbarとメイン画面の境界線の影をなくす
       automaticallyImplyLeading: false, // デフォルトの戻るボタン(<)を削除
-      title: _appBarLogo(),
+      title: _buildAppBarLogo(),
       actions: [
-        _appBarIcons(),
+        _buildAppBarActions(),
       ],
     );
   }
 
-  Widget _appBarLogo() {
+  Widget _buildAppBarLogo() {
     return Row(
       children: const [
         Image(
@@ -109,7 +104,7 @@ class YoutubeScreen extends StatelessWidget {
     );
   }
 
-  Widget _appBarIcons() {
+  Widget _buildAppBarActions() {
     return SizedBox(
       width: 180,
       child: Row(
@@ -141,14 +136,14 @@ class YoutubeScreen extends StatelessWidget {
     return SafeArea(
       child: Column(
         children: [
-          _gridMenus(),
-          _mainMovies(),
+          _buildGridMenus(),
+          _buildMainMovies(),
         ],
       ),
     );
   }
 
-  Widget _gridMenus() {
+  Widget _buildGridMenus() {
     return Container(
       color: _gridMenuColor,
       height: 230,
@@ -165,14 +160,14 @@ class YoutubeScreen extends StatelessWidget {
           childAspectRatio: 3 / 0.7,
           children: List<Widget>.generate(
             _gridIcon.length,
-            _gridMenu,
+            _buildGridMenu,
           ),
         ),
       ),
     );
   }
 
-  Widget _gridMenu(int index) {
+  Widget _buildGridMenu(int index) {
     return GridTile(
       child: Container(
         decoration: BoxDecoration(
@@ -205,7 +200,7 @@ class YoutubeScreen extends StatelessWidget {
     );
   }
 
-  Widget _mainMovies() {
+  Widget _buildMainMovies() {
     return Expanded(
       // Column内にLisiViewを入れている場合はExpandedでラップする。この場合は親WidgetのこのColumnもExpandedでラップすることでエラー解決
       child: Column(
@@ -228,13 +223,13 @@ class YoutubeScreen extends StatelessWidget {
               ),
             ),
           ),
-          _mainMovie(),
+          _buildMainMovie(),
         ],
       ),
     );
   }
 
-  Widget _mainMovie() {
+  Widget _buildMainMovie() {
     return Expanded(
       child: ListView.builder(
         shrinkWrap: true,
