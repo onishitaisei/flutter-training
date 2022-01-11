@@ -10,22 +10,24 @@ class YoutubeScreen extends StatelessWidget {
   final _gridMenuColor = const Color(0xff1D191E);
   final _movieTextColor = const Color(0xffA59FA5);
 
-  final List<MovieInfo> _createDammyData = [
+  final List<MovieInfo> _createDummyData = [
     MovieInfo(
-      'images/arashi.jpg',
-      'https://yt3.ggpht.com/ytc/AKedOLTrHCr-o1_G03azTDjkocuI4vGwBRpoeNUWtC6oew=s900-c-k-c0x00ffffff-no-rj',
-      '"This is ARASHI LIVE 2020.12.31" Digest\nMovie',
-      'ARASHI',
-      100,
-      1,
+      imagePath: 'images/arashi.jpg',
+      iconPath:
+          'https://yt3.ggpht.com/ytc/AKedOLTrHCr-o1_G03azTDjkocuI4vGwBRpoeNUWtC6oew=s900-c-k-c0x00ffffff-no-rj',
+      title: '"This is ARASHI LIVE 2020.12.31" Digest\nMovie',
+      channelName: 'ARASHI',
+      numOfViews: 100,
+      daysAgo: 1,
     ),
     MovieInfo(
-      'images/arashi.jpg',
-      'https://yt3.ggpht.com/ytc/AKedOLTrHCr-o1_G03azTDjkocuI4vGwBRpoeNUWtC6oew=s900-c-k-c0x00ffffff-no-rj',
-      '"This is ARASHI LIVE 2020.12.31" Digest\nMovie',
-      'ARASHI',
-      200,
-      2,
+      imagePath: 'images/arashi.jpg',
+      iconPath:
+          'https://yt3.ggpht.com/ytc/AKedOLTrHCr-o1_G03azTDjkocuI4vGwBRpoeNUWtC6oew=s900-c-k-c0x00ffffff-no-rj',
+      title: '"This is ARASHI LIVE 2020.12.31" Digest\nMovie',
+      channelName: 'ARASHI',
+      numOfViews: 200,
+      daysAgo: 2,
     ),
   ];
 
@@ -61,81 +63,37 @@ class YoutubeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: _backgroundColor,
-      appBar: AppBar(
-        backgroundColor: _backgroundColor,
-        elevation: 0, // Appbarとメイン画面の境界線の影をなくす
-        automaticallyImplyLeading: false, // デフォルトの戻るボタン(<)を削除
-        title: _buildHeaderLogo(),
-
-        actions: [
-          _buildHeaderIcons(),
-        ],
+      appBar: PreferredSize(
+        // Appbarを切り出すときは高さの指定が必要？
+        // 切り出したWidget側にPreferredSizeWidgetを指定することが出来なかったので、コチラに指定しました。
+        preferredSize: const Size.fromHeight(50),
+        child: _buildAppbar(),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: _backgroundColor,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home_outlined,
-              color: Colors.white,
-            ),
-            label: 'ホーム',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.explore,
-              color: Colors.white,
-            ),
-            label: '検索',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.control_point_outlined,
-              size: 40,
-              color: Colors.white,
-            ),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.slow_motion_video_outlined,
-              color: Colors.white,
-            ),
-            label: '登録チャンネル',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.slideshow,
-              color: Colors.white,
-            ),
-            label: 'ライブラリ',
-          ),
-        ],
-
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.white,
-        selectedFontSize: 10,
-        unselectedFontSize: 10,
-        type: BottomNavigationBarType
-            .fixed, // bottomnavigationが4つ以上の時は見えなくなってしまうため、type: BottomNavigationBarType.fixed,を追加
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            _buildGridMenus(),
-            _buildMainScreen(),
-          ],
-        ),
-      ),
+      body: _buildBody(),
+      bottomNavigationBar: _buildBottomNavigationBar(),
     );
   }
 
-  Widget _buildHeaderLogo() {
+  Widget _buildAppbar() {
+    return AppBar(
+      backgroundColor: _backgroundColor,
+      elevation: 0, // Appbarとメイン画面の境界線の影をなくす
+      automaticallyImplyLeading: false, // デフォルトの戻るボタン(<)を削除
+      title: _appBarLogo(),
+      actions: [
+        _appBarIcons(),
+      ],
+    );
+  }
+
+  Widget _appBarLogo() {
     return Row(
       children: const [
         Image(
           width: 27,
-          image: AssetImage('images/youtube_img.png'),
+          image: AssetImage(
+            'images/youtube_img.png',
+          ),
         ),
         Text(
           'YouTube',
@@ -151,7 +109,7 @@ class YoutubeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildHeaderIcons() {
+  Widget _appBarIcons() {
     return SizedBox(
       width: 180,
       child: Row(
@@ -179,7 +137,18 @@ class YoutubeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildGridMenus() {
+  Widget _buildBody() {
+    return SafeArea(
+      child: Column(
+        children: [
+          _gridMenus(),
+          _mainMovies(),
+        ],
+      ),
+    );
+  }
+
+  Widget _gridMenus() {
     return Container(
       color: _gridMenuColor,
       height: 230,
@@ -196,14 +165,14 @@ class YoutubeScreen extends StatelessWidget {
           childAspectRatio: 3 / 0.7,
           children: List<Widget>.generate(
             _gridIcon.length,
-            _buildGridMenu,
+            _gridMenu,
           ),
         ),
       ),
     );
   }
 
-  Widget _buildGridMenu(int index) {
+  Widget _gridMenu(int index) {
     return GridTile(
       child: Container(
         decoration: BoxDecoration(
@@ -211,7 +180,9 @@ class YoutubeScreen extends StatelessWidget {
           borderRadius: BorderRadius.circular(5),
         ),
         child: Padding(
-          padding: const EdgeInsets.only(left: 8.0),
+          padding: const EdgeInsets.only(
+            left: 8.0,
+          ),
           child: Row(
             children: [
               Icon(
@@ -223,7 +194,9 @@ class YoutubeScreen extends StatelessWidget {
               ),
               Text(
                 _gridText[index],
-                style: const TextStyle(color: Colors.white),
+                style: const TextStyle(
+                  color: Colors.white,
+                ),
               ),
             ],
           ),
@@ -232,33 +205,40 @@ class YoutubeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildMainScreen() {
+  Widget _mainMovies() {
     return Expanded(
       // Column内にLisiViewを入れている場合はExpandedでラップする。この場合は親WidgetのこのColumnもExpandedでラップすることでエラー解決
       child: Column(
         children: [
           const Padding(
-            padding: EdgeInsets.only(top: 15.0, bottom: 15.0, left: 15.0),
+            padding: EdgeInsets.only(
+              top: 15.0,
+              bottom: 15.0,
+              left: 15.0,
+            ),
             child: SizedBox(
               width: double.infinity,
               child: Text(
                 '急上昇動画',
                 textAlign: TextAlign.left,
-                style: TextStyle(color: Colors.white, fontSize: 20),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                ),
               ),
             ),
           ),
-          _buildMainMovies(),
+          _mainMovie(),
         ],
       ),
     );
   }
 
-  Widget _buildMainMovies() {
+  Widget _mainMovie() {
     return Expanded(
       child: ListView.builder(
         shrinkWrap: true,
-        itemCount: _createDammyData.length,
+        itemCount: _createDummyData.length,
         itemBuilder: (context, index) {
           return SizedBox(
             width: double.infinity,
@@ -268,7 +248,7 @@ class YoutubeScreen extends StatelessWidget {
                   alignment: Alignment.bottomRight,
                   children: [
                     Image.asset(
-                      _createDammyData[index].imagePath,
+                      _createDummyData[index].imagePath,
                       fit: BoxFit.cover,
                     ),
                     Padding(
@@ -292,7 +272,9 @@ class YoutubeScreen extends StatelessWidget {
                               padding: EdgeInsets.all(2.0),
                               child: Text(
                                 '9:49',
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           )
@@ -309,8 +291,9 @@ class YoutubeScreen extends StatelessWidget {
                       CircleAvatar(
                         radius: 18,
                         backgroundColor: _userIconColor,
-                        backgroundImage:
-                            NetworkImage(_createDammyData[index].iconPath),
+                        backgroundImage: NetworkImage(
+                          _createDummyData[index].iconPath,
+                        ),
                       ),
                       const SizedBox(
                         width: 10,
@@ -319,8 +302,10 @@ class YoutubeScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            _createDammyData[index].title,
-                            style: const TextStyle(color: Colors.white),
+                            _createDummyData[index].title,
+                            style: const TextStyle(
+                              color: Colors.white,
+                            ),
                           ),
                           SizedBox(
                             width: 180,
@@ -328,7 +313,7 @@ class YoutubeScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  _createDammyData[index].channelName,
+                                  _createDummyData[index].channelName,
                                   style: TextStyle(
                                     color: _movieTextColor,
                                     fontSize: 13,
@@ -340,7 +325,7 @@ class YoutubeScreen extends StatelessWidget {
                                   color: _movieTextColor,
                                 ),
                                 Text(
-                                  '${_createDammyData[index].numOfViews}万 回視聴',
+                                  '${_createDummyData[index].numOfViews}万 回視聴',
                                   style: TextStyle(
                                     color: _movieTextColor,
                                     fontSize: 13,
@@ -352,7 +337,7 @@ class YoutubeScreen extends StatelessWidget {
                                   color: _movieTextColor,
                                 ),
                                 Text(
-                                  '${_createDammyData[index].daysAgo}日前',
+                                  '${_createDummyData[index].daysAgo}日前',
                                   style: TextStyle(
                                     color: _movieTextColor,
                                     fontSize: 13,
@@ -378,24 +363,74 @@ class YoutubeScreen extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildBottomNavigationBar() {
+    return BottomNavigationBar(
+      backgroundColor: _backgroundColor,
+      items: const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.home_outlined,
+            color: Colors.white,
+          ),
+          label: 'ホーム',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.explore,
+            color: Colors.white,
+          ),
+          label: '検索',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.control_point_outlined,
+            size: 40,
+            color: Colors.white,
+          ),
+          label: '',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.slow_motion_video_outlined,
+            color: Colors.white,
+          ),
+          label: '登録チャンネル',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.slideshow,
+            color: Colors.white,
+          ),
+          label: 'ライブラリ',
+        ),
+      ],
+      selectedItemColor: Colors.white,
+      unselectedItemColor: Colors.white,
+      selectedFontSize: 10,
+      unselectedFontSize: 10,
+      type: BottomNavigationBarType
+          .fixed, // bottomnavigationが4つ以上の時は見えなくなってしまうため、type: BottomNavigationBarType.fixed,を追加
+    );
+  }
 }
 
 // ignore: duplicate_ignore
 class MovieInfo {
   // 一つの動画に関するデータを管理
-  late final imagePath; // サムネイル画像パス
-  late final iconPath; // チャンネルのアイコン画像パス
-  late final title; // 動画タイトル
-  late final channelName; // チャンネル名
-  late final numOfViews; // 再生回数
-  late final daysAgo; // 何日前にアップロードされたか
+  final String imagePath; // サムネイル画像パス
+  final String iconPath; // チャンネルのアイコン画像パス
+  final String title; // 動画タイトル
+  final String channelName; // チャンネル名
+  final int numOfViews; // 再生回数
+  final int daysAgo; // 何日前にアップロードされたか
 
-  MovieInfo(
-    this.imagePath,
-    this.iconPath,
-    this.title,
-    this.channelName,
-    this.numOfViews,
-    this.daysAgo,
-  );
+  MovieInfo({
+    required this.imagePath,
+    required this.iconPath,
+    required this.title,
+    required this.channelName,
+    required this.numOfViews,
+    required this.daysAgo,
+  });
 }
