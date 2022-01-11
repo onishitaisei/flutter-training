@@ -33,7 +33,7 @@ class ResidenceScreen extends StatelessWidget {
       ),
       layoutImagePath: 'images/house_layout.png',
       title: 'Rising place横浜',
-      accessInfo: '京急本線 京急横浜駅 より 徒歩20分',
+      accessInfo: '市営地下鉄ブルーライン横浜駅 より 徒歩20分',
       roomInfo: '1K / 21.24㎡ 南西向き',
       oldnessInfo: '2階/15階建 築5年',
       price: 3000,
