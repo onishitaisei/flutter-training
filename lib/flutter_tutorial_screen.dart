@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
 class FlutterTutorialScreen extends StatelessWidget {
@@ -20,7 +19,9 @@ class FlutterTutorialScreen extends StatelessWidget {
               children: [
                 /*2*/
                 Container(
-                  padding: const EdgeInsets.only(bottom: 8),
+                  padding: const EdgeInsets.only(
+                    bottom: 8,
+                  ),
                   child: const Text(
                     'Oeschinen Lake Campground',
                     style: TextStyle(
@@ -68,35 +69,40 @@ class FlutterTutorialScreen extends StatelessWidget {
       ),
     );
     return Scaffold(
-        appBar: AppBar(
-          // タイトルテキスト
-          title: const Text('Flutter layout demo'),
-          actions: [
-            IconButton(
-                onPressed: () {
-                  Navigator.push<void>(
-                    context,
-                    MaterialPageRoute(builder: (context) => const LogoApp()),
-                  );
-                },
-                icon: const Icon(Icons.arrow_forward_ios))
-          ],
-        ),
-        body: ListView(
-          children: [
-            Image.asset(
-              'images/lake.jpeg',
-              width: 600,
-              height: 240,
-              fit: BoxFit.cover,
-            ),
-            titleSection,
-            buttonSection,
-            textSection,
-            Text(AppLocalizations.of(context)!.helloWorld),
-            Text(myLocale.toString()),
-          ],
-        ));
+      appBar: AppBar(
+        // タイトルテキスト
+        title: const Text('Flutter layout demo'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push<void>(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const LogoApp(),
+                ),
+              );
+            },
+            icon: const Icon(Icons.arrow_forward_ios),
+          )
+        ],
+      ),
+      body: ListView(
+        children: [
+          Image.asset(
+            'images/lake.jpeg',
+            width: 600,
+            height: 240,
+            fit: BoxFit.cover,
+          ),
+          titleSection,
+          buttonSection,
+          textSection,
+          Text(
+            myLocale.toString(),
+          ),
+        ],
+      ),
+    );
   }
 
   Column _buildButtonColumn(Color color, IconData icon, String label) {
@@ -133,15 +139,17 @@ class _FavoriteWidgetState extends State<FavoriteWidget> {
   int _favoriteCount = 41;
 
   void _toggleFavorite() {
-    setState(() {
-      if (_isFavorited) {
-        _favoriteCount -= 1;
-        _isFavorited = false;
-      } else {
-        _favoriteCount += 1;
-        _isFavorited = true;
-      }
-    });
+    setState(
+      () {
+        if (_isFavorited) {
+          _favoriteCount -= 1;
+          _isFavorited = false;
+        } else {
+          _favoriteCount += 1;
+          _isFavorited = true;
+        }
+      },
+    );
   }
 
   @override
@@ -213,8 +221,10 @@ class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin {
     super.initState();
     controller =
         AnimationController(duration: const Duration(seconds: 2), vsync: this);
-    animation = CurvedAnimation(parent: controller, curve: Curves.easeIn)
-      ..addStatusListener((status) {
+    animation = CurvedAnimation(
+      parent: controller,
+      curve: Curves.easeIn,
+    )..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
           controller.reverse();
         } else if (status == AnimationStatus.dismissed) {
@@ -244,9 +254,11 @@ class DemoLocalizations {
             : locale.toString();
     final String localeName = Intl.canonicalizedLocale(name);
 
-    return initializeMessages(localeName).then((_) {
-      return DemoLocalizations(localeName);
-    });
+    return initializeMessages(localeName).then(
+      (_) {
+        return DemoLocalizations(localeName);
+      },
+    );
   }
 
   static DemoLocalizations of(BuildContext context) {
