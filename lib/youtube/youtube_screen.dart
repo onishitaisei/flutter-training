@@ -75,9 +75,7 @@ class YoutubeScreen extends StatelessWidget {
       elevation: 0, // Appbarとメイン画面の境界線の影をなくす
       automaticallyImplyLeading: false, // デフォルトの戻るボタン(<)を削除
       title: _buildAppBarLogo(),
-      actions: [
-        _buildAppBarActions(),
-      ],
+      actions: _buildAppBarActions(),
     );
   }
 
@@ -104,32 +102,34 @@ class YoutubeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildAppBarActions() {
-    return SizedBox(
-      width: 180,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          const Icon(
-            Icons.cast,
-            color: Colors.white,
-          ),
-          const Icon(
-            Icons.notifications_outlined,
-            color: Colors.white,
-          ),
-          const Icon(
-            Icons.search,
-            color: Colors.white,
-          ),
-          CircleAvatar(
-            radius: 15,
-            backgroundColor: _userIconColor,
-            child: const Text('t'),
-          ),
-        ],
-      ),
-    );
+  List<Widget> _buildAppBarActions() {
+    return [
+      SizedBox(
+        width: 180,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            const Icon(
+              Icons.cast,
+              color: Colors.white,
+            ),
+            const Icon(
+              Icons.notifications_outlined,
+              color: Colors.white,
+            ),
+            const Icon(
+              Icons.search,
+              color: Colors.white,
+            ),
+            CircleAvatar(
+              radius: 15,
+              backgroundColor: _userIconColor,
+              child: const Text('t'),
+            ),
+          ],
+        ),
+      )
+    ];
   }
 
   Widget _buildBody() {
