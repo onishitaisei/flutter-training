@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'Mercari/mercari_screen.dart';
 import 'flutter_tutorial_screen.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import 'residence/residence_screen.dart';
 import 'youtube/youtube_screen.dart';
 
@@ -20,7 +18,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       localizationsDelegates: const [
-        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
