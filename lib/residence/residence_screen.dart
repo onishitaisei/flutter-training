@@ -146,16 +146,14 @@ class ResidenceScreen extends StatelessWidget {
   }
 
   Widget _buildBody(mediaSize) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 15,
-          ),
-          _buildPropertyConditions(mediaSize),
-          _buildMainContents(mediaSize),
-        ],
-      ),
+    return Column(
+      children: [
+        const SizedBox(
+          height: 15,
+        ),
+        _buildPropertyConditions(mediaSize),
+        _buildMainContents(mediaSize),
+      ],
     );
   }
 
@@ -315,40 +313,41 @@ class ResidenceScreen extends StatelessWidget {
   }
 
   Widget _buildMainContents(mediaSize) {
-    return SizedBox(
-      height: mediaSize.height,
-      child: ListView.builder(
-        itemCount: _createDummyData.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Padding(
-            padding: const EdgeInsets.only(top: 12.0, bottom: 12.0),
-            child: Center(
-              child: Container(
-                width: mediaSize.width * 0.97,
-                height: mediaSize.height * 0.45,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
-                  color: _whiteColor,
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.grey, //色
-                      spreadRadius: 0.5,
-                      blurRadius: 2,
-                      offset: Offset(1, 1),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    _buildContentsImage(mediaSize, index),
-                    _buildContentsDetail(index),
-                    _buildContentsBtn(mediaSize),
-                  ],
+    return Expanded(
+      child: SizedBox(
+        child: ListView.builder(
+          itemCount: _createDummyData.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Padding(
+              padding: const EdgeInsets.only(top: 12.0, bottom: 12.0),
+              child: Center(
+                child: Container(
+                  width: mediaSize.width * 0.97,
+                  height: mediaSize.height * 0.45,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    color: _whiteColor,
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.grey, //色
+                        spreadRadius: 0.5,
+                        blurRadius: 2,
+                        offset: Offset(1, 1),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    children: [
+                      _buildContentsImage(mediaSize, index),
+                      _buildContentsDetail(index),
+                      _buildContentsBtn(mediaSize),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
