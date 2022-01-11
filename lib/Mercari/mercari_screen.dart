@@ -6,6 +6,7 @@ class MercariScreen extends StatelessWidget {
   // ignore: non_constant_identifier_names
   final _iconAndTextColor = const Color(0xff222222);
   final _dividerColor = const Color(0xffF1F1F2);
+  final _shortCutToSellBtnsColor = const Color(0xffE9E9E9);
   final double _footerIconSize = 30.0;
   final double _floatingActionButtonSize = 70.0;
   final double _shortCutBtnWidth = 85.0;
@@ -14,105 +15,38 @@ class MercariScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 1, // Appbarとメイン画面の境界線の影をなくす
-        automaticallyImplyLeading: false, // デフォルトの戻るボタン(<)を削除
-        title: const Text(
-          '出品',
-          style: TextStyle(
-            color: Color(0xff343434),
-            fontWeight: FontWeight.w800,
-          ),
+      appBar: _buildAppBar(),
+      body: _buildBody(),
+      floatingActionButton: _buildFloatingActionButton(),
+      bottomNavigationBar: _buildBottomNavigationBar(),
+    );
+  }
+
+  AppBar _buildAppBar() {
+    return AppBar(
+      backgroundColor: Colors.white,
+      elevation: 1, // Appbarとメイン画面の境界線の影をなくす
+      automaticallyImplyLeading: false, // デフォルトの戻るボタン(<)を削除
+      title: const Text(
+        '出品',
+        style: TextStyle(
+          color: Color(0xff343434),
+          fontWeight: FontWeight.w800,
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home_outlined,
-              color: _iconAndTextColor,
-              size: _footerIconSize,
-            ),
-            label: 'ホーム',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.notifications_outlined,
-              color: _iconAndTextColor,
-              size: _footerIconSize,
-            ),
-            label: 'お知らせ',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.camera_alt,
-              color: _iconAndTextColor,
-              size: _footerIconSize,
-            ),
-            label: '出品',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.qr_code,
-              color: _iconAndTextColor,
-              size: _footerIconSize,
-            ),
-            label: 'メルペイ',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.person_outline,
-              color: _iconAndTextColor,
-              size: _footerIconSize,
-            ),
-            label: 'マイページ',
-          ),
-        ],
-        selectedItemColor: _iconAndTextColor,
-        unselectedItemColor: _iconAndTextColor,
-        selectedFontSize: 10,
-        unselectedFontSize: 10,
-        selectedLabelStyle: const TextStyle(
-          fontWeight: FontWeight.bold,
-        ),
-        unselectedLabelStyle: const TextStyle(
-          fontWeight: FontWeight.bold,
-        ),
-        type: BottomNavigationBarType.fixed,
-      ),
-      floatingActionButton: SizedBox(
-        width: _floatingActionButtonSize,
-        height: _floatingActionButtonSize,
-        child: FloatingActionButton(
-          backgroundColor: const Color(0xffD25244),
-          onPressed: () {},
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Icon(Icons.camera_alt),
-              Text(
-                '出品',
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 10,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-      body: Scrollbar(
-        isAlwaysShown: true,
-        child: SingleChildScrollView(
-          // 端末サイズを超えた場合スクロール可能に
-          child: Column(
-            children: [
-              _buildShortCutToSell(),
-              _buildItemsEasyToSell(),
-            ],
-          ),
+    );
+  }
+
+  Widget _buildBody() {
+    return Scrollbar(
+      isAlwaysShown: true,
+      child: SingleChildScrollView(
+        // 端末サイズを超えた場合スクロール可能に
+        child: Column(
+          children: [
+            _buildShortCutToSell(),
+            _buildItemsEasyToSell(),
+          ],
         ),
       ),
     );
@@ -139,7 +73,9 @@ class MercariScreen extends StatelessWidget {
   Widget _buildStartGuideImg() {
     return const SizedBox(
       child: Image(
-        image: AssetImage('images/start_guide.png'),
+        image: AssetImage(
+          'images/start_guide.png',
+        ),
       ),
     );
   }
@@ -171,7 +107,7 @@ class MercariScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(
                   width: 2,
-                  color: const Color(0xffE9E9E9),
+                  color: _shortCutToSellBtnsColor,
                 ),
                 borderRadius: BorderRadius.circular(4.0),
                 color: Colors.white,
@@ -200,7 +136,7 @@ class MercariScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(
                   width: 2,
-                  color: const Color(0xffE9E9E9),
+                  color: _shortCutToSellBtnsColor,
                 ),
                 borderRadius: BorderRadius.circular(4.0),
                 color: Colors.white,
@@ -229,7 +165,7 @@ class MercariScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(
                   width: 2,
-                  color: const Color(0xffE9E9E9),
+                  color: _shortCutToSellBtnsColor,
                 ),
                 borderRadius: BorderRadius.circular(4.0),
                 color: Colors.white,
@@ -265,7 +201,7 @@ class MercariScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(
                   width: 2,
-                  color: const Color(0xffE9E9E9),
+                  color: _shortCutToSellBtnsColor,
                 ),
                 borderRadius: BorderRadius.circular(4.0),
                 color: Colors.white,
@@ -298,23 +234,11 @@ class MercariScreen extends StatelessWidget {
     return Column(
       children: [
         _buildItemsEasyToSellTop(),
-        Divider(
-          thickness: 2,
-          indent: 15.0,
-          color: _dividerColor,
-        ),
+        _buildItemDivider(),
         _buildItems(),
-        Divider(
-          thickness: 2,
-          indent: 15.0,
-          color: _dividerColor,
-        ),
+        _buildItemDivider(),
         _buildItems(),
-        Divider(
-          thickness: 2,
-          indent: 15.0,
-          color: _dividerColor,
-        ),
+        _buildItemDivider(),
         _buildItems(),
       ],
     );
@@ -362,6 +286,14 @@ class MercariScreen extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Divider _buildItemDivider() {
+    return Divider(
+      thickness: 2,
+      indent: 15.0,
+      color: _dividerColor,
     );
   }
 
@@ -431,6 +363,89 @@ class MercariScreen extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildFloatingActionButton() {
+    return SizedBox(
+      width: _floatingActionButtonSize,
+      height: _floatingActionButtonSize,
+      child: FloatingActionButton(
+        backgroundColor: const Color(0xffD25244),
+        onPressed: () {},
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            Icon(Icons.camera_alt),
+            Text(
+              '出品',
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 10,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  BottomNavigationBar _buildBottomNavigationBar() {
+    return BottomNavigationBar(
+      backgroundColor: Colors.white,
+      items: <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.home_outlined,
+            color: _iconAndTextColor,
+            size: _footerIconSize,
+          ),
+          label: 'ホーム',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.notifications_outlined,
+            color: _iconAndTextColor,
+            size: _footerIconSize,
+          ),
+          label: 'お知らせ',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.camera_alt,
+            color: _iconAndTextColor,
+            size: _footerIconSize,
+          ),
+          label: '出品',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.qr_code,
+            color: _iconAndTextColor,
+            size: _footerIconSize,
+          ),
+          label: 'メルペイ',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.person_outline,
+            color: _iconAndTextColor,
+            size: _footerIconSize,
+          ),
+          label: 'マイページ',
+        ),
+      ],
+      selectedItemColor: _iconAndTextColor,
+      unselectedItemColor: _iconAndTextColor,
+      selectedFontSize: 10,
+      unselectedFontSize: 10,
+      selectedLabelStyle: const TextStyle(
+        fontWeight: FontWeight.bold,
+      ),
+      unselectedLabelStyle: const TextStyle(
+        fontWeight: FontWeight.bold,
+      ),
+      type: BottomNavigationBarType.fixed,
     );
   }
 }
