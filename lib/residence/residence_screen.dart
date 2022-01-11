@@ -32,11 +32,11 @@ class ResidenceScreen extends StatelessWidget {
         color: Color(0xff919191),
       ),
       layoutImagePath: 'images/house_layout.png',
-      title: 'Rising place川崎',
-      accessInfo: '京急本線 京急川崎駅 より 徒歩9分',
+      title: 'Rising place横浜',
+      accessInfo: '京急本線 京急横浜駅 より 徒歩20分',
       roomInfo: '1K / 21.24㎡ 南西向き',
       oldnessInfo: '2階/15階建 築5年',
-      price: 2000,
+      price: 3000,
     ),
   ];
 
@@ -45,351 +45,24 @@ class ResidenceScreen extends StatelessWidget {
     final Size mediaSize = MediaQuery.of(context).size; // 画面サイズを取得
     return Scaffold(
       backgroundColor: _backgroundColor,
-      appBar: AppBar(
-        backgroundColor: _whiteColor,
-        elevation: 3, // Appbarとメイン画面の境界線の影をなくす
-        automaticallyImplyLeading: false, // デフォルトの戻るボタン(<)を削除
-        title: _buildHeaderTag(),
-        actions: [
-          _buildHeaderIcon(),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: _backgroundColor,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home_filled,
-              color: _primaryColor,
-              size: 35,
-            ),
-            label: 'ホーム',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.favorite_border,
-              color: _footerUnselectedIconColor,
-              size: 35,
-            ),
-            label: 'お気に入り',
-          ),
-          BottomNavigationBarItem(
-            icon: Stack(
-              alignment: Alignment.topRight,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    right: 5.0,
-                    left: 3.0,
-                  ),
-                  child: Icon(
-                    Icons.chat_bubble_outline,
-                    color: _footerUnselectedIconColor,
-                    size: 35,
-                  ),
-                ),
-                const CircleAvatar(
-                  child: Text(
-                    '1',
-                    style: TextStyle(
-                      fontSize: 15,
-                    ),
-                  ),
-                  radius: 10,
-                  backgroundColor: Color(0xffE2554A),
-                  foregroundColor: Colors.white,
-                )
-              ],
-            ),
-            label: 'メッセージ',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.manage_accounts_outlined,
-              color: _footerUnselectedIconColor,
-              size: 35,
-            ),
-            label: 'マイページ',
-          ),
-        ],
-
-        selectedItemColor: _primaryColor,
-        selectedLabelStyle: const TextStyle(
-          fontWeight: FontWeight.bold,
-        ),
-        unselectedItemColor: Colors.grey[600],
-        selectedFontSize: 13,
-        unselectedFontSize: 10,
-        type: BottomNavigationBarType
-            .fixed, // bottomnavigationが4つ以上の時は見えなくなってしまうため、type: BottomNavigationBarType.fixed,を追加
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 15,
-            ),
-            _buildPropertyConditions(mediaSize),
-            _buildMainContents(mediaSize),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: _primaryColor,
-        onPressed: () {},
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Icon(Icons.search),
-            Text(
-              '物件',
-              style: TextStyle(
-                fontWeight: FontWeight.w900,
-                fontSize: 10,
-              ),
-            ),
-          ],
-        ),
-      ),
+      appBar: _buildAppBar(),
+      body: _buildBody(mediaSize),
+      floatingActionButton: _buildFloatingActionButton(),
+      bottomNavigationBar: _buildBottomNavigationBar(),
     );
   }
 
-  Widget _buildMainContents(mediaSize) {
-    return SizedBox(
-      height: mediaSize.height,
-      child: ListView.builder(
-        itemCount: _createDummyData.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Padding(
-            padding: const EdgeInsets.only(top: 12.0, bottom: 12.0),
-            child: Center(
-              child: Container(
-                width: mediaSize.width * 0.97,
-                height: mediaSize.height * 0.45,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
-                  color: _whiteColor,
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.grey, //色
-                      spreadRadius: 0.5,
-                      blurRadius: 2,
-                      offset: Offset(1, 1),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    _buildContentsImage(mediaSize, index),
-                    _buildContentsDetail(index),
-                    _buildContentsBtn(mediaSize),
-                  ],
-                ),
-              ),
-            ),
-          );
-        },
-      ),
+  AppBar _buildAppBar() {
+    return AppBar(
+      backgroundColor: _whiteColor,
+      elevation: 3, // Appbarとメイン画面の境界線の影をなくす
+      automaticallyImplyLeading: false, // デフォルトの戻るボタン(<)を削除
+      title: _buildAppBarTag(),
+      actions: _buildAppBarIcon(),
     );
   }
 
-  Widget _buildContentsImage(Size mediaSize, index) {
-    return SizedBox(
-      height: mediaSize.height * 0.23,
-      child: Row(
-        children: [
-          Container(
-            width: mediaSize.width * 0.5,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10.0),
-              ),
-              color: Color(0xffD8D9D8),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  'NO IMAGE',
-                  style: TextStyle(
-                    color: Color(0xff919191),
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Roboto Mono',
-                  ),
-                ),
-                _createDummyData[index].imageIcon,
-              ],
-            ),
-          ),
-          SizedBox(
-            width: mediaSize.width * 0.45,
-            child: Image(
-              image: AssetImage(_createDummyData[index].layoutImagePath),
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget _buildContentsDetail(index) {
-    final formatter = NumberFormat("#,###"); // 三桁ごとにカンマで区切るフォーマット
-    var result = formatter.format(_createDummyData[index].price); // ダミーデータを加工
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            _createDummyData[index].title,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-            ),
-          ),
-          Text(
-            '$result万円',
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-              color: const Color(
-                0xffEA7961,
-              ),
-            ),
-          ),
-          Row(
-            children: [
-              const Icon(
-                Icons.train,
-                color: Colors.black87,
-                size: 15,
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              Text(
-                _createDummyData[index].accessInfo,
-                style: const TextStyle(
-                  color: Colors.black87,
-                  fontSize: 11,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 2,
-          ),
-          Row(
-            children: [
-              const Icon(
-                Icons.space_dashboard_rounded,
-                color: Colors.black87,
-                size: 15,
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              Text(
-                _createDummyData[index].roomInfo,
-                style: const TextStyle(
-                  color: Colors.black87,
-                  fontSize: 11,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 2,
-          ),
-          Row(
-            children: [
-              const Icon(
-                Icons.business_outlined,
-                color: Colors.black87,
-                size: 15,
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              Text(
-                _createDummyData[index].oldnessInfo,
-                style: const TextStyle(
-                  color: Colors.black87,
-                  fontSize: 11,
-                ),
-              ),
-            ],
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget _buildContentsBtn(Size mediaSize) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          width: mediaSize.width * 0.45,
-          height: mediaSize.height * 0.05,
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: _mainBtnColor,
-            ),
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const SizedBox(
-                width: 10,
-              ),
-              Icon(
-                Icons.delete,
-                color: _mainBtnColor,
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              const Text('興味なし'),
-            ],
-          ),
-        ),
-        const SizedBox(
-          width: 10,
-        ),
-        Container(
-          width: mediaSize.width * 0.45,
-          height: mediaSize.height * 0.05,
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: _mainBtnColor,
-            ),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const SizedBox(
-                width: 10,
-              ),
-              Icon(
-                Icons.favorite_border,
-                color: _mainBtnColor,
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              const Text('お気に入り'),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildHeaderTag() {
+  Widget _buildAppBarTag() {
     return Row(
       children: [
         Container(
@@ -451,21 +124,37 @@ class ResidenceScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildHeaderIcon() {
-    return Container(
-      width: 50,
-      padding: const EdgeInsets.only(
-        right: 15.0,
-      ),
-      child: CircleAvatar(
-        // flatingActionbuttonだと影を削除する方法がわからなかったので、CircleAvatarを使用しました。
-        child: const Icon(
-          Icons.add,
-          size: 25,
+  List<Widget> _buildAppBarIcon() {
+    return [
+      Container(
+        width: 50,
+        padding: const EdgeInsets.only(
+          right: 15.0,
         ),
-        radius: 10,
-        backgroundColor: _primaryColor,
-        foregroundColor: Colors.white,
+        child: CircleAvatar(
+          // flatingActionbuttonだと影を削除する方法がわからなかったので、CircleAvatarを使用しました。
+          child: const Icon(
+            Icons.add,
+            size: 25,
+          ),
+          radius: 10,
+          backgroundColor: _primaryColor,
+          foregroundColor: Colors.white,
+        ),
+      )
+    ];
+  }
+
+  Widget _buildBody(mediaSize) {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          const SizedBox(
+            height: 15,
+          ),
+          _buildPropertyConditions(mediaSize),
+          _buildMainContents(mediaSize),
+        ],
       ),
     );
   }
@@ -622,6 +311,333 @@ class ResidenceScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildMainContents(mediaSize) {
+    return SizedBox(
+      height: mediaSize.height,
+      child: ListView.builder(
+        itemCount: _createDummyData.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Padding(
+            padding: const EdgeInsets.only(top: 12.0, bottom: 12.0),
+            child: Center(
+              child: Container(
+                width: mediaSize.width * 0.97,
+                height: mediaSize.height * 0.45,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                  color: _whiteColor,
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.grey, //色
+                      spreadRadius: 0.5,
+                      blurRadius: 2,
+                      offset: Offset(1, 1),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    _buildContentsImage(mediaSize, index),
+                    _buildContentsDetail(index),
+                    _buildContentsBtn(mediaSize),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildContentsImage(Size mediaSize, index) {
+    return SizedBox(
+      height: mediaSize.height * 0.23,
+      child: Row(
+        children: [
+          Container(
+            width: mediaSize.width * 0.5,
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10.0),
+              ),
+              color: Color(0xffD8D9D8),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  'NO IMAGE',
+                  style: TextStyle(
+                    color: Color(0xff919191),
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Roboto Mono',
+                  ),
+                ),
+                _createDummyData[index].imageIcon,
+              ],
+            ),
+          ),
+          SizedBox(
+            width: mediaSize.width * 0.45,
+            child: Image(
+              image: AssetImage(_createDummyData[index].layoutImagePath),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildContentsDetail(index) {
+    final formatter = NumberFormat("#,###"); // 三桁ごとにカンマで区切るフォーマット
+    var result = formatter.format(_createDummyData[index].price); // ダミーデータを加工
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            _createDummyData[index].title,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
+          ),
+          Text(
+            '$result万円',
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+              color: Color(
+                0xffEA7961,
+              ),
+            ),
+          ),
+          Row(
+            children: [
+              const Icon(
+                Icons.train,
+                color: Colors.black87,
+                size: 15,
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              Text(
+                _createDummyData[index].accessInfo,
+                style: const TextStyle(
+                  color: Colors.black87,
+                  fontSize: 11,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 2,
+          ),
+          Row(
+            children: [
+              const Icon(
+                Icons.space_dashboard_rounded,
+                color: Colors.black87,
+                size: 15,
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              Text(
+                _createDummyData[index].roomInfo,
+                style: const TextStyle(
+                  color: Colors.black87,
+                  fontSize: 11,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 2,
+          ),
+          Row(
+            children: [
+              const Icon(
+                Icons.business_outlined,
+                color: Colors.black87,
+                size: 15,
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              Text(
+                _createDummyData[index].oldnessInfo,
+                style: const TextStyle(
+                  color: Colors.black87,
+                  fontSize: 11,
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildContentsBtn(Size mediaSize) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          width: mediaSize.width * 0.45,
+          height: mediaSize.height * 0.05,
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: _mainBtnColor,
+            ),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const SizedBox(
+                width: 10,
+              ),
+              Icon(
+                Icons.delete,
+                color: _mainBtnColor,
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              const Text('興味なし'),
+            ],
+          ),
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        Container(
+          width: mediaSize.width * 0.45,
+          height: mediaSize.height * 0.05,
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: _mainBtnColor,
+            ),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const SizedBox(
+                width: 10,
+              ),
+              Icon(
+                Icons.favorite_border,
+                color: _mainBtnColor,
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              const Text('お気に入り'),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  FloatingActionButton _buildFloatingActionButton() {
+    return FloatingActionButton(
+      backgroundColor: _primaryColor,
+      onPressed: () {},
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: const [
+          Icon(Icons.search),
+          Text(
+            '物件',
+            style: TextStyle(
+              fontWeight: FontWeight.w900,
+              fontSize: 10,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  BottomNavigationBar _buildBottomNavigationBar() {
+    return BottomNavigationBar(
+      backgroundColor: _backgroundColor,
+      items: <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.home_filled,
+            color: _primaryColor,
+            size: 35,
+          ),
+          label: 'ホーム',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.favorite_border,
+            color: _footerUnselectedIconColor,
+            size: 35,
+          ),
+          label: 'お気に入り',
+        ),
+        BottomNavigationBarItem(
+          icon: Stack(
+            alignment: Alignment.topRight,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(
+                  right: 5.0,
+                  left: 3.0,
+                ),
+                child: Icon(
+                  Icons.chat_bubble_outline,
+                  color: _footerUnselectedIconColor,
+                  size: 35,
+                ),
+              ),
+              const CircleAvatar(
+                child: Text(
+                  '1',
+                  style: TextStyle(
+                    fontSize: 15,
+                  ),
+                ),
+                radius: 10,
+                backgroundColor: Color(0xffE2554A),
+                foregroundColor: Colors.white,
+              )
+            ],
+          ),
+          label: 'メッセージ',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.manage_accounts_outlined,
+            color: _footerUnselectedIconColor,
+            size: 35,
+          ),
+          label: 'マイページ',
+        ),
+      ],
+
+      selectedItemColor: _primaryColor,
+      selectedLabelStyle: const TextStyle(
+        fontWeight: FontWeight.bold,
+      ),
+      unselectedItemColor: Colors.grey[600],
+      selectedFontSize: 13,
+      unselectedFontSize: 10,
+      type: BottomNavigationBarType
+          .fixed, // bottomnavigationが4つ以上の時は見えなくなってしまうため、type: BottomNavigationBarType.fixed,を追加
     );
   }
 }
