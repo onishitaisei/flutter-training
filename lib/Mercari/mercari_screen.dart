@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class MercariScreen extends StatelessWidget {
-  const MercariScreen({Key? key}) : super(key: key);
+  MercariScreen({Key? key}) : super(key: key);
 
   // ignore: non_constant_identifier_names
   final _iconAndTextColor = const Color(0xff222222);
@@ -11,6 +12,27 @@ class MercariScreen extends StatelessWidget {
   final double _floatingActionButtonSize = 70.0;
   final double _shortCutBtnWidth = 85.0;
   final double _shortCutBtnHeight = 100.0;
+
+  final List _createDummyData = [
+    ItemInfo(
+      imagePath: 'images/camera.png',
+      title: 'NikonD5500',
+      price: 51000,
+      numOfPeople: 446,
+    ),
+    ItemInfo(
+      imagePath: 'images/camera.png',
+      title: '早い者勝ち！【新品】ERA',
+      price: 15700,
+      numOfPeople: 177,
+    ),
+    ItemInfo(
+      imagePath: 'images/camera.png',
+      title: 'NikonD6000',
+      price: 71000,
+      numOfPeople: 320,
+    )
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -40,14 +62,11 @@ class MercariScreen extends StatelessWidget {
   Widget _buildBody() {
     return Scrollbar(
       isAlwaysShown: true,
-      child: SingleChildScrollView(
-        // 端末サイズを超えた場合スクロール可能に
-        child: Column(
-          children: [
-            _buildShortCutToSell(),
-            _buildItemsEasyToSell(),
-          ],
-        ),
+      child: Column(
+        children: [
+          _buildShortCutToSell(),
+          _buildItemsEasyToSell(),
+        ],
       ),
     );
   }
@@ -231,16 +250,13 @@ class MercariScreen extends StatelessWidget {
   }
 
   Widget _buildItemsEasyToSell() {
-    return Column(
-      children: [
-        _buildItemsEasyToSellTop(),
-        _buildItemDivider(),
-        _buildItems(),
-        _buildItemDivider(),
-        _buildItems(),
-        _buildItemDivider(),
-        _buildItems(),
-      ],
+    return Expanded(
+      child: Column(
+        children: [
+          _buildItemsEasyToSellTop(),
+          _buildItems(),
+        ],
+      ),
     );
   }
 
@@ -289,80 +305,86 @@ class MercariScreen extends StatelessWidget {
     );
   }
 
-  Divider _buildItemDivider() {
-    return Divider(
-      thickness: 2,
-      indent: 15.0,
-      color: _dividerColor,
-    );
-  }
-
   Widget _buildItems() {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(
-            top: 4.0,
-            bottom: 4.0,
-            left: 16.0,
-            right: 16.0,
-          ),
-          child: Row(
+    return Expanded(
+      child: ListView.builder(
+        itemCount: _createDummyData.length,
+        itemBuilder: (BuildContext context, int index) {
+          final _formatter = NumberFormat("#,###");
+          var _price = _formatter.format(_createDummyData[index].price);
+          return Column(
             children: [
-              const Image(
-                width: 70,
-                image: AssetImage('images/camera.png'),
+              Divider(
+                thickness: 2,
+                indent: 15.0,
+                color: _dividerColor,
               ),
-              const SizedBox(
-                width: 10,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'NikonD5500',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
-                    ),
-                  ),
-                  const Text(
-                    '¥51,000',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
-                    ),
-                  ),
-                  Row(
-                    children: const [
-                      Icon(
-                        Icons.local_fire_department,
-                        color: Color(0xff4092E7),
-                        size: 20,
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text(
-                        '446人が探しています',
-                        style: TextStyle(fontSize: 12),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              const Spacer(),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: const Color(0xffD25244),
+              Padding(
+                padding: const EdgeInsets.only(
+                  top: 4.0,
+                  bottom: 4.0,
+                  left: 16.0,
+                  right: 16.0,
                 ),
-                onPressed: () {},
-                child: const Text('出品する'),
+                child: Row(
+                  children: [
+                    Image(
+                      width: 70,
+                      image: AssetImage('${_createDummyData[index].imagePath}'),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          _createDummyData[index].title,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
+                        ),
+                        Text(
+                          '¥$_price',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.local_fire_department,
+                              color: Color(0xff4092E7),
+                              size: 20,
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              '${_createDummyData[index].numOfPeople}人が探しています',
+                              style: const TextStyle(fontSize: 12),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    const Spacer(),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: const Color(0xffD25244),
+                      ),
+                      onPressed: () {},
+                      child: const Text('出品する'),
+                    ),
+                  ],
+                ),
               ),
             ],
-          ),
-        ),
-      ],
+          );
+        },
+      ),
     );
   }
 
@@ -448,4 +470,17 @@ class MercariScreen extends StatelessWidget {
       type: BottomNavigationBarType.fixed,
     );
   }
+}
+
+class ItemInfo {
+  final String imagePath;
+  final String title;
+  final int price;
+  final int numOfPeople;
+  ItemInfo({
+    required this.imagePath,
+    required this.title,
+    required this.price,
+    required this.numOfPeople,
+  });
 }
