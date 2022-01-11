@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart'; // 数字に関するパッケージ
 
+// ignore: must_be_immutable
 class ResidenceScreen extends StatelessWidget {
+  ResidenceScreen({Key? key}) : super(key: key);
   final _whiteColor = const Color(0xffFFFFFF);
   final _footerUnselectedIconColor =
       const Color(0xffCECECE); // ボトムナビゲーションのアクティブではないアイコンの色
@@ -8,7 +11,35 @@ class ResidenceScreen extends StatelessWidget {
   final _primaryColor = const Color(0xff5BADA1);
   final _mainBtnColor = const Color(0xffC9C9C9);
 
-  const ResidenceScreen({Key? key}) : super(key: key);
+  final List<ResidenceInfo> _createDummyData = [
+    ResidenceInfo(
+      imageIcon: const Icon(
+        Icons.apartment_outlined,
+        size: 80,
+        color: Color(0xff919191),
+      ),
+      layoutImagePath: 'images/house_layout.png',
+      title: 'Rising place川崎',
+      accessInfo: '京急本線 京急川崎駅 より 徒歩9分',
+      roomInfo: '1K / 21.24㎡ 南西向き',
+      oldnessInfo: '2階/15階建 築5年',
+      price: 2000,
+    ),
+    ResidenceInfo(
+      imageIcon: const Icon(
+        Icons.apartment_outlined,
+        size: 80,
+        color: Color(0xff919191),
+      ),
+      layoutImagePath: 'images/house_layout.png',
+      title: 'Rising place川崎',
+      accessInfo: '京急本線 京急川崎駅 より 徒歩9分',
+      roomInfo: '1K / 21.24㎡ 南西向き',
+      oldnessInfo: '2階/15階建 築5年',
+      price: 2000,
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     final Size mediaSize = MediaQuery.of(context).size; // 画面サイズを取得
@@ -98,15 +129,7 @@ class ResidenceScreen extends StatelessWidget {
             const SizedBox(
               height: 15,
             ),
-            _buildPropertyConditions(
-                mediaSize), // 物件の条件という意味で「PropertyConditions」にしました。
-            const SizedBox(
-              height: 15,
-            ),
-            _buildMainContents(mediaSize),
-            const SizedBox(
-              height: 15,
-            ),
+            _buildPropertyConditions(mediaSize),
             _buildMainContents(mediaSize),
           ],
         ),
@@ -128,6 +151,241 @@ class ResidenceScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildMainContents(mediaSize) {
+    return SizedBox(
+      height: mediaSize.height,
+      child: ListView.builder(
+        itemCount: _createDummyData.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Padding(
+            padding: const EdgeInsets.only(top: 12.0, bottom: 12.0),
+            child: Center(
+              child: Container(
+                width: mediaSize.width * 0.97,
+                height: mediaSize.height * 0.45,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                  color: _whiteColor,
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.grey, //色
+                      spreadRadius: 0.5,
+                      blurRadius: 2,
+                      offset: Offset(1, 1),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    _buildContentsImage(mediaSize, index),
+                    _buildContentsDetail(index),
+                    _buildContentsBtn(mediaSize),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildContentsImage(Size mediaSize, index) {
+    return SizedBox(
+      height: mediaSize.height * 0.23,
+      child: Row(
+        children: [
+          Container(
+            width: mediaSize.width * 0.5,
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10.0),
+              ),
+              color: Color(0xffD8D9D8),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  'NO IMAGE',
+                  style: TextStyle(
+                    color: Color(0xff919191),
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Roboto Mono',
+                  ),
+                ),
+                _createDummyData[index].imageIcon,
+              ],
+            ),
+          ),
+          SizedBox(
+            width: mediaSize.width * 0.45,
+            child: Image(
+              image: AssetImage(_createDummyData[index].layoutImagePath),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildContentsDetail(index) {
+    final formatter = NumberFormat("#,###"); // 三桁ごとにカンマで区切るフォーマット
+    var result = formatter.format(_createDummyData[index].price); // ダミーデータを加工
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            _createDummyData[index].title,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
+          ),
+          Text(
+            '$result万円',
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+              color: const Color(
+                0xffEA7961,
+              ),
+            ),
+          ),
+          Row(
+            children: [
+              const Icon(
+                Icons.train,
+                color: Colors.black87,
+                size: 15,
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              Text(
+                _createDummyData[index].accessInfo,
+                style: const TextStyle(
+                  color: Colors.black87,
+                  fontSize: 11,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 2,
+          ),
+          Row(
+            children: [
+              const Icon(
+                Icons.space_dashboard_rounded,
+                color: Colors.black87,
+                size: 15,
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              Text(
+                _createDummyData[index].roomInfo,
+                style: const TextStyle(
+                  color: Colors.black87,
+                  fontSize: 11,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 2,
+          ),
+          Row(
+            children: [
+              const Icon(
+                Icons.business_outlined,
+                color: Colors.black87,
+                size: 15,
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              Text(
+                _createDummyData[index].oldnessInfo,
+                style: const TextStyle(
+                  color: Colors.black87,
+                  fontSize: 11,
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildContentsBtn(Size mediaSize) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          width: mediaSize.width * 0.45,
+          height: mediaSize.height * 0.05,
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: _mainBtnColor,
+            ),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const SizedBox(
+                width: 10,
+              ),
+              Icon(
+                Icons.delete,
+                color: _mainBtnColor,
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              const Text('興味なし'),
+            ],
+          ),
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        Container(
+          width: mediaSize.width * 0.45,
+          height: mediaSize.height * 0.05,
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: _mainBtnColor,
+            ),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const SizedBox(
+                width: 10,
+              ),
+              Icon(
+                Icons.favorite_border,
+                color: _mainBtnColor,
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              const Text('お気に入り'),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -366,230 +624,24 @@ class ResidenceScreen extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildMainContents(Size mediaSize) {
-    return Center(
-      child: Container(
-        width: mediaSize.width * 0.97,
-        height: mediaSize.height * 0.45,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          color: _whiteColor,
-          boxShadow: const [
-            BoxShadow(
-              color: Colors.grey, //色
-              spreadRadius: 0.5,
-              blurRadius: 2,
-              offset: Offset(1, 1),
-            ),
-          ],
-        ),
-        child: Column(
-          children: [
-            _contentsImage(mediaSize),
-            _contentsDetail(),
-            _contentsBtn(mediaSize),
-          ],
-        ),
-      ),
-    );
-  }
+class ResidenceInfo {
+  final Icon imageIcon;
+  final String layoutImagePath;
+  final String title;
+  final String accessInfo;
+  final String roomInfo;
+  final String oldnessInfo;
+  final int price;
 
-  Widget _contentsImage(Size mediaSize) {
-    return SizedBox(
-      height: mediaSize.height * 0.23,
-      child: Row(
-        children: [
-          Container(
-            width: mediaSize.width * 0.5,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10.0),
-              ),
-              color: Color(0xffD8D9D8),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Text(
-                  'NO IMAGE',
-                  style: TextStyle(
-                    color: Color(0xff919191),
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Roboto Mono',
-                  ),
-                ),
-                Icon(
-                  Icons.apartment_outlined,
-                  color: Color(0xff919191),
-                  size: 90,
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            width: mediaSize.width * 0.45,
-            child: const Image(
-              image: AssetImage('images/house_layout.png'),
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget _contentsDetail() {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Rising place川崎',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-            ),
-          ),
-          const Text(
-            '2,000万円',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-              color: Color(
-                0xffEA7961,
-              ),
-            ),
-          ),
-          Row(
-            children: const [
-              Icon(
-                Icons.train,
-                color: Colors.black87,
-                size: 15,
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Text(
-                '京急本線 京急川崎駅 より 徒歩9分',
-                style: TextStyle(
-                  color: Colors.black87,
-                  fontSize: 11,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 2,
-          ),
-          Row(
-            children: const [
-              Icon(
-                Icons.space_dashboard_rounded,
-                color: Colors.black87,
-                size: 15,
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Text(
-                '1K / 21.24㎡ 南西向き',
-                style: TextStyle(
-                  color: Colors.black87,
-                  fontSize: 11,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 2,
-          ),
-          Row(
-            children: const [
-              Icon(
-                Icons.business_outlined,
-                color: Colors.black87,
-                size: 15,
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Text(
-                '2階/15階建 築5年',
-                style: TextStyle(
-                  color: Colors.black87,
-                  fontSize: 11,
-                ),
-              ),
-            ],
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget _contentsBtn(Size mediaSize) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          width: mediaSize.width * 0.45,
-          height: mediaSize.height * 0.05,
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: _mainBtnColor,
-            ),
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const SizedBox(
-                width: 10,
-              ),
-              Icon(
-                Icons.delete,
-                color: _mainBtnColor,
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              const Text('興味なし'),
-            ],
-          ),
-        ),
-        const SizedBox(
-          width: 10,
-        ),
-        Container(
-          width: mediaSize.width * 0.45,
-          height: mediaSize.height * 0.05,
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: _mainBtnColor,
-            ),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const SizedBox(
-                width: 10,
-              ),
-              Icon(
-                Icons.favorite_border,
-                color: _mainBtnColor,
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              const Text('お気に入り'),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
+  ResidenceInfo({
+    required this.imageIcon,
+    required this.layoutImagePath,
+    required this.title,
+    required this.accessInfo,
+    required this.roomInfo,
+    required this.oldnessInfo,
+    required this.price,
+  });
 }
