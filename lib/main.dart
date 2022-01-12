@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'flutter_tutorial_screen.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'residence/residence_screen.dart';
 import 'youtube/youtube_screen.dart';
@@ -19,7 +18,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       localizationsDelegates: const [
-        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
@@ -74,7 +72,8 @@ class Home extends StatelessWidget {
                 Navigator.push<void>(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const FlutterTutorialScreen()),
+                    builder: (context) => const FlutterTutorialScreen(),
+                  ),
                 );
               },
               child: const Text('Flutter tutorial'),
@@ -83,7 +82,9 @@ class Home extends StatelessWidget {
               onPressed: () {
                 Navigator.push<void>(
                   context,
-                  MaterialPageRoute(builder: (context) => YoutubeScreen()),
+                  MaterialPageRoute(
+                    builder: (context) => YoutubeScreen(),
+                  ),
                 );
               },
               child: const Text('Youtube'),
@@ -93,7 +94,8 @@ class Home extends StatelessWidget {
                 Navigator.push<void>(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const ResidenceScreen()),
+                    builder: (context) => ResidenceScreen(),
+                  ),
                 );
               },
               child: const Text('Residence'),
