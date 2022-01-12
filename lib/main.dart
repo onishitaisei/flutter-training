@@ -118,7 +118,7 @@ class Home extends StatelessWidget {
                 Navigator.push<void>(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => AsyncScreen(),
+                    builder: (context) => const AsyncScreen(),
                   ),
                 );
               },
