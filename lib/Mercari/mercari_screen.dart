@@ -311,7 +311,7 @@ class MercariScreen extends StatelessWidget {
         itemCount: _createDummyData.length,
         itemBuilder: (BuildContext context, int index) {
           final _formatter = NumberFormat("#,###");
-          var _price = _formatter.format(_createDummyData[index].price);
+          final _price = _formatter.format(_createDummyData[index].price);
           return Column(
             children: [
               Divider(
