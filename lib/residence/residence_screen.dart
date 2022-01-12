@@ -338,9 +338,9 @@ class ResidenceScreen extends StatelessWidget {
                   ),
                   child: Column(
                     children: [
-                      _buildContentsImage(mediaSize, index),
-                      _buildContentsDetail(index),
-                      _buildContentsBtn(mediaSize),
+                      _buildItemImage(mediaSize, index),
+                      _buildItemContent(index),
+                      _buildItemButton(mediaSize),
                     ],
                   ),
                 ),
@@ -352,7 +352,7 @@ class ResidenceScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildContentsImage(Size mediaSize, index) {
+  Widget _buildItemImage(Size mediaSize, index) {
     return SizedBox(
       height: mediaSize.height * 0.23,
       child: Row(
@@ -392,7 +392,7 @@ class ResidenceScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildContentsDetail(index) {
+  Widget _buildItemContent(index) {
     final formatter = NumberFormat("#,###"); // 三桁ごとにカンマで区切るフォーマット
     final result = formatter.format(_createDummyData[index].price); // ダミーデータを加工
     return Padding(
@@ -485,7 +485,7 @@ class ResidenceScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildContentsBtn(Size mediaSize) {
+  Widget _buildItemButton(Size mediaSize) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
