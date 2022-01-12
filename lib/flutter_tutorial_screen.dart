@@ -69,40 +69,34 @@ class FlutterTutorialScreen extends StatelessWidget {
       ),
     );
     return Scaffold(
-      appBar: AppBar(
-        // タイトルテキスト
-        title: const Text('Flutter layout demo'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push<void>(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const LogoApp(),
-                ),
-              );
-            },
-            icon: const Icon(Icons.arrow_forward_ios),
-          )
-        ],
-      ),
-      body: ListView(
-        children: [
-          Image.asset(
-            'images/lake.jpeg',
-            width: 600,
-            height: 240,
-            fit: BoxFit.cover,
-          ),
-          titleSection,
-          buttonSection,
-          textSection,
-          Text(
-            myLocale.toString(),
-          ),
-        ],
-      ),
-    );
+        appBar: AppBar(
+          // タイトルテキスト
+          title: const Text('Flutter layout demo'),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Navigator.push<void>(
+                    context,
+                    MaterialPageRoute(builder: (context) => const LogoApp()),
+                  );
+                },
+                icon: const Icon(Icons.arrow_forward_ios))
+          ],
+        ),
+        body: ListView(
+          children: [
+            Image.asset(
+              'images/lake.jpeg',
+              width: 600,
+              height: 240,
+              fit: BoxFit.cover,
+            ),
+            titleSection,
+            buttonSection,
+            textSection,
+            Text(myLocale.toString()),
+          ],
+        ));
   }
 
   Column _buildButtonColumn(Color color, IconData icon, String label) {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'Mercari/mercari_screen.dart';
 import 'flutter_tutorial_screen.dart';
+
 import 'residence/residence_screen.dart';
 import 'youtube/youtube_screen.dart';
 
@@ -94,7 +95,7 @@ class Home extends StatelessWidget {
                 Navigator.push<void>(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const ResidenceScreen(),
+                    builder: (context) => ResidenceScreen(),
                   ),
                 );
               },
