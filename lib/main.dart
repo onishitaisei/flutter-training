@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'Mercari/mercari_screen.dart';
+import 'async_await/async_screen.dart';
 import 'flutter_tutorial_screen.dart';
 
 import 'residence/residence_screen.dart';
@@ -111,6 +112,17 @@ class Home extends StatelessWidget {
                 );
               },
               child: const Text('Mercari'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push<void>(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AsyncScreen(),
+                  ),
+                );
+              },
+              child: const Text('Async'),
             ),
           ],
         ),
