@@ -394,7 +394,7 @@ class ResidenceScreen extends StatelessWidget {
 
   Widget _buildContentsDetail(index) {
     final formatter = NumberFormat("#,###"); // 三桁ごとにカンマで区切るフォーマット
-    var result = formatter.format(_createDummyData[index].price); // ダミーデータを加工
+    final result = formatter.format(_createDummyData[index].price); // ダミーデータを加工
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
