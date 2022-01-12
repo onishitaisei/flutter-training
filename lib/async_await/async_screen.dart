@@ -105,6 +105,7 @@ class _AsyncScreen extends State<AsyncScreen> {
                       name = value;
                     },
                     decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.zero,
                       labelText: "名前",
                     ),
                   ),
@@ -123,6 +124,7 @@ class _AsyncScreen extends State<AsyncScreen> {
                       age = int.parse(value);
                     },
                     decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.zero,
                       labelText: "年齢",
                     ),
                   ),
@@ -137,6 +139,7 @@ class _AsyncScreen extends State<AsyncScreen> {
                       birthday = value;
                     },
                     decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.zero,
                       labelText: "誕生日",
                     ),
                   ),
