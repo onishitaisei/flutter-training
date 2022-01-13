@@ -11,28 +11,30 @@ class AsyncScreen extends StatefulWidget {
 
 class _AsyncScreen extends State<AsyncScreen> {
   final _formKey = GlobalKey<FormState>();
-  String name = '';
-  String birthday = '';
-  int age = -1;
+
+  final int _impossibleAge = -1;
+  String _name = '';
+  String _birthday = '';
+  late int _age = _impossibleAge;
 
   void _setValue() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(
       () {
-        prefs.setString('name', name);
-        prefs.setString('birthday', birthday);
-        prefs.setInt('age', age);
+        prefs.setString('name', _name);
+        prefs.setString('birthday', _birthday);
+        prefs.setInt('age', _age);
       },
     );
   }
 
-  void _cheackUserInformation() async {
+  void _checkUserInformation() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(
       () {
-        name = prefs.getString('name') ?? '未設定';
-        birthday = prefs.getString('birthday') ?? '未設定';
-        age = prefs.getInt('age') ?? -1;
+        _name = prefs.getString('name') ?? '未設定';
+        _birthday = prefs.getString('birthday') ?? '未設定';
+        _age = prefs.getInt('age') ?? _impossibleAge;
       },
     );
   }
@@ -40,7 +42,7 @@ class _AsyncScreen extends State<AsyncScreen> {
   @override
   void initState() {
     super.initState();
-    _cheackUserInformation();
+    _checkUserInformation();
   }
 
   @override
@@ -57,13 +59,13 @@ class _AsyncScreen extends State<AsyncScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            '名前 $name',
+            '名前 $_name',
           ),
           Text(
-            '年齢 ${age == -1 ? '未設定' : age}',
+            '年齢 ${_age == _impossibleAge ? '未設定' : _age}',
           ),
           Text(
-            '誕生日 $birthday',
+            '誕生日 $_birthday',
           ),
         ],
       ),
@@ -102,7 +104,7 @@ class _AsyncScreen extends State<AsyncScreen> {
                       return null;
                     },
                     onChanged: (value) {
-                      name = value;
+                      _name = value;
                     },
                     decoration: const InputDecoration(
                       contentPadding: EdgeInsets.zero,
@@ -121,7 +123,7 @@ class _AsyncScreen extends State<AsyncScreen> {
                       return null;
                     },
                     onChanged: (value) {
-                      age = int.parse(value);
+                      _age = int.parse(value);
                     },
                     decoration: const InputDecoration(
                       contentPadding: EdgeInsets.zero,
@@ -136,10 +138,9 @@ class _AsyncScreen extends State<AsyncScreen> {
                       return null;
                     },
                     onChanged: (value) {
-                      birthday = value;
+                      _birthday = value;
                     },
                     decoration: const InputDecoration(
-                      contentPadding: EdgeInsets.zero,
                       labelText: "誕生日",
                     ),
                   ),
@@ -161,7 +162,6 @@ class _AsyncScreen extends State<AsyncScreen> {
                   _setValue();
                   Navigator.pop(context);
                 }
-                // Navigator.pop(context);
               },
             ),
           ],
