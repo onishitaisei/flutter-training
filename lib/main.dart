@@ -12,6 +12,7 @@ import 'youtube/youtube_screen.dart';
 void main() {
   runApp(
     const ProviderScope(
+      // アプリのルートにProviderScopeを追加
       child: MyApp(),
     ),
   );
