@@ -7,7 +7,8 @@ final qiitaClientStateNotifier = StateNotifierProvider.autoDispose<
     QiitaClientState>((ref) => QiitaClientStateNotifier(ref.read));
 
 class QiitaClientStateNotifier extends StateNotifier<QiitaClientState> {
-  QiitaClientStateNotifier(this._read) : super(const QiitaClientState());
+  QiitaClientStateNotifier(this._read)
+      : super(const QiitaClientState()); //親クラスQiitaClientStateクラスを継承
 
   final Reader _read;
 
@@ -19,10 +20,11 @@ class QiitaClientStateNotifier extends StateNotifier<QiitaClientState> {
 
     if (qiitaItems.isNotEmpty) {
       state = state.copyWith(
-          isLoading: false,
-          isReadyData: true,
-          currentTag: tag,
-          qiitaItems: qiitaItems);
+        isLoading: false,
+        isReadyData: true,
+        currentTag: tag,
+        qiitaItems: qiitaItems,
+      );
     } else {
       state = state.copyWith(
         isLoading: false,
