@@ -1,4 +1,3 @@
-// import 'package:training/mvvm/model/qiita_user.dart;
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:training/mvvm/model/qiita_user.dart';
 

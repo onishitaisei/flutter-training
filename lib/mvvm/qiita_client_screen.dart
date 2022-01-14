@@ -8,8 +8,7 @@ class QiitaClientScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(
-        qiitaClientStateNotifier); // グローバル変数としてQiitaClientStateNotifierクラスを宣言
+    final state = ref.watch(qiitaClientStateNotifier);
 
     return
         // 戻るボタンの挙動
