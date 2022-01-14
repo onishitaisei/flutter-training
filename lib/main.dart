@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'Mercari/mercari_screen.dart';
 import 'async_await/async_screen.dart';
 import 'flutter_tutorial_screen.dart';
 
+import 'mvvm/qiita_client_screen.dart';
 import 'residence/residence_screen.dart';
 import 'youtube/youtube_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    const ProviderScope(
+      // アプリのルートにProviderScopeを追加
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -123,6 +130,17 @@ class Home extends StatelessWidget {
                 );
               },
               child: const Text('Async'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => QiitaClientScreen(),
+                  ),
+                );
+              },
+              child: const Text('Qiita'),
             ),
           ],
         ),
