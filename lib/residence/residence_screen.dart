@@ -257,7 +257,7 @@ class ResidenceScreen extends StatelessWidget {
                   '東京駅・品川駅・川崎駅・横浜駅・目黒駅・恵比寿駅・渋谷駅・',
                   style: TextStyle(
                     color: Colors.black87,
-                    fontSize: 11,
+                    fontSize: 10,
                   ),
                 ),
               ],
