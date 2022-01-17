@@ -309,7 +309,10 @@ class ResidenceScreen extends ConsumerWidget {
           itemCount: residenceInformations.length,
           itemBuilder: (BuildContext context, int index) {
             return Padding(
-              padding: const EdgeInsets.only(top: 12.0, bottom: 12.0),
+              padding: const EdgeInsets.only(
+                top: 12.0,
+                bottom: 12.0,
+              ),
               child: Center(
                 child: Container(
                   width: mediaSize.width * 0.97,
@@ -322,7 +325,10 @@ class ResidenceScreen extends ConsumerWidget {
                         color: Colors.grey, //色
                         spreadRadius: 0.5,
                         blurRadius: 2,
-                        offset: Offset(1, 1),
+                        offset: Offset(
+                          1,
+                          1,
+                        ),
                       ),
                     ],
                   ),
@@ -634,24 +640,4 @@ class ResidenceScreen extends ConsumerWidget {
           .fixed, // bottomnavigationが4つ以上の時は見えなくなってしまうため、type: BottomNavigationBarType.fixed,を追加
     );
   }
-}
-
-class ResidenceInfo {
-  final Icon imageIcon;
-  final String layoutImagePath;
-  final String title;
-  final String accessInfo;
-  final String roomInfo;
-  final String oldnessInfo;
-  final int price;
-
-  ResidenceInfo({
-    required this.imageIcon,
-    required this.layoutImagePath,
-    required this.title,
-    required this.accessInfo,
-    required this.roomInfo,
-    required this.oldnessInfo,
-    required this.price,
-  });
 }

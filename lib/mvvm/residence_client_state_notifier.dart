@@ -30,7 +30,7 @@ class ResidenceClientStateNotifier extends StateNotifier<ResidenceClientState> {
       state = state.copyWith(
         isLoading: false,
         isReadyData: false,
-        residenceInformations: residenceInformations,
+        residenceInformations: [],
       );
     }
   }
