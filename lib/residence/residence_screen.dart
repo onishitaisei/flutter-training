@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart'; // 数字に関するパッケージ
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
+import 'package:training/mvvm/model/residence_information.dart';
+import 'package:training/mvvm/residence_client_state_notifier.dart';
+import 'package:training/mvvm/state/residence_client_state.dart';
 
 // ignore: must_be_immutable
-class ResidenceScreen extends StatelessWidget {
+class ResidenceScreen extends ConsumerWidget {
   ResidenceScreen({Key? key}) : super(key: key);
   final _whiteColor = const Color(0xffFFFFFF);
   final _footerUnselectedIconColor =
@@ -11,42 +15,14 @@ class ResidenceScreen extends StatelessWidget {
   final _primaryColor = const Color(0xff5BADA1);
   final _mainBtnColor = const Color(0xffC9C9C9);
 
-  final List<ResidenceInfo> _createDummyData = [
-    ResidenceInfo(
-      imageIcon: const Icon(
-        Icons.apartment_outlined,
-        size: 80,
-        color: Color(0xff919191),
-      ),
-      layoutImagePath: 'images/house_layout.png',
-      title: 'Rising place川崎',
-      accessInfo: '京急本線 京急川崎駅 より 徒歩9分',
-      roomInfo: '1K / 21.24㎡ 南西向き',
-      oldnessInfo: '2階/15階建 築5年',
-      price: 2000,
-    ),
-    ResidenceInfo(
-      imageIcon: const Icon(
-        Icons.apartment_outlined,
-        size: 80,
-        color: Color(0xff919191),
-      ),
-      layoutImagePath: 'images/house_layout.png',
-      title: 'Rising place横浜',
-      accessInfo: '市営地下鉄ブルーライン横浜駅 より 徒歩20分',
-      roomInfo: '1K / 21.24㎡ 南西向き',
-      oldnessInfo: '2階/15階建 築5年',
-      price: 3000,
-    ),
-  ];
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(residenceClientStateNotifier);
     final Size mediaSize = MediaQuery.of(context).size; // 画面サイズを取得
     return Scaffold(
       backgroundColor: _backgroundColor,
       appBar: _buildAppBar(),
-      body: _buildBody(mediaSize),
+      body: _buildBody(mediaSize, state),
       floatingActionButton: _buildFloatingActionButton(),
       bottomNavigationBar: _buildBottomNavigationBar(),
     );
@@ -145,14 +121,27 @@ class ResidenceScreen extends StatelessWidget {
     ];
   }
 
-  Widget _buildBody(mediaSize) {
-    return Column(
+  Widget _buildBody(mediaSize, ResidenceClientState state) {
+    return Stack(
       children: [
-        const SizedBox(
-          height: 15,
+        Column(
+          children: [
+            const SizedBox(
+              height: 15,
+            ),
+            _buildPropertyConditions(mediaSize),
+            _buildMainContents(mediaSize, state.residenceInformations),
+          ],
         ),
-        _buildPropertyConditions(mediaSize),
-        _buildMainContents(mediaSize),
+        Visibility(
+          visible: state.isLoading,
+          child: Container(
+            color: const Color(0x88000000),
+            child: const Center(
+              child: const CircularProgressIndicator(),
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -312,11 +301,12 @@ class ResidenceScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildMainContents(mediaSize) {
+  Widget _buildMainContents(
+      mediaSize, List<ResidenceInformation> residenceInformations) {
     return Expanded(
       child: SizedBox(
         child: ListView.builder(
-          itemCount: _createDummyData.length,
+          itemCount: residenceInformations.length,
           itemBuilder: (BuildContext context, int index) {
             return Padding(
               padding: const EdgeInsets.only(top: 12.0, bottom: 12.0),
@@ -338,8 +328,8 @@ class ResidenceScreen extends StatelessWidget {
                   ),
                   child: Column(
                     children: [
-                      _buildItemImage(mediaSize, index),
-                      _buildItemContent(index),
+                      _buildItemImage(mediaSize, index, residenceInformations),
+                      _buildItemContent(index, residenceInformations),
                       _buildItemButton(mediaSize),
                     ],
                   ),
@@ -352,7 +342,8 @@ class ResidenceScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildItemImage(Size mediaSize, index) {
+  Widget _buildItemImage(
+      Size mediaSize, index, List<ResidenceInformation> residenceInformations) {
     return SizedBox(
       height: mediaSize.height * 0.23,
       child: Row(
@@ -377,14 +368,17 @@ class ResidenceScreen extends StatelessWidget {
                     fontFamily: 'Roboto Mono',
                   ),
                 ),
-                _createDummyData[index].imageIcon,
+                Icon(
+                  Icons.business_outlined,
+                  size: 50,
+                ),
               ],
             ),
           ),
           SizedBox(
             width: mediaSize.width * 0.45,
-            child: Image(
-              image: AssetImage(_createDummyData[index].layoutImagePath),
+            child: Image.asset(
+              residenceInformations[index].layoutImagePath.toString(),
             ),
           )
         ],
@@ -392,16 +386,17 @@ class ResidenceScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildItemContent(index) {
+  Widget _buildItemContent(
+      index, List<ResidenceInformation> residenceInformations) {
     final formatter = NumberFormat("#,###"); // 三桁ごとにカンマで区切るフォーマット
-    final result = formatter.format(_createDummyData[index].price); // ダミーデータを加工
+    final result = formatter.format(residenceInformations[index].price);
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            _createDummyData[index].title,
+            residenceInformations[index].title.toString(),
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 18,
@@ -428,7 +423,7 @@ class ResidenceScreen extends StatelessWidget {
                 width: 5,
               ),
               Text(
-                _createDummyData[index].accessInfo,
+                residenceInformations[index].accessInfo.toString(),
                 style: const TextStyle(
                   color: Colors.black87,
                   fontSize: 11,
@@ -450,7 +445,7 @@ class ResidenceScreen extends StatelessWidget {
                 width: 5,
               ),
               Text(
-                _createDummyData[index].roomInfo,
+                residenceInformations[index].roomInfo.toString(),
                 style: const TextStyle(
                   color: Colors.black87,
                   fontSize: 11,
@@ -472,7 +467,7 @@ class ResidenceScreen extends StatelessWidget {
                 width: 5,
               ),
               Text(
-                _createDummyData[index].oldnessInfo,
+                residenceInformations[index].oldnessInfo.toString(),
                 style: const TextStyle(
                   color: Colors.black87,
                   fontSize: 11,

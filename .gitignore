@@ -44,3 +44,14 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+
+
+
+
+
+
+residence_information.freezed.dart
+residence_information.g.dart
+residence_client_state.freezed.dart
+residence_api_client.g.dart
