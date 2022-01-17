@@ -7,7 +7,6 @@ part 'residence_client_state.freezed.dart';
 class ResidenceClientState with _$ResidenceClientState {
   const factory ResidenceClientState({
     @Default(false) bool isLoading,
-    @Default(false) bool isReadyData,
     @Default(<ResidenceInformation>[])
         List<ResidenceInformation> residenceInformations,
   }) = _ResidenceClientState;
