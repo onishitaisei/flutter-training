@@ -17,12 +17,12 @@ class ResidenceScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(residenceClientStateNotifier);
-    final Size mediaSize = MediaQuery.of(context).size; // 画面サイズを取得
+    final _state = ref.watch(residenceClientStateNotifier);
+    final Size _mediaSize = MediaQuery.of(context).size; // 画面サイズを取得
     return Scaffold(
       backgroundColor: _backgroundColor,
       appBar: _buildAppBar(),
-      body: _buildBody(mediaSize, state),
+      body: _buildBody(_mediaSize, _state),
       floatingActionButton: _buildFloatingActionButton(),
       bottomNavigationBar: _buildBottomNavigationBar(),
     );
@@ -121,12 +121,12 @@ class ResidenceScreen extends ConsumerWidget {
     ];
   }
 
-  Widget _buildBody(mediaSize, ResidenceClientState state) {
+  Widget _buildBody(_mediaSize, ResidenceClientState _state) {
     return Stack(
       children: [
-        _buildMainContents(mediaSize, state.residenceInformations),
+        _buildMainContents(_mediaSize, _state.residenceInformations),
         Visibility(
-          visible: state.isLoading,
+          visible: _state.isLoading,
           child: Container(
             color: const Color(0x88000000),
             child: const Center(
@@ -138,13 +138,13 @@ class ResidenceScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildPropertyConditions(Size mediaSize) {
+  Widget _buildPropertyConditions(Size _mediaSize) {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child: Center(
         child: Container(
-          width: mediaSize.width * 0.97,
-          height: mediaSize.height * 0.15,
+          width: _mediaSize.width * 0.97,
+          height: _mediaSize.height * 0.15,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.0),
             color: _whiteColor,
@@ -160,7 +160,7 @@ class ResidenceScreen extends ConsumerWidget {
           child: Column(
             children: [
               _buildHeaderPropertyConditions(),
-              _buildContents0fPropertyConditions(mediaSize),
+              _buildContents0fPropertyConditions(_mediaSize),
             ],
           ),
         ),
@@ -214,10 +214,10 @@ class ResidenceScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildContents0fPropertyConditions(Size mediaSize) {
+  Widget _buildContents0fPropertyConditions(Size _mediaSize) {
     return Container(
-      width: mediaSize.width * 0.93,
-      height: mediaSize.height * 0.09,
+      width: _mediaSize.width * 0.93,
+      height: _mediaSize.height * 0.09,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
         color: _backgroundColor,
@@ -297,15 +297,15 @@ class ResidenceScreen extends ConsumerWidget {
   }
 
   Widget _buildMainContents(
-      mediaSize, List<ResidenceInformation> residenceInformations) {
+      _mediaSize, List<ResidenceInformation> _residenceInformations) {
     return Expanded(
       child: SizedBox(
         child: ListView.builder(
-          itemCount: residenceInformations.length,
+          itemCount: _residenceInformations.length,
           itemBuilder: (BuildContext context, int index) {
             return Column(
               children: [
-                index == 0 ? _buildPropertyConditions(mediaSize) : Container(),
+                index == 0 ? _buildPropertyConditions(_mediaSize) : Container(),
                 Padding(
                   padding: const EdgeInsets.only(
                     top: 12.0,
@@ -313,8 +313,8 @@ class ResidenceScreen extends ConsumerWidget {
                   ),
                   child: Center(
                     child: Container(
-                      width: mediaSize.width * 0.97,
-                      height: mediaSize.height * 0.45,
+                      width: _mediaSize.width * 0.97,
+                      height: _mediaSize.height * 0.45,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0),
                         color: _whiteColor,
@@ -333,15 +333,15 @@ class ResidenceScreen extends ConsumerWidget {
                       child: Column(
                         children: [
                           _buildItemImage(
-                            mediaSize,
+                            _mediaSize,
                             index,
-                            residenceInformations,
+                            _residenceInformations,
                           ),
                           _buildItemContent(
                             index,
-                            residenceInformations,
+                            _residenceInformations,
                           ),
-                          _buildItemButton(mediaSize),
+                          _buildItemButton(_mediaSize),
                         ],
                       ),
                     ),
@@ -355,14 +355,14 @@ class ResidenceScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildItemImage(
-      Size mediaSize, index, List<ResidenceInformation> residenceInformations) {
+  Widget _buildItemImage(Size _mediaSize, index,
+      List<ResidenceInformation> _residenceInformations) {
     return SizedBox(
-      height: mediaSize.height * 0.23,
+      height: _mediaSize.height * 0.23,
       child: Row(
         children: [
           Container(
-            width: mediaSize.width * 0.5,
+            width: _mediaSize.width * 0.5,
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10.0),
@@ -389,9 +389,9 @@ class ResidenceScreen extends ConsumerWidget {
             ),
           ),
           SizedBox(
-            width: mediaSize.width * 0.45,
+            width: _mediaSize.width * 0.45,
             child: Image.asset(
-              residenceInformations[index].layoutImagePath?.toString() ?? '',
+              _residenceInformations[index].layoutImagePath?.toString() ?? '',
             ),
           )
         ],
@@ -400,10 +400,10 @@ class ResidenceScreen extends ConsumerWidget {
   }
 
   Widget _buildItemContent(
-      index, List<ResidenceInformation> residenceInformations) {
+      index, List<ResidenceInformation> _residenceInformations) {
     final formatter = NumberFormat("#,###"); // 三桁ごとにカンマで区切るフォーマット
     final result = formatter.format(
-      residenceInformations[index].price,
+      _residenceInformations[index].price,
     );
     return Padding(
       padding: const EdgeInsets.all(10.0),
@@ -411,7 +411,7 @@ class ResidenceScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            residenceInformations[index].title?.toString() ?? "",
+            _residenceInformations[index].title?.toString() ?? "",
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 18,
@@ -438,7 +438,7 @@ class ResidenceScreen extends ConsumerWidget {
                 width: 5,
               ),
               Text(
-                residenceInformations[index].accessInfo?.toString() ?? "",
+                _residenceInformations[index].accessInfo?.toString() ?? "",
                 style: const TextStyle(
                   color: Colors.black87,
                   fontSize: 11,
@@ -460,7 +460,7 @@ class ResidenceScreen extends ConsumerWidget {
                 width: 5,
               ),
               Text(
-                residenceInformations[index].roomInfo?.toString() ?? '',
+                _residenceInformations[index].roomInfo?.toString() ?? '',
                 style: const TextStyle(
                   color: Colors.black87,
                   fontSize: 11,
@@ -482,7 +482,7 @@ class ResidenceScreen extends ConsumerWidget {
                 width: 5,
               ),
               Text(
-                residenceInformations[index].oldnessInfo?.toString() ?? '',
+                _residenceInformations[index].oldnessInfo?.toString() ?? '',
                 style: const TextStyle(
                   color: Colors.black87,
                   fontSize: 11,
@@ -495,13 +495,13 @@ class ResidenceScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildItemButton(Size mediaSize) {
+  Widget _buildItemButton(Size _mediaSize) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          width: mediaSize.width * 0.45,
-          height: mediaSize.height * 0.05,
+          width: _mediaSize.width * 0.45,
+          height: _mediaSize.height * 0.05,
           decoration: BoxDecoration(
             border: Border.all(
               color: _mainBtnColor,
@@ -529,8 +529,8 @@ class ResidenceScreen extends ConsumerWidget {
           width: 10,
         ),
         Container(
-          width: mediaSize.width * 0.45,
-          height: mediaSize.height * 0.05,
+          width: _mediaSize.width * 0.45,
+          height: _mediaSize.height * 0.05,
           decoration: BoxDecoration(
             border: Border.all(
               color: _mainBtnColor,
