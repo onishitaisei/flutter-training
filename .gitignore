@@ -47,7 +47,5 @@ app.*.map.json
 
 
 # 新しく生成されたファイルをgitの管理対象外に
-youtube_information.freezed.dart
-youtube_information.g.dart
-youtube_api_client.g.dart
-youtube_client_state.freezed.dart
+*freezed.dart
+*g.dart
