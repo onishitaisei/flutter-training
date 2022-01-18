@@ -152,7 +152,7 @@ class YoutubeScreen extends ConsumerWidget {
                   alignment: Alignment.bottomRight,
                   children: [
                     Image.asset(
-                      youtubeInformation[index].imagePath.toString(),
+                      youtubeInformation[index].imagePath,
                       fit: BoxFit.cover,
                     ),
                     Padding(
@@ -196,7 +196,7 @@ class YoutubeScreen extends ConsumerWidget {
                         radius: 18,
                         backgroundColor: _userIconColor,
                         backgroundImage: NetworkImage(
-                          youtubeInformation[index].iconPath.toString(),
+                          youtubeInformation[index].iconPath,
                         ),
                       ),
                       const SizedBox(
@@ -206,7 +206,7 @@ class YoutubeScreen extends ConsumerWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            youtubeInformation[index].title.toString(),
+                            youtubeInformation[index].title,
                             style: const TextStyle(
                               color: Colors.white,
                             ),
@@ -217,9 +217,7 @@ class YoutubeScreen extends ConsumerWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  youtubeInformation[index]
-                                      .channelName
-                                      .toString(),
+                                  youtubeInformation[index].channelName,
                                   style: TextStyle(
                                     color: _movieTextColor,
                                     fontSize: 13,
