@@ -118,7 +118,6 @@ class YoutubeScreen extends ConsumerWidget {
         SafeArea(
           child: Column(
             children: [
-              _buildGridMenus(),
               _buildMainMovies(state.youtubeInformation),
             ],
           ),
@@ -136,92 +135,7 @@ class YoutubeScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildGridMenus() {
-    return Container(
-      color: _gridMenuColor,
-      height: 230,
-      width: double.infinity,
-      child: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: GridView.count(
-          physics:
-              const NeverScrollableScrollPhysics(), // GridViewをスクロールしないようにする
-          crossAxisSpacing: 10.0,
-          mainAxisSpacing: 10.0,
-          scrollDirection: Axis.vertical,
-          crossAxisCount: 2,
-          childAspectRatio: 3 / 0.7,
-          children: List<Widget>.generate(
-            _gridIcon.length,
-            _buildGridMenu,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildGridMenu(int index) {
-    return GridTile(
-      child: Container(
-        decoration: BoxDecoration(
-          color: _gridColor[index],
-          borderRadius: BorderRadius.circular(5),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(
-            left: 8.0,
-          ),
-          child: Row(
-            children: [
-              Icon(
-                _gridIcon[index],
-                color: Colors.white,
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Text(
-                _gridText[index],
-                style: const TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget _buildMainMovies(List<YoutubeInformation> youtubeInformation) {
-    return Expanded(
-      child: Column(
-        children: [
-          const Padding(
-            padding: EdgeInsets.only(
-              top: 15.0,
-              bottom: 15.0,
-              left: 15.0,
-            ),
-            child: SizedBox(
-              width: double.infinity,
-              child: Text(
-                '急上昇動画',
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                ),
-              ),
-            ),
-          ),
-          _buildMainMovie(youtubeInformation),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildMainMovie(List youtubeInformation) {
     return Expanded(
       child: ListView.builder(
         shrinkWrap: true,
@@ -231,11 +145,14 @@ class YoutubeScreen extends ConsumerWidget {
             width: double.infinity,
             child: Column(
               children: [
+                index == 0
+                    ? _buildGridMenus() // ListViewの要素の一つ目のみGridMenusを表示
+                    : Container(),
                 Stack(
                   alignment: Alignment.bottomRight,
                   children: [
                     Image.asset(
-                      youtubeInformation[index].imagePath,
+                      youtubeInformation[index].imagePath.toString(),
                       fit: BoxFit.cover,
                     ),
                     Padding(
@@ -279,7 +196,7 @@ class YoutubeScreen extends ConsumerWidget {
                         radius: 18,
                         backgroundColor: _userIconColor,
                         backgroundImage: NetworkImage(
-                          youtubeInformation[index].iconPath,
+                          youtubeInformation[index].iconPath.toString(),
                         ),
                       ),
                       const SizedBox(
@@ -289,7 +206,7 @@ class YoutubeScreen extends ConsumerWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            youtubeInformation[index].title,
+                            youtubeInformation[index].title.toString(),
                             style: const TextStyle(
                               color: Colors.white,
                             ),
@@ -300,7 +217,9 @@ class YoutubeScreen extends ConsumerWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  youtubeInformation[index].channelName,
+                                  youtubeInformation[index]
+                                      .channelName
+                                      .toString(),
                                   style: TextStyle(
                                     color: _movieTextColor,
                                     fontSize: 13,
@@ -347,6 +266,85 @@ class YoutubeScreen extends ConsumerWidget {
             ),
           );
         },
+      ),
+    );
+  }
+
+  Widget _buildGridMenus() {
+    return Column(
+      children: [
+        Container(
+          color: _gridMenuColor,
+          height: 230,
+          width: double.infinity,
+          child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: GridView.count(
+              physics:
+                  const NeverScrollableScrollPhysics(), // GridViewをスクロールしないようにする
+              crossAxisSpacing: 10.0,
+              mainAxisSpacing: 10.0,
+              scrollDirection: Axis.vertical,
+              crossAxisCount: 2,
+              childAspectRatio: 3 / 0.7,
+              children: List<Widget>.generate(
+                _gridIcon.length,
+                _buildGridMenu,
+              ),
+            ),
+          ),
+        ),
+        const Padding(
+          padding: EdgeInsets.only(
+            top: 15.0,
+            bottom: 15.0,
+            left: 15.0,
+          ),
+          child: SizedBox(
+            width: double.infinity,
+            child: Text(
+              '急上昇動画',
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildGridMenu(int index) {
+    return GridTile(
+      child: Container(
+        decoration: BoxDecoration(
+          color: _gridColor[index],
+          borderRadius: BorderRadius.circular(5),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(
+            left: 8.0,
+          ),
+          child: Row(
+            children: [
+              Icon(
+                _gridIcon[index],
+                color: Colors.white,
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Text(
+                _gridText[index],
+                style: const TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -400,24 +398,4 @@ class YoutubeScreen extends ConsumerWidget {
           .fixed, // bottomnavigationが4つ以上の時は見えなくなってしまうため、type: BottomNavigationBarType.fixed,を追加
     );
   }
-}
-
-// ignore: duplicate_ignore
-class MovieInfo {
-  // 一つの動画に関するデータを管理
-  final String imagePath; // サムネイル画像パス
-  final String iconPath; // チャンネルのアイコン画像パス
-  final String title; // 動画タイトル
-  final String channelName; // チャンネル名
-  final int numOfViews; // 再生回数
-  final int daysAgo; // 何日前にアップロードされたか
-
-  MovieInfo({
-    required this.imagePath,
-    required this.iconPath,
-    required this.title,
-    required this.channelName,
-    required this.numOfViews,
-    required this.daysAgo,
-  });
 }
