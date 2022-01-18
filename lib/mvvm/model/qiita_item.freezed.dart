@@ -43,8 +43,7 @@ const $QiitaItem = _$QiitaItemTearOff();
 /// @nodoc
 mixin _$QiitaItem {
   @JsonKey(name: "title")
-  String? get title =>
-      throw _privateConstructorUsedError; // Jsonのキーと別名でメンバ変数を定義したい場合は@JsonKeyを使用する。
+  String? get title => throw _privateConstructorUsedError;
   @JsonKey(name: "url")
   String? get url => throw _privateConstructorUsedError;
   @JsonKey(name: "user")
@@ -171,7 +170,7 @@ class _$_QiitaItem implements _QiitaItem {
   @override
   @JsonKey(name: "title")
   final String? title;
-  @override // Jsonのキーと別名でメンバ変数を定義したい場合は@JsonKeyを使用する。
+  @override
   @JsonKey(name: "url")
   final String? url;
   @override
@@ -223,7 +222,7 @@ abstract class _QiitaItem implements QiitaItem {
   @override
   @JsonKey(name: "title")
   String? get title;
-  @override // Jsonのキーと別名でメンバ変数を定義したい場合は@JsonKeyを使用する。
+  @override
   @JsonKey(name: "url")
   String? get url;
   @override
