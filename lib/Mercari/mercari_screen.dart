@@ -19,10 +19,10 @@ class MercariScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(mercariClientStateNotifier);
+    final _state = ref.watch(mercariClientStateNotifier);
     return Scaffold(
       appBar: _buildAppBar(),
-      body: _buildBody(state),
+      body: _buildBody(_state),
       floatingActionButton: _buildFloatingActionButton(),
       bottomNavigationBar: _buildBottomNavigationBar(),
     );
@@ -43,20 +43,15 @@ class MercariScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildBody(MercariClientState state) {
+  Widget _buildBody(MercariClientState _state) {
     return Stack(
       children: [
         Scrollbar(
           isAlwaysShown: true,
-          child: Column(
-            children: [
-              _buildShortCutToSell(),
-              _buildItemsEasyToSell(state.mercariInformations),
-            ],
-          ),
+          child: _buildItems(_state.mercariInformations),
         ),
         Visibility(
-          visible: state.isLoading,
+          visible: _state.isLoading,
           child: Container(
             color: const Color(0x88000000),
             child: const Center(
@@ -246,17 +241,6 @@ class MercariScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildItemsEasyToSell(List<MercariInformation> mercariInformations) {
-    return Expanded(
-      child: Column(
-        children: [
-          _buildItemsEasyToSellTop(),
-          _buildItems(mercariInformations),
-        ],
-      ),
-    );
-  }
-
   Widget _buildItemsEasyToSellTop() {
     return Padding(
       padding: const EdgeInsets.only(
@@ -302,15 +286,23 @@ class MercariScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildItems(List<MercariInformation> mercariInformations) {
+  Widget _buildItems(List<MercariInformation> _mercariInformations) {
     return Expanded(
       child: ListView.builder(
-        itemCount: mercariInformations.length,
+        itemCount: _mercariInformations.length,
         itemBuilder: (BuildContext context, int index) {
           final _formatter = NumberFormat("#,###");
-          final _price = _formatter.format(mercariInformations[index].price);
+          final _price = _formatter.format(_mercariInformations[index].price);
           return Column(
             children: [
+              index == 0
+                  ? Column(
+                      children: [
+                        _buildShortCutToSell(),
+                        _buildItemsEasyToSellTop(),
+                      ],
+                    )
+                  : Container(),
               Divider(
                 thickness: 2,
                 indent: 15.0,
@@ -328,7 +320,7 @@ class MercariScreen extends ConsumerWidget {
                     Image(
                       width: 70,
                       image: AssetImage(
-                        '${mercariInformations[index].imagePath}',
+                        _mercariInformations[index].imagePath?.toString() ?? "",
                       ),
                     ),
                     const SizedBox(
@@ -338,14 +330,14 @@ class MercariScreen extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          mercariInformations[index].title.toString(),
+                          _mercariInformations[index].title?.toString() ?? "",
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 15,
                           ),
                         ),
                         Text(
-                          '¥$_price',
+                          _price.toString(),
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 15,
@@ -362,7 +354,7 @@ class MercariScreen extends ConsumerWidget {
                               width: 5,
                             ),
                             Text(
-                              '${mercariInformations[index].numOfPeople}人が探しています',
+                              '${_mercariInformations[index].numOfPeople?.toString() ?? ""}人が探しています',
                               style: const TextStyle(fontSize: 12),
                             ),
                           ],
