@@ -45,17 +45,5 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-
-
-
-
-
-
-
-
-
-
-mercari_information.freezed.dart
-mercari_information.g.dart
-mercari_api_client.g.dart
-mercari_client_state.freezed.dart
+*.freezed.dart
+*.g.dart
