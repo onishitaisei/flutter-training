@@ -45,13 +45,6 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-
-
-
-
-
-
-residence_information.freezed.dart
-residence_information.g.dart
-residence_client_state.freezed.dart
-residence_api_client.g.dart
+# 新しく生成されたファイルをgitの管理対象外に
+*freezed.dart
+*g.dart
