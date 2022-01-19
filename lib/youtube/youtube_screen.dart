@@ -1,6 +1,9 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:training/mvvm/model/youtube_information.dart';
+import 'package:training/mvvm/state/youtube_client_state.dart';
 import 'package:training/mvvm/youtube_client_state_notifier.dart';
 
 class YoutubeScreen extends ConsumerWidget {
@@ -40,11 +43,11 @@ class YoutubeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(youtubeClientStateNotifier);
+    final _state = ref.watch(youtubeClientStateNotifier);
     return Scaffold(
       backgroundColor: _backgroundColor,
       appBar: _buildAppBar(),
-      body: _buildBody(state),
+      body: _buildBody(_state),
       bottomNavigationBar: _buildBottomNavigationBar(),
     );
   }
@@ -112,7 +115,7 @@ class YoutubeScreen extends ConsumerWidget {
     ];
   }
 
-  Widget _buildBody(state) {
+  Widget _buildBody(YoutubeClientState state) {
     return Stack(
       children: [
         SafeArea(
@@ -127,7 +130,7 @@ class YoutubeScreen extends ConsumerWidget {
           child: Container(
             color: const Color(0x88000000),
             child: const Center(
-              child: const CircularProgressIndicator(),
+              child: CircularProgressIndicator(),
             ),
           ),
         ),
@@ -145,9 +148,7 @@ class YoutubeScreen extends ConsumerWidget {
             width: double.infinity,
             child: Column(
               children: [
-                index == 0
-                    ? _buildGridMenus() // ListViewの要素の一つ目のみGridMenusを表示
-                    : Container(),
+                index == 0 ? _buildGridMenus() : Container(),
                 Stack(
                   alignment: Alignment.bottomRight,
                   children: [
@@ -156,7 +157,7 @@ class YoutubeScreen extends ConsumerWidget {
                       fit: BoxFit.cover,
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(8),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -173,7 +174,7 @@ class YoutubeScreen extends ConsumerWidget {
                               borderRadius: BorderRadius.circular(5),
                             ),
                             child: const Padding(
-                              padding: EdgeInsets.all(2.0),
+                              padding: EdgeInsets.all(2),
                               child: Text(
                                 '9:49',
                                 style: TextStyle(
@@ -188,7 +189,7 @@ class YoutubeScreen extends ConsumerWidget {
                   ],
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(12.0),
+                  padding: const EdgeInsets.all(12),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -276,12 +277,11 @@ class YoutubeScreen extends ConsumerWidget {
           height: 230,
           width: double.infinity,
           child: Padding(
-            padding: const EdgeInsets.all(15.0),
+            padding: const EdgeInsets.all(15),
             child: GridView.count(
-              physics:
-                  const NeverScrollableScrollPhysics(), // GridViewをスクロールしないようにする
-              crossAxisSpacing: 10.0,
-              mainAxisSpacing: 10.0,
+              physics: const NeverScrollableScrollPhysics(),
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
               scrollDirection: Axis.vertical,
               crossAxisCount: 2,
               childAspectRatio: 3 / 0.7,
@@ -294,9 +294,9 @@ class YoutubeScreen extends ConsumerWidget {
         ),
         const Padding(
           padding: EdgeInsets.only(
-            top: 15.0,
-            bottom: 15.0,
-            left: 15.0,
+            top: 15,
+            bottom: 15,
+            left: 15,
           ),
           child: SizedBox(
             width: double.infinity,
@@ -323,7 +323,7 @@ class YoutubeScreen extends ConsumerWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.only(
-            left: 8.0,
+            left: 8,
           ),
           child: Row(
             children: [
@@ -392,8 +392,7 @@ class YoutubeScreen extends ConsumerWidget {
       unselectedItemColor: Colors.white,
       selectedFontSize: 10,
       unselectedFontSize: 10,
-      type: BottomNavigationBarType
-          .fixed, // bottomnavigationが4つ以上の時は見えなくなってしまうため、type: BottomNavigationBarType.fixed,を追加
+      type: BottomNavigationBarType.fixed,
     );
   }
 }

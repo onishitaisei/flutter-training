@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart'; // 数字に関するパッケージ
+import 'package:intl/intl.dart';
 
 // ignore: must_be_immutable
 class ResidenceScreen extends StatelessWidget {
   ResidenceScreen({Key? key}) : super(key: key);
   final _whiteColor = const Color(0xffFFFFFF);
-  final _footerUnselectedIconColor =
-      const Color(0xffCECECE); // ボトムナビゲーションのアクティブではないアイコンの色
+  final _footerUnselectedIconColor = const Color(0xffCECECE);
   final _backgroundColor = const Color(0xffFAF8F5);
   final _primaryColor = const Color(0xff5BADA1);
   final _mainBtnColor = const Color(0xffC9C9C9);
@@ -42,7 +41,7 @@ class ResidenceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size mediaSize = MediaQuery.of(context).size; // 画面サイズを取得
+    final mediaSize = MediaQuery.of(context).size; // 画面サイズを取得
     return Scaffold(
       backgroundColor: _backgroundColor,
       appBar: _buildAppBar(),
@@ -70,7 +69,7 @@ class ResidenceScreen extends StatelessWidget {
           height: 30,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20.0),
+            borderRadius: BorderRadius.circular(20),
             color: const Color(0xffE9EFEE),
           ),
           child: Text(
@@ -89,13 +88,13 @@ class ResidenceScreen extends StatelessWidget {
           alignment: Alignment.topRight,
           children: [
             Padding(
-              padding: const EdgeInsets.all(5.0),
+              padding: const EdgeInsets.all(5),
               child: Container(
                 width: 120,
                 height: 30,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20.0),
+                  borderRadius: BorderRadius.circular(20),
                   color: const Color(0xffF3F3F3),
                 ),
                 child: const Text(
@@ -108,15 +107,15 @@ class ResidenceScreen extends StatelessWidget {
               ),
             ),
             const CircleAvatar(
+              radius: 10,
+              backgroundColor: Color(0xffE2554A),
+              foregroundColor: Colors.white,
               child: Text(
                 '1',
                 style: TextStyle(
                   fontSize: 15,
                 ),
               ),
-              radius: 10,
-              backgroundColor: Color(0xffE2554A),
-              foregroundColor: Colors.white,
             )
           ],
         ),
@@ -129,23 +128,22 @@ class ResidenceScreen extends StatelessWidget {
       Container(
         width: 50,
         padding: const EdgeInsets.only(
-          right: 15.0,
+          right: 15,
         ),
         child: CircleAvatar(
-          // flatingActionbuttonだと影を削除する方法がわからなかったので、CircleAvatarを使用しました。
+          radius: 10,
+          backgroundColor: _primaryColor,
+          foregroundColor: Colors.white,
           child: const Icon(
             Icons.add,
             size: 25,
           ),
-          radius: 10,
-          backgroundColor: _primaryColor,
-          foregroundColor: Colors.white,
         ),
       )
     ];
   }
 
-  Widget _buildBody(mediaSize) {
+  Widget _buildBody(Size mediaSize) {
     return Column(
       children: [
         const SizedBox(
@@ -163,7 +161,7 @@ class ResidenceScreen extends StatelessWidget {
         width: mediaSize.width * 0.97,
         height: mediaSize.height * 0.15,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(10),
           color: _whiteColor,
           boxShadow: const [
             BoxShadow(
@@ -187,10 +185,10 @@ class ResidenceScreen extends StatelessWidget {
   Widget _buildHeaderPropertyConditions() {
     return Padding(
       padding: const EdgeInsets.only(
-        top: 13.0,
-        right: 13.0,
-        left: 13.0,
-        bottom: 5.0,
+        top: 13,
+        right: 13,
+        left: 13,
+        bottom: 5,
       ),
       child: Row(
         children: [
@@ -235,11 +233,11 @@ class ResidenceScreen extends StatelessWidget {
       width: mediaSize.width * 0.93,
       height: mediaSize.height * 0.09,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: BorderRadius.circular(10),
         color: _backgroundColor,
       ),
       child: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -312,20 +310,20 @@ class ResidenceScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildMainContents(mediaSize) {
+  Widget _buildMainContents(Size mediaSize) {
     return Expanded(
       child: SizedBox(
         child: ListView.builder(
           itemCount: _createDummyData.length,
           itemBuilder: (BuildContext context, int index) {
             return Padding(
-              padding: const EdgeInsets.only(top: 12.0, bottom: 12.0),
+              padding: const EdgeInsets.only(top: 12, bottom: 12),
               child: Center(
                 child: Container(
                   width: mediaSize.width * 0.97,
                   height: mediaSize.height * 0.45,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
+                    borderRadius: BorderRadius.circular(10),
                     color: _whiteColor,
                     boxShadow: const [
                       BoxShadow(
@@ -352,7 +350,7 @@ class ResidenceScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildItemImage(Size mediaSize, index) {
+  Widget _buildItemImage(Size mediaSize, int index) {
     return SizedBox(
       height: mediaSize.height * 0.23,
       child: Row(
@@ -361,7 +359,7 @@ class ResidenceScreen extends StatelessWidget {
             width: mediaSize.width * 0.5,
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10.0),
+                topLeft: Radius.circular(10),
               ),
               color: Color(0xffD8D9D8),
             ),
@@ -392,11 +390,11 @@ class ResidenceScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildItemContent(index) {
-    final formatter = NumberFormat("#,###"); // 三桁ごとにカンマで区切るフォーマット
+  Widget _buildItemContent(int index) {
+    final formatter = NumberFormat('#,###'); // 三桁ごとにカンマで区切るフォーマット
     final result = formatter.format(_createDummyData[index].price); // ダミーデータを加工
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -496,7 +494,7 @@ class ResidenceScreen extends StatelessWidget {
             border: Border.all(
               color: _mainBtnColor,
             ),
-            borderRadius: BorderRadius.circular(10.0),
+            borderRadius: BorderRadius.circular(10),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -594,8 +592,8 @@ class ResidenceScreen extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.only(
-                  right: 5.0,
-                  left: 3.0,
+                  right: 5,
+                  left: 3,
                 ),
                 child: Icon(
                   Icons.chat_bubble_outline,
@@ -604,15 +602,15 @@ class ResidenceScreen extends StatelessWidget {
                 ),
               ),
               const CircleAvatar(
+                radius: 10,
+                backgroundColor: Color(0xffE2554A),
+                foregroundColor: Colors.white,
                 child: Text(
                   '1',
                   style: TextStyle(
                     fontSize: 15,
                   ),
                 ),
-                radius: 10,
-                backgroundColor: Color(0xffE2554A),
-                foregroundColor: Colors.white,
               )
             ],
           ),
@@ -627,7 +625,6 @@ class ResidenceScreen extends StatelessWidget {
           label: 'マイページ',
         ),
       ],
-
       selectedItemColor: _primaryColor,
       selectedLabelStyle: const TextStyle(
         fontWeight: FontWeight.bold,
@@ -635,21 +632,12 @@ class ResidenceScreen extends StatelessWidget {
       unselectedItemColor: Colors.grey[600],
       selectedFontSize: 13,
       unselectedFontSize: 10,
-      type: BottomNavigationBarType
-          .fixed, // bottomnavigationが4つ以上の時は見えなくなってしまうため、type: BottomNavigationBarType.fixed,を追加
+      type: BottomNavigationBarType.fixed,
     );
   }
 }
 
 class ResidenceInfo {
-  final Icon imageIcon;
-  final String layoutImagePath;
-  final String title;
-  final String accessInfo;
-  final String roomInfo;
-  final String oldnessInfo;
-  final int price;
-
   ResidenceInfo({
     required this.imageIcon,
     required this.layoutImagePath,
@@ -659,4 +647,11 @@ class ResidenceInfo {
     required this.oldnessInfo,
     required this.price,
   });
+  final Icon imageIcon;
+  final String layoutImagePath;
+  final String title;
+  final String accessInfo;
+  final String roomInfo;
+  final String oldnessInfo;
+  final int price;
 }
