@@ -1,6 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, lines_longer_than_80_chars
 
 part of 'qiita_item.dart';
 
@@ -22,9 +22,9 @@ class _$QiitaItemTearOff {
   const _$QiitaItemTearOff();
 
   _QiitaItem call(
-      {@JsonKey(name: "title") String? title,
-      @JsonKey(name: "url") String? url,
-      @JsonKey(name: "user") QiitaUser? user}) {
+      {@JsonKey(name: 'title') String? title,
+      @JsonKey(name: 'url') String? url,
+      @JsonKey(name: 'user') QiitaUser? user}) {
     return _QiitaItem(
       title: title,
       url: url,
@@ -42,11 +42,11 @@ const $QiitaItem = _$QiitaItemTearOff();
 
 /// @nodoc
 mixin _$QiitaItem {
-  @JsonKey(name: "title")
+  @JsonKey(name: 'title')
   String? get title => throw _privateConstructorUsedError;
-  @JsonKey(name: "url")
+  @JsonKey(name: 'url')
   String? get url => throw _privateConstructorUsedError;
-  @JsonKey(name: "user")
+  @JsonKey(name: 'user')
   QiitaUser? get user => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -60,9 +60,9 @@ abstract class $QiitaItemCopyWith<$Res> {
   factory $QiitaItemCopyWith(QiitaItem value, $Res Function(QiitaItem) then) =
       _$QiitaItemCopyWithImpl<$Res>;
   $Res call(
-      {@JsonKey(name: "title") String? title,
-      @JsonKey(name: "url") String? url,
-      @JsonKey(name: "user") QiitaUser? user});
+      {@JsonKey(name: 'title') String? title,
+      @JsonKey(name: 'url') String? url,
+      @JsonKey(name: 'user') QiitaUser? user});
 
   $QiitaUserCopyWith<$Res>? get user;
 }
@@ -116,9 +116,9 @@ abstract class _$QiitaItemCopyWith<$Res> implements $QiitaItemCopyWith<$Res> {
       __$QiitaItemCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@JsonKey(name: "title") String? title,
-      @JsonKey(name: "url") String? url,
-      @JsonKey(name: "user") QiitaUser? user});
+      {@JsonKey(name: 'title') String? title,
+      @JsonKey(name: 'url') String? url,
+      @JsonKey(name: 'user') QiitaUser? user});
 
   @override
   $QiitaUserCopyWith<$Res>? get user;
@@ -160,21 +160,21 @@ class __$QiitaItemCopyWithImpl<$Res> extends _$QiitaItemCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_QiitaItem implements _QiitaItem {
   const _$_QiitaItem(
-      {@JsonKey(name: "title") this.title,
-      @JsonKey(name: "url") this.url,
-      @JsonKey(name: "user") this.user});
+      {@JsonKey(name: 'title') this.title,
+      @JsonKey(name: 'url') this.url,
+      @JsonKey(name: 'user') this.user});
 
   factory _$_QiitaItem.fromJson(Map<String, dynamic> json) =>
       _$$_QiitaItemFromJson(json);
 
   @override
-  @JsonKey(name: "title")
+  @JsonKey(name: 'title')
   final String? title;
   @override
-  @JsonKey(name: "url")
+  @JsonKey(name: 'url')
   final String? url;
   @override
-  @JsonKey(name: "user")
+  @JsonKey(name: 'user')
   final QiitaUser? user;
 
   @override
@@ -212,21 +212,21 @@ class _$_QiitaItem implements _QiitaItem {
 
 abstract class _QiitaItem implements QiitaItem {
   const factory _QiitaItem(
-      {@JsonKey(name: "title") String? title,
-      @JsonKey(name: "url") String? url,
-      @JsonKey(name: "user") QiitaUser? user}) = _$_QiitaItem;
+      {@JsonKey(name: 'title') String? title,
+      @JsonKey(name: 'url') String? url,
+      @JsonKey(name: 'user') QiitaUser? user}) = _$_QiitaItem;
 
   factory _QiitaItem.fromJson(Map<String, dynamic> json) =
       _$_QiitaItem.fromJson;
 
   @override
-  @JsonKey(name: "title")
+  @JsonKey(name: 'title')
   String? get title;
   @override
-  @JsonKey(name: "url")
+  @JsonKey(name: 'url')
   String? get url;
   @override
-  @JsonKey(name: "user")
+  @JsonKey(name: 'user')
   QiitaUser? get user;
   @override
   @JsonKey(ignore: true)
