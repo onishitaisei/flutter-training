@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart'; // 数字に関するパッケージ
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
+import 'package:training/mvvm/model/residence_information.dart';
+import 'package:training/mvvm/residence_client_state_notifier.dart';
+import 'package:training/mvvm/state/residence_client_state.dart';
 
 // ignore: must_be_immutable
-class ResidenceScreen extends StatelessWidget {
+class ResidenceScreen extends ConsumerWidget {
   ResidenceScreen({Key? key}) : super(key: key);
   final _whiteColor = const Color(0xffFFFFFF);
   final _footerUnselectedIconColor =
@@ -11,42 +15,14 @@ class ResidenceScreen extends StatelessWidget {
   final _primaryColor = const Color(0xff5BADA1);
   final _mainBtnColor = const Color(0xffC9C9C9);
 
-  final List<ResidenceInfo> _createDummyData = [
-    ResidenceInfo(
-      imageIcon: const Icon(
-        Icons.apartment_outlined,
-        size: 80,
-        color: Color(0xff919191),
-      ),
-      layoutImagePath: 'images/house_layout.png',
-      title: 'Rising place川崎',
-      accessInfo: '京急本線 京急川崎駅 より 徒歩9分',
-      roomInfo: '1K / 21.24㎡ 南西向き',
-      oldnessInfo: '2階/15階建 築5年',
-      price: 2000,
-    ),
-    ResidenceInfo(
-      imageIcon: const Icon(
-        Icons.apartment_outlined,
-        size: 80,
-        color: Color(0xff919191),
-      ),
-      layoutImagePath: 'images/house_layout.png',
-      title: 'Rising place横浜',
-      accessInfo: '市営地下鉄ブルーライン横浜駅 より 徒歩20分',
-      roomInfo: '1K / 21.24㎡ 南西向き',
-      oldnessInfo: '2階/15階建 築5年',
-      price: 3000,
-    ),
-  ];
-
   @override
-  Widget build(BuildContext context) {
-    final Size mediaSize = MediaQuery.of(context).size; // 画面サイズを取得
+  Widget build(BuildContext context, WidgetRef ref) {
+    final _state = ref.watch(residenceClientStateNotifier);
+    final Size _mediaSize = MediaQuery.of(context).size; // 画面サイズを取得
     return Scaffold(
       backgroundColor: _backgroundColor,
       appBar: _buildAppBar(),
-      body: _buildBody(mediaSize),
+      body: _buildBody(_mediaSize, _state),
       floatingActionButton: _buildFloatingActionButton(),
       bottomNavigationBar: _buildBottomNavigationBar(),
     );
@@ -145,40 +121,48 @@ class ResidenceScreen extends StatelessWidget {
     ];
   }
 
-  Widget _buildBody(mediaSize) {
-    return Column(
+  Widget _buildBody(_mediaSize, ResidenceClientState _state) {
+    return Stack(
       children: [
-        const SizedBox(
-          height: 15,
+        _buildMainContents(_mediaSize, _state.residenceInformations),
+        Visibility(
+          visible: _state.isLoading,
+          child: Container(
+            color: const Color(0x88000000),
+            child: const Center(
+              child: const CircularProgressIndicator(),
+            ),
+          ),
         ),
-        _buildPropertyConditions(mediaSize),
-        _buildMainContents(mediaSize),
       ],
     );
   }
 
-  Widget _buildPropertyConditions(Size mediaSize) {
-    return Center(
-      child: Container(
-        width: mediaSize.width * 0.97,
-        height: mediaSize.height * 0.15,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          color: _whiteColor,
-          boxShadow: const [
-            BoxShadow(
-              color: Colors.grey, //色
-              spreadRadius: 0.5,
-              blurRadius: 2,
-              offset: Offset(1, 1),
-            ),
-          ],
-        ),
-        child: Column(
-          children: [
-            _buildHeaderPropertyConditions(),
-            _buildContents0fPropertyConditions(mediaSize),
-          ],
+  Widget _buildPropertyConditions(Size _mediaSize) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 8.0),
+      child: Center(
+        child: Container(
+          width: _mediaSize.width * 0.97,
+          height: _mediaSize.height * 0.15,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.0),
+            color: _whiteColor,
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.grey, //色
+                spreadRadius: 0.5,
+                blurRadius: 2,
+                offset: Offset(1, 1),
+              ),
+            ],
+          ),
+          child: Column(
+            children: [
+              _buildHeaderPropertyConditions(),
+              _buildContents0fPropertyConditions(_mediaSize),
+            ],
+          ),
         ),
       ),
     );
@@ -230,10 +214,10 @@ class ResidenceScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildContents0fPropertyConditions(Size mediaSize) {
+  Widget _buildContents0fPropertyConditions(Size _mediaSize) {
     return Container(
-      width: mediaSize.width * 0.93,
-      height: mediaSize.height * 0.09,
+      width: _mediaSize.width * 0.93,
+      height: _mediaSize.height * 0.09,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
         color: _backgroundColor,
@@ -257,7 +241,7 @@ class ResidenceScreen extends StatelessWidget {
                   '東京駅・品川駅・川崎駅・横浜駅・目黒駅・恵比寿駅・渋谷駅・',
                   style: TextStyle(
                     color: Colors.black87,
-                    fontSize: 11,
+                    fontSize: 10,
                   ),
                 ),
               ],
@@ -312,39 +296,58 @@ class ResidenceScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildMainContents(mediaSize) {
+  Widget _buildMainContents(
+      _mediaSize, List<ResidenceInformation> _residenceInformations) {
     return Expanded(
       child: SizedBox(
         child: ListView.builder(
-          itemCount: _createDummyData.length,
+          itemCount: _residenceInformations.length,
           itemBuilder: (BuildContext context, int index) {
-            return Padding(
-              padding: const EdgeInsets.only(top: 12.0, bottom: 12.0),
-              child: Center(
-                child: Container(
-                  width: mediaSize.width * 0.97,
-                  height: mediaSize.height * 0.45,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    color: _whiteColor,
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.grey, //色
-                        spreadRadius: 0.5,
-                        blurRadius: 2,
-                        offset: Offset(1, 1),
-                      ),
-                    ],
+            return Column(
+              children: [
+                index == 0 ? _buildPropertyConditions(_mediaSize) : Container(),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 12.0,
+                    bottom: 12.0,
                   ),
-                  child: Column(
-                    children: [
-                      _buildItemImage(mediaSize, index),
-                      _buildItemContent(index),
-                      _buildItemButton(mediaSize),
-                    ],
+                  child: Center(
+                    child: Container(
+                      width: _mediaSize.width * 0.97,
+                      height: _mediaSize.height * 0.45,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        color: _whiteColor,
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.grey, //色
+                            spreadRadius: 0.5,
+                            blurRadius: 2,
+                            offset: Offset(
+                              1,
+                              1,
+                            ),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          _buildItemImage(
+                            _mediaSize,
+                            index,
+                            _residenceInformations,
+                          ),
+                          _buildItemContent(
+                            index,
+                            _residenceInformations,
+                          ),
+                          _buildItemButton(_mediaSize),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-              ),
+              ],
             );
           },
         ),
@@ -352,13 +355,14 @@ class ResidenceScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildItemImage(Size mediaSize, index) {
+  Widget _buildItemImage(Size _mediaSize, index,
+      List<ResidenceInformation> _residenceInformations) {
     return SizedBox(
-      height: mediaSize.height * 0.23,
+      height: _mediaSize.height * 0.23,
       child: Row(
         children: [
           Container(
-            width: mediaSize.width * 0.5,
+            width: _mediaSize.width * 0.5,
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10.0),
@@ -377,14 +381,17 @@ class ResidenceScreen extends StatelessWidget {
                     fontFamily: 'Roboto Mono',
                   ),
                 ),
-                _createDummyData[index].imageIcon,
+                Icon(
+                  Icons.business_outlined,
+                  size: 50,
+                ),
               ],
             ),
           ),
           SizedBox(
-            width: mediaSize.width * 0.45,
-            child: Image(
-              image: AssetImage(_createDummyData[index].layoutImagePath),
+            width: _mediaSize.width * 0.45,
+            child: Image.asset(
+              _residenceInformations[index].layoutImagePath?.toString() ?? '',
             ),
           )
         ],
@@ -392,16 +399,19 @@ class ResidenceScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildItemContent(index) {
+  Widget _buildItemContent(
+      index, List<ResidenceInformation> _residenceInformations) {
     final formatter = NumberFormat("#,###"); // 三桁ごとにカンマで区切るフォーマット
-    final result = formatter.format(_createDummyData[index].price); // ダミーデータを加工
+    final result = formatter.format(
+      _residenceInformations[index].price,
+    );
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            _createDummyData[index].title,
+            _residenceInformations[index].title?.toString() ?? "",
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 18,
@@ -428,7 +438,7 @@ class ResidenceScreen extends StatelessWidget {
                 width: 5,
               ),
               Text(
-                _createDummyData[index].accessInfo,
+                _residenceInformations[index].accessInfo?.toString() ?? "",
                 style: const TextStyle(
                   color: Colors.black87,
                   fontSize: 11,
@@ -450,7 +460,7 @@ class ResidenceScreen extends StatelessWidget {
                 width: 5,
               ),
               Text(
-                _createDummyData[index].roomInfo,
+                _residenceInformations[index].roomInfo?.toString() ?? '',
                 style: const TextStyle(
                   color: Colors.black87,
                   fontSize: 11,
@@ -472,7 +482,7 @@ class ResidenceScreen extends StatelessWidget {
                 width: 5,
               ),
               Text(
-                _createDummyData[index].oldnessInfo,
+                _residenceInformations[index].oldnessInfo?.toString() ?? '',
                 style: const TextStyle(
                   color: Colors.black87,
                   fontSize: 11,
@@ -485,13 +495,13 @@ class ResidenceScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildItemButton(Size mediaSize) {
+  Widget _buildItemButton(Size _mediaSize) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          width: mediaSize.width * 0.45,
-          height: mediaSize.height * 0.05,
+          width: _mediaSize.width * 0.45,
+          height: _mediaSize.height * 0.05,
           decoration: BoxDecoration(
             border: Border.all(
               color: _mainBtnColor,
@@ -519,8 +529,8 @@ class ResidenceScreen extends StatelessWidget {
           width: 10,
         ),
         Container(
-          width: mediaSize.width * 0.45,
-          height: mediaSize.height * 0.05,
+          width: _mediaSize.width * 0.45,
+          height: _mediaSize.height * 0.05,
           decoration: BoxDecoration(
             border: Border.all(
               color: _mainBtnColor,
@@ -639,24 +649,4 @@ class ResidenceScreen extends StatelessWidget {
           .fixed, // bottomnavigationが4つ以上の時は見えなくなってしまうため、type: BottomNavigationBarType.fixed,を追加
     );
   }
-}
-
-class ResidenceInfo {
-  final Icon imageIcon;
-  final String layoutImagePath;
-  final String title;
-  final String accessInfo;
-  final String roomInfo;
-  final String oldnessInfo;
-  final int price;
-
-  ResidenceInfo({
-    required this.imageIcon,
-    required this.layoutImagePath,
-    required this.title,
-    required this.accessInfo,
-    required this.roomInfo,
-    required this.oldnessInfo,
-    required this.price,
-  });
 }
