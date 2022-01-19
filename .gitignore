@@ -45,7 +45,6 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-
 # 新しく生成されたファイルをgitの管理対象外に
 *freezed.dart
 *g.dart
