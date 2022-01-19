@@ -55,7 +55,7 @@ class MercariScreen extends ConsumerWidget {
           child: Container(
             color: const Color(0x88000000),
             child: const Center(
-              child: const CircularProgressIndicator(),
+              child: CircularProgressIndicator(),
             ),
           ),
         ),
@@ -302,7 +302,7 @@ class MercariScreen extends ConsumerWidget {
                         _buildItemsEasyToSellTop(),
                       ],
                     )
-                  : Container(),
+                  : const SizedBox.shrink(),
               Divider(
                 thickness: 2,
                 indent: 15.0,
