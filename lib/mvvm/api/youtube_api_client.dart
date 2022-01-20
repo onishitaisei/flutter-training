@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages, prefer_constructors_over_static_methods, lines_longer_than_80_chars
+
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:retrofit/retrofit.dart';
@@ -5,7 +7,7 @@ import 'package:training/mvvm/model/youtube_information.dart';
 
 part 'youtube_api_client.g.dart';
 
-@RestApi(baseUrl: "https://json-hosting-b39d4.web.app/api/v1")
+@RestApi(baseUrl: 'https://json-hosting-b39d4.web.app/api/v1')
 abstract class YoutubeApiClient {
   factory YoutubeApiClient(Dio dio, {String baseUrl}) = _YoutubeApiClient;
 
@@ -15,6 +17,6 @@ abstract class YoutubeApiClient {
     return YoutubeApiClient(dio);
   }
 
-  @GET("/youtube/index.json")
+  @GET('/youtube/index.json')
   Future<List<YoutubeInformation>> fetchYoutubeInformation();
 }

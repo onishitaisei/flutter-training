@@ -6,18 +6,16 @@ class FlutterTutorialScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Locale myLocale = Localizations.localeOf(context); // デバイスのロケールを取得する。
+    final myLocale = Localizations.localeOf(context);
 
-    Widget titleSection = Padding(
+    final Widget titleSection = Padding(
       padding: const EdgeInsets.all(32),
       child: Row(
         children: [
           Expanded(
-            /*1*/
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                /*2*/
                 Container(
                   padding: const EdgeInsets.only(
                     bottom: 8,
@@ -44,10 +42,9 @@ class FlutterTutorialScreen extends StatelessWidget {
       ),
     );
 
-    Color color =
-        Theme.of(context).primaryColor; // MaterialAppのprimaryColorを取得できる。
+    final color = Theme.of(context).primaryColor;
 
-    Widget buttonSection = Row(
+    final Widget buttonSection = Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         _buildButtonColumn(color, Icons.call, 'CALL'),
@@ -56,7 +53,7 @@ class FlutterTutorialScreen extends StatelessWidget {
       ],
     );
 
-    Widget textSection = const Padding(
+    const Widget textSection = Padding(
       padding: EdgeInsets.all(32),
       child: Text(
         'Lake Oeschinen lies at the foot of the Blüemlisalp in the Bernese '
@@ -69,34 +66,39 @@ class FlutterTutorialScreen extends StatelessWidget {
       ),
     );
     return Scaffold(
-        appBar: AppBar(
-          // タイトルテキスト
-          title: const Text('Flutter layout demo'),
-          actions: [
-            IconButton(
-                onPressed: () {
-                  Navigator.push<void>(
-                    context,
-                    MaterialPageRoute(builder: (context) => const LogoApp()),
-                  );
-                },
-                icon: const Icon(Icons.arrow_forward_ios))
-          ],
-        ),
-        body: ListView(
-          children: [
-            Image.asset(
-              'images/lake.jpeg',
-              width: 600,
-              height: 240,
-              fit: BoxFit.cover,
-            ),
-            titleSection,
-            buttonSection,
-            textSection,
-            Text(myLocale.toString()),
-          ],
-        ));
+      appBar: AppBar(
+        title: const Text('Flutter layout demo'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push<void>(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const LogoApp(),
+                ),
+              );
+            },
+            icon: const Icon(Icons.arrow_forward_ios),
+          )
+        ],
+      ),
+      body: ListView(
+        children: [
+          Image.asset(
+            'images/lake.jpeg',
+            width: 600,
+            height: 240,
+            fit: BoxFit.cover,
+          ),
+          titleSection,
+          buttonSection,
+          textSection,
+          Text(
+            myLocale.toString(),
+          ),
+        ],
+      ),
+    );
   }
 
   Column _buildButtonColumn(Color color, IconData icon, String label) {
@@ -152,13 +154,15 @@ class _FavoriteWidgetState extends State<FavoriteWidget> {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          padding: const EdgeInsets.all(0),
+          padding: EdgeInsets.zero,
           child: IconButton(
-            padding: const EdgeInsets.all(0),
+            padding: EdgeInsets.zero,
             alignment: Alignment.centerRight,
-            icon: (_isFavorited
+            icon: _isFavorited
                 ? const Icon(Icons.star)
-                : const Icon(Icons.star_border)),
+                : const Icon(
+                    Icons.star_border,
+                  ),
             color: Colors.red[500],
             onPressed: _toggleFavorite,
           ),
@@ -218,13 +222,15 @@ class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin {
     animation = CurvedAnimation(
       parent: controller,
       curve: Curves.easeIn,
-    )..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          controller.reverse();
-        } else if (status == AnimationStatus.dismissed) {
-          controller.forward();
-        }
-      });
+    )..addStatusListener(
+        (status) {
+          if (status == AnimationStatus.completed) {
+            controller.reverse();
+          } else if (status == AnimationStatus.dismissed) {
+            controller.forward();
+          }
+        },
+      );
     controller.forward();
   }
 
@@ -240,21 +246,6 @@ class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin {
 
 class DemoLocalizations {
   DemoLocalizations(this.localeName);
-
-  static Future<DemoLocalizations> load(Locale locale) {
-    final String name =
-        locale.countryCode == null || locale.countryCode!.isEmpty
-            ? locale.languageCode
-            : locale.toString();
-    final String localeName = Intl.canonicalizedLocale(name);
-
-    return initializeMessages(localeName).then(
-      (_) {
-        return DemoLocalizations(localeName);
-      },
-    );
-  }
-
   static DemoLocalizations of(BuildContext context) {
     return Localizations.of<DemoLocalizations>(context, DemoLocalizations)!;
   }
@@ -269,6 +260,4 @@ class DemoLocalizations {
       locale: localeName,
     );
   }
-
-  static initializeMessages(String localeName) {}
 }
