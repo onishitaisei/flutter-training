@@ -17,19 +17,20 @@ class _AsyncScreen extends State<AsyncScreen> {
   String _birthday = '';
   late int _age = _impossibleAge;
 
-  void _setValue() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+  Future<void> _setValue() async {
+    final prefs = await SharedPreferences.getInstance();
     setState(
       () {
-        prefs.setString('name', _name);
-        prefs.setString('birthday', _birthday);
-        prefs.setInt('age', _age);
+        prefs
+          ..setString('name', _name)
+          ..setString('birthday', _birthday)
+          ..setInt('age', _age);
       },
     );
   }
 
-  void _checkUserInformation() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
+  Future<void> _checkUserInformation() async {
+    final prefs = await SharedPreferences.getInstance();
     setState(
       () {
         _name = prefs.getString('name') ?? '未設定';
@@ -72,7 +73,7 @@ class _AsyncScreen extends State<AsyncScreen> {
     );
   }
 
-  FloatingActionButton _buildFloatingActionButton(context) {
+  FloatingActionButton _buildFloatingActionButton(BuildContext context) {
     return FloatingActionButton(
       backgroundColor: const Color(0xff4DAF50),
       child: const Icon(Icons.add),
@@ -82,12 +83,12 @@ class _AsyncScreen extends State<AsyncScreen> {
     );
   }
 
-  _buildProfileEditDialog(context) {
-    return showDialog(
+  Future<void> _buildProfileEditDialog(BuildContext context) {
+    return showDialog<Future<void>>(
       context: context,
       builder: (_) {
         return AlertDialog(
-          title: const Text("登録"),
+          title: const Text('登録'),
           content: SizedBox(
             height: 270,
             child: Form(
@@ -108,7 +109,7 @@ class _AsyncScreen extends State<AsyncScreen> {
                     },
                     decoration: const InputDecoration(
                       contentPadding: EdgeInsets.zero,
-                      labelText: "名前",
+                      labelText: '名前',
                     ),
                   ),
                   TextFormField(
@@ -127,7 +128,7 @@ class _AsyncScreen extends State<AsyncScreen> {
                     },
                     decoration: const InputDecoration(
                       contentPadding: EdgeInsets.zero,
-                      labelText: "年齢",
+                      labelText: '年齢',
                     ),
                   ),
                   TextFormField(
@@ -141,7 +142,7 @@ class _AsyncScreen extends State<AsyncScreen> {
                       _birthday = value;
                     },
                     decoration: const InputDecoration(
-                      labelText: "誕生日",
+                      labelText: '誕生日',
                     ),
                   ),
                 ],
@@ -151,11 +152,11 @@ class _AsyncScreen extends State<AsyncScreen> {
           actions: <Widget>[
             // ボタン領域
             ElevatedButton(
-              child: const Text("Cancel"),
+              child: const Text('Cancel'),
               onPressed: () => Navigator.pop(context),
             ),
             ElevatedButton(
-              child: const Text("保存"),
+              child: const Text('保存'),
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   // フォームに問題がなかったときの処理

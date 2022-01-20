@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_single_quotes, invalid_annotation_target
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'qiita_user.freezed.dart';

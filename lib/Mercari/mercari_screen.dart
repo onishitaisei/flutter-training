@@ -8,12 +8,12 @@ class MercariScreen extends StatelessWidget {
   final _iconAndTextColor = const Color(0xff222222);
   final _dividerColor = const Color(0xffF1F1F2);
   final _shortCutToSellBtnsColor = const Color(0xffE9E9E9);
-  final double _footerIconSize = 30.0;
-  final double _floatingActionButtonSize = 70.0;
-  final double _shortCutBtnWidth = 85.0;
-  final double _shortCutBtnHeight = 100.0;
+  final double _footerIconSize = 30;
+  final double _floatingActionButtonSize = 70;
+  final double _shortCutBtnWidth = 85;
+  final double _shortCutBtnHeight = 100;
 
-  final List _createDummyData = [
+  final List<ItemInfo> _createDummyData = [
     ItemInfo(
       imagePath: 'images/camera.png',
       title: 'NikonD5500',
@@ -74,10 +74,10 @@ class MercariScreen extends StatelessWidget {
   Widget _buildShortCutToSell() {
     return Container(
       padding: const EdgeInsets.only(
-        top: 20.0,
-        bottom: 20.0,
-        left: 16.0,
-        right: 16.0,
+        top: 20,
+        bottom: 20,
+        left: 16,
+        right: 16,
       ),
       color: const Color(0xffEFEFEF),
       child: Column(
@@ -105,8 +105,8 @@ class MercariScreen extends StatelessWidget {
       children: [
         const Padding(
           padding: EdgeInsets.only(
-            top: 16.0,
-            bottom: 16.0,
+            top: 16,
+            bottom: 16,
           ),
           child: Text(
             '出品へのショートカット',
@@ -128,7 +128,7 @@ class MercariScreen extends StatelessWidget {
                   width: 2,
                   color: _shortCutToSellBtnsColor,
                 ),
-                borderRadius: BorderRadius.circular(4.0),
+                borderRadius: BorderRadius.circular(4),
                 color: Colors.white,
               ),
               child: Column(
@@ -157,7 +157,7 @@ class MercariScreen extends StatelessWidget {
                   width: 2,
                   color: _shortCutToSellBtnsColor,
                 ),
-                borderRadius: BorderRadius.circular(4.0),
+                borderRadius: BorderRadius.circular(4),
                 color: Colors.white,
               ),
               child: Column(
@@ -186,7 +186,7 @@ class MercariScreen extends StatelessWidget {
                   width: 2,
                   color: _shortCutToSellBtnsColor,
                 ),
-                borderRadius: BorderRadius.circular(4.0),
+                borderRadius: BorderRadius.circular(4),
                 color: Colors.white,
               ),
               child: Column(
@@ -222,7 +222,7 @@ class MercariScreen extends StatelessWidget {
                   width: 2,
                   color: _shortCutToSellBtnsColor,
                 ),
-                borderRadius: BorderRadius.circular(4.0),
+                borderRadius: BorderRadius.circular(4),
                 color: Colors.white,
               ),
               child: Column(
@@ -263,10 +263,10 @@ class MercariScreen extends StatelessWidget {
   Widget _buildItemsEasyToSellTop() {
     return Padding(
       padding: const EdgeInsets.only(
-        top: 12.0,
-        bottom: 8.0,
-        left: 16.0,
-        right: 16.0,
+        top: 12,
+        bottom: 8,
+        left: 16,
+        right: 16,
       ),
       child: Row(
         children: [
@@ -310,27 +310,27 @@ class MercariScreen extends StatelessWidget {
       child: ListView.builder(
         itemCount: _createDummyData.length,
         itemBuilder: (BuildContext context, int index) {
-          final _formatter = NumberFormat("#,###");
+          final _formatter = NumberFormat('#,###');
           final _price = _formatter.format(_createDummyData[index].price);
           return Column(
             children: [
               Divider(
                 thickness: 2,
-                indent: 15.0,
+                indent: 15,
                 color: _dividerColor,
               ),
               Padding(
                 padding: const EdgeInsets.only(
-                  top: 4.0,
-                  bottom: 4.0,
-                  left: 16.0,
-                  right: 16.0,
+                  top: 4,
+                  bottom: 4,
+                  left: 16,
+                  right: 16,
                 ),
                 child: Row(
                   children: [
                     Image(
                       width: 70,
-                      image: AssetImage('${_createDummyData[index].imagePath}'),
+                      image: AssetImage('$_createDummyData[index].imagePath'),
                     ),
                     const SizedBox(
                       width: 10,
@@ -473,14 +473,14 @@ class MercariScreen extends StatelessWidget {
 }
 
 class ItemInfo {
-  final String imagePath;
-  final String title;
-  final int price;
-  final int numOfPeople;
   ItemInfo({
     required this.imagePath,
     required this.title,
     required this.price,
     required this.numOfPeople,
   });
+  final String imagePath;
+  final String title;
+  final int price;
+  final int numOfPeople;
 }
