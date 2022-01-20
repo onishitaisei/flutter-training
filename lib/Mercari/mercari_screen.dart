@@ -12,10 +12,10 @@ class MercariScreen extends ConsumerWidget {
   final _iconAndTextColor = const Color(0xff222222);
   final _dividerColor = const Color(0xffF1F1F2);
   final _shortCutToSellBtnsColor = const Color(0xffE9E9E9);
-  final double _footerIconSize = 30.0;
-  final double _floatingActionButtonSize = 70.0;
-  final double _shortCutBtnWidth = 85.0;
-  final double _shortCutBtnHeight = 100.0;
+  final double _footerIconSize = 30;
+  final double _floatingActionButtonSize = 70;
+  final double _shortCutBtnWidth = 85;
+  final double _shortCutBtnHeight = 100;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -66,10 +66,10 @@ class MercariScreen extends ConsumerWidget {
   Widget _buildShortCutToSell() {
     return Container(
       padding: const EdgeInsets.only(
-        top: 20.0,
-        bottom: 20.0,
-        left: 16.0,
-        right: 16.0,
+        top: 20,
+        bottom: 20,
+        left: 16,
+        right: 16,
       ),
       color: const Color(0xffEFEFEF),
       child: Column(
@@ -97,8 +97,8 @@ class MercariScreen extends ConsumerWidget {
       children: [
         const Padding(
           padding: EdgeInsets.only(
-            top: 16.0,
-            bottom: 16.0,
+            top: 16,
+            bottom: 16,
           ),
           child: Text(
             '出品へのショートカット',
@@ -120,7 +120,7 @@ class MercariScreen extends ConsumerWidget {
                   width: 2,
                   color: _shortCutToSellBtnsColor,
                 ),
-                borderRadius: BorderRadius.circular(4.0),
+                borderRadius: BorderRadius.circular(4),
                 color: Colors.white,
               ),
               child: Column(
@@ -149,7 +149,7 @@ class MercariScreen extends ConsumerWidget {
                   width: 2,
                   color: _shortCutToSellBtnsColor,
                 ),
-                borderRadius: BorderRadius.circular(4.0),
+                borderRadius: BorderRadius.circular(4),
                 color: Colors.white,
               ),
               child: Column(
@@ -178,7 +178,7 @@ class MercariScreen extends ConsumerWidget {
                   width: 2,
                   color: _shortCutToSellBtnsColor,
                 ),
-                borderRadius: BorderRadius.circular(4.0),
+                borderRadius: BorderRadius.circular(4),
                 color: Colors.white,
               ),
               child: Column(
@@ -214,7 +214,7 @@ class MercariScreen extends ConsumerWidget {
                   width: 2,
                   color: _shortCutToSellBtnsColor,
                 ),
-                borderRadius: BorderRadius.circular(4.0),
+                borderRadius: BorderRadius.circular(4),
                 color: Colors.white,
               ),
               child: Column(
@@ -244,10 +244,10 @@ class MercariScreen extends ConsumerWidget {
   Widget _buildItemsEasyToSellTop() {
     return Padding(
       padding: const EdgeInsets.only(
-        top: 12.0,
-        bottom: 8.0,
-        left: 16.0,
-        right: 16.0,
+        top: 12,
+        bottom: 8,
+        left: 16,
+        right: 16,
       ),
       child: Row(
         children: [
@@ -305,15 +305,15 @@ class MercariScreen extends ConsumerWidget {
                   : const SizedBox.shrink(),
               Divider(
                 thickness: 2,
-                indent: 15.0,
+                indent: 15,
                 color: _dividerColor,
               ),
               Padding(
                 padding: const EdgeInsets.only(
-                  top: 4.0,
-                  bottom: 4.0,
-                  left: 16.0,
-                  right: 16.0,
+                  top: 4,
+                  bottom: 4,
+                  left: 16,
+                  right: 16,
                 ),
                 child: Row(
                   children: [
