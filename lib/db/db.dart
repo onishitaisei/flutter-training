@@ -2,22 +2,16 @@ import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
-import 'package:drift/drift.dart';
 import 'dart:io';
 
 part 'db.g.dart';
 
-class Todos extends Table {
-  IntColumn get id => integer().autoIncrement()();
-  TextColumn get title => text().withLength(min: 6, max: 32)();
-  TextColumn get content => text().named('body')();
-  IntColumn get category => integer().nullable()();
-}
-
-@DataClassName("Category")
-class Categories extends Table {
-  IntColumn get id => integer().autoIncrement()();
-  TextColumn get description => text()();
+class TodoData extends Table {
+  IntColumn get id => integer().autoIncrement().nullable()();
+  TextColumn get title => text().withLength(min: 1, max: 20)();
+  TextColumn get content => text().withLength(min: 1, max: 100)();
+  TextColumn get createdAt => text()();
+  TextColumn get deadLine => text()();
 }
 
 LazyDatabase _openConnection() {
@@ -28,9 +22,19 @@ LazyDatabase _openConnection() {
   });
 }
 
-@DriftDatabase(tables: [Todos, Categories])
+@DriftDatabase(tables: [TodoData])
 class MyDatabase extends _$MyDatabase {
   MyDatabase() : super(_openConnection());
   @override
   int get schemaVersion => 1;
+
+  // 保存されているすべてのtodoを取得
+  Future get getAllTodoData => select(todoData).get();
+
+  // todoを追加するメソッド
+  Future<int> insertTodoData(todo) => into(todoData).insert(todo);
+
+  // todoを削除するメソッド
+  Future deleteTodoData(int index) =>
+      (delete(todoData)..where((tbl) => tbl.id.equals(index))).go();
 }
