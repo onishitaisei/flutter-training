@@ -1,6 +1,6 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:training/mvvm/repository/youtube_repository.dart';
 import 'package:training/mvvm/state/youtube_client_state.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final youtubeClientStateNotifier = StateNotifierProvider.autoDispose<
     YoutubeClientStateNotifier,

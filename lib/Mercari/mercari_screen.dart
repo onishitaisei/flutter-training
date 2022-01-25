@@ -1,44 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:training/mvvm/mercari_client_state._notifier.dart';
+import 'package:training/mvvm/model/mercari_information.dart';
+import 'package:training/mvvm/state/mercari_client_state.dart';
 
-class MercariScreen extends StatelessWidget {
+class MercariScreen extends ConsumerWidget {
   MercariScreen({Key? key}) : super(key: key);
 
   // ignore: non_constant_identifier_names
   final _iconAndTextColor = const Color(0xff222222);
   final _dividerColor = const Color(0xffF1F1F2);
   final _shortCutToSellBtnsColor = const Color(0xffE9E9E9);
-  final double _footerIconSize = 30.0;
-  final double _floatingActionButtonSize = 70.0;
-  final double _shortCutBtnWidth = 85.0;
-  final double _shortCutBtnHeight = 100.0;
-
-  final List _createDummyData = [
-    ItemInfo(
-      imagePath: 'images/camera.png',
-      title: 'NikonD5500',
-      price: 51000,
-      numOfPeople: 446,
-    ),
-    ItemInfo(
-      imagePath: 'images/camera.png',
-      title: '早い者勝ち！【新品】ERA',
-      price: 15700,
-      numOfPeople: 177,
-    ),
-    ItemInfo(
-      imagePath: 'images/camera.png',
-      title: 'NikonD6000',
-      price: 71000,
-      numOfPeople: 320,
-    )
-  ];
+  final double _footerIconSize = 30;
+  final double _floatingActionButtonSize = 70;
+  final double _shortCutBtnWidth = 85;
+  final double _shortCutBtnHeight = 100;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final _state = ref.watch(mercariClientStateNotifier);
     return Scaffold(
       appBar: _buildAppBar(),
-      body: _buildBody(),
+      body: _buildBody(_state),
       floatingActionButton: _buildFloatingActionButton(),
       bottomNavigationBar: _buildBottomNavigationBar(),
     );
@@ -47,8 +31,8 @@ class MercariScreen extends StatelessWidget {
   AppBar _buildAppBar() {
     return AppBar(
       backgroundColor: Colors.white,
-      elevation: 1, // Appbarとメイン画面の境界線の影をなくす
-      automaticallyImplyLeading: false, // デフォルトの戻るボタン(<)を削除
+      elevation: 1,
+      automaticallyImplyLeading: false,
       title: const Text(
         '出品',
         style: TextStyle(
@@ -59,25 +43,33 @@ class MercariScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBody() {
-    return Scrollbar(
-      isAlwaysShown: true,
-      child: Column(
-        children: [
-          _buildShortCutToSell(),
-          _buildItemsEasyToSell(),
-        ],
-      ),
+  Widget _buildBody(MercariClientState _state) {
+    return Stack(
+      children: [
+        Scrollbar(
+          isAlwaysShown: true,
+          child: _buildItems(_state.mercariInformations),
+        ),
+        Visibility(
+          visible: _state.isLoading,
+          child: Container(
+            color: const Color(0x88000000),
+            child: const Center(
+              child: CircularProgressIndicator(),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
   Widget _buildShortCutToSell() {
     return Container(
       padding: const EdgeInsets.only(
-        top: 20.0,
-        bottom: 20.0,
-        left: 16.0,
-        right: 16.0,
+        top: 20,
+        bottom: 20,
+        left: 16,
+        right: 16,
       ),
       color: const Color(0xffEFEFEF),
       child: Column(
@@ -105,8 +97,8 @@ class MercariScreen extends StatelessWidget {
       children: [
         const Padding(
           padding: EdgeInsets.only(
-            top: 16.0,
-            bottom: 16.0,
+            top: 16,
+            bottom: 16,
           ),
           child: Text(
             '出品へのショートカット',
@@ -128,7 +120,7 @@ class MercariScreen extends StatelessWidget {
                   width: 2,
                   color: _shortCutToSellBtnsColor,
                 ),
-                borderRadius: BorderRadius.circular(4.0),
+                borderRadius: BorderRadius.circular(4),
                 color: Colors.white,
               ),
               child: Column(
@@ -157,7 +149,7 @@ class MercariScreen extends StatelessWidget {
                   width: 2,
                   color: _shortCutToSellBtnsColor,
                 ),
-                borderRadius: BorderRadius.circular(4.0),
+                borderRadius: BorderRadius.circular(4),
                 color: Colors.white,
               ),
               child: Column(
@@ -186,7 +178,7 @@ class MercariScreen extends StatelessWidget {
                   width: 2,
                   color: _shortCutToSellBtnsColor,
                 ),
-                borderRadius: BorderRadius.circular(4.0),
+                borderRadius: BorderRadius.circular(4),
                 color: Colors.white,
               ),
               child: Column(
@@ -222,7 +214,7 @@ class MercariScreen extends StatelessWidget {
                   width: 2,
                   color: _shortCutToSellBtnsColor,
                 ),
-                borderRadius: BorderRadius.circular(4.0),
+                borderRadius: BorderRadius.circular(4),
                 color: Colors.white,
               ),
               child: Column(
@@ -249,24 +241,13 @@ class MercariScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildItemsEasyToSell() {
-    return Expanded(
-      child: Column(
-        children: [
-          _buildItemsEasyToSellTop(),
-          _buildItems(),
-        ],
-      ),
-    );
-  }
-
   Widget _buildItemsEasyToSellTop() {
     return Padding(
       padding: const EdgeInsets.only(
-        top: 12.0,
-        bottom: 8.0,
-        left: 16.0,
-        right: 16.0,
+        top: 12,
+        bottom: 8,
+        left: 16,
+        right: 16,
       ),
       child: Row(
         children: [
@@ -305,32 +286,42 @@ class MercariScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildItems() {
+  Widget _buildItems(List<MercariInformation> _mercariInformations) {
     return Expanded(
       child: ListView.builder(
-        itemCount: _createDummyData.length,
+        itemCount: _mercariInformations.length,
         itemBuilder: (BuildContext context, int index) {
           final _formatter = NumberFormat("#,###");
-          final _price = _formatter.format(_createDummyData[index].price);
+          final _price = _formatter.format(_mercariInformations[index].price);
           return Column(
             children: [
+              index == 0
+                  ? Column(
+                      children: [
+                        _buildShortCutToSell(),
+                        _buildItemsEasyToSellTop(),
+                      ],
+                    )
+                  : const SizedBox.shrink(),
               Divider(
                 thickness: 2,
-                indent: 15.0,
+                indent: 15,
                 color: _dividerColor,
               ),
               Padding(
                 padding: const EdgeInsets.only(
-                  top: 4.0,
-                  bottom: 4.0,
-                  left: 16.0,
-                  right: 16.0,
+                  top: 4,
+                  bottom: 4,
+                  left: 16,
+                  right: 16,
                 ),
                 child: Row(
                   children: [
                     Image(
                       width: 70,
-                      image: AssetImage('${_createDummyData[index].imagePath}'),
+                      image: AssetImage(
+                        _mercariInformations[index].imagePath?.toString() ?? "",
+                      ),
                     ),
                     const SizedBox(
                       width: 10,
@@ -339,14 +330,14 @@ class MercariScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          _createDummyData[index].title,
+                          _mercariInformations[index].title?.toString() ?? "",
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 15,
                           ),
                         ),
                         Text(
-                          '¥$_price',
+                          _price.toString(),
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 15,
@@ -363,7 +354,7 @@ class MercariScreen extends StatelessWidget {
                               width: 5,
                             ),
                             Text(
-                              '${_createDummyData[index].numOfPeople}人が探しています',
+                              '${_mercariInformations[index].numOfPeople?.toString() ?? ""}人が探しています',
                               style: const TextStyle(fontSize: 12),
                             ),
                           ],
@@ -470,17 +461,4 @@ class MercariScreen extends StatelessWidget {
       type: BottomNavigationBarType.fixed,
     );
   }
-}
-
-class ItemInfo {
-  final String imagePath;
-  final String title;
-  final int price;
-  final int numOfPeople;
-  ItemInfo({
-    required this.imagePath,
-    required this.title,
-    required this.price,
-    required this.numOfPeople,
-  });
 }

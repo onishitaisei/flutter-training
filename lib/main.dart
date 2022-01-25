@@ -13,7 +13,6 @@ import 'youtube/youtube_screen.dart';
 void main() {
   runApp(
     const ProviderScope(
-      // アプリのルートにProviderScopeを追加
       child: MyApp(),
     ),
   );
@@ -33,27 +32,17 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [
-        Locale('en', ''), // English, no country code
-        Locale('es', ''), // Spanish, no country code
-        Locale.fromSubtags(languageCode: 'zh'), // generic Chinese 'zh'
+        Locale('en', ''),
+        Locale('es', ''),
+        Locale.fromSubtags(languageCode: 'zh'),
+        Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hans'),
+        Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hant'),
         Locale.fromSubtags(
-            languageCode: 'zh',
-            scriptCode: 'Hans'), // generic simplified Chinese 'zh_Hans'
+            languageCode: 'zh', scriptCode: 'Hans', countryCode: 'CN'),
         Locale.fromSubtags(
-            languageCode: 'zh',
-            scriptCode: 'Hant'), // generic traditional Chinese 'zh_Hant'
+            languageCode: 'zh', scriptCode: 'Hant', countryCode: 'TW'),
         Locale.fromSubtags(
-            languageCode: 'zh',
-            scriptCode: 'Hans',
-            countryCode: 'CN'), // 'zh_Hans_CN'
-        Locale.fromSubtags(
-            languageCode: 'zh',
-            scriptCode: 'Hant',
-            countryCode: 'TW'), // 'zh_Hant_TW'
-        Locale.fromSubtags(
-            languageCode: 'zh',
-            scriptCode: 'Hant',
-            countryCode: 'HK'), // 'zh_Hant_HK'
+            languageCode: 'zh', scriptCode: 'Hant', countryCode: 'HK'),
       ],
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -63,7 +52,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// 画面遷移をする部分のコード
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -134,7 +122,7 @@ class Home extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
+                Navigator.push<Widget>(
                   context,
                   MaterialPageRoute(
                       builder: (context) => const QiitaClientScreen()),

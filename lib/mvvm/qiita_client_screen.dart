@@ -1,7 +1,7 @@
-import 'package:training/mvvm/model/qiita_item.dart';
-import 'package:training/mvvm/qiita_client_state_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:training/mvvm/model/qiita_item.dart';
+import 'package:training/mvvm/qiita_client_state_notifier.dart';
 
 class QiitaClientScreen extends ConsumerWidget {
   const QiitaClientScreen({Key? key}) : super(key: key);
@@ -10,9 +10,7 @@ class QiitaClientScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(qiitaClientStateNotifier);
 
-    return
-        // 戻るボタンの挙動
-        WillPopScope(
+    return WillPopScope(
       onWillPop: state.isReadyData
           ? () {
               ref.read(qiitaClientStateNotifier.notifier).onBackHome();
@@ -38,7 +36,7 @@ class QiitaClientScreen extends ConsumerWidget {
               child: Container(
                 color: const Color(0x88000000),
                 child: const Center(
-                  child: const CircularProgressIndicator(),
+                  child: CircularProgressIndicator(),
                 ),
               ),
             ),
@@ -56,7 +54,12 @@ class QiitaClientScreen extends ConsumerWidget {
         final item = qiitaItems[index];
 
         return Container(
-          padding: const EdgeInsets.only(top: 4, bottom: 4, left: 8, right: 8),
+          padding: const EdgeInsets.only(
+            top: 4,
+            bottom: 4,
+            left: 8,
+            right: 8,
+          ),
           constraints: const BoxConstraints(minHeight: 96, maxHeight: 96),
           child: Card(
             elevation: 8,
