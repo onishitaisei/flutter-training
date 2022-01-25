@@ -8,6 +8,6 @@ class TodoClientState with _$TodoClientState {
   const factory TodoClientState({
     @Default(false) bool isLoading,
     @Default(false) bool isReadyData,
-    @Default([]) List<TodoDataData> todoItems,
+    @Default([]) List<Todo> todoItems,
   }) = _TodoClientState;
 }

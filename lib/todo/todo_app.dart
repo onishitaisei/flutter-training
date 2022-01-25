@@ -1,3 +1,4 @@
+import 'package:drift/drift.dart' as drift;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -55,6 +56,7 @@ class ToDoApp extends ConsumerWidget {
             children: [
               SlidableAction(
                 onPressed: (context) {
+                  print(_data.id);
                   _notifier.deleteTodoData(_data.id);
                 },
                 backgroundColor: Color(0xFFFE4A49),
@@ -222,12 +224,12 @@ class ToDoApp extends ConsumerWidget {
               child: const Text("保存"),
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
-                  var _newTodo = TodoDataData(
-                    id: null,
-                    title: _titleController.text,
-                    content: _contentController.text,
-                    createdAt: _format.format(_date),
-                    deadLine: _deadLineController.text,
+                  var _newTodo = TodosCompanion(
+                    // idはDrift側で自動生成
+                    title: drift.Value(_titleController.text),
+                    content: drift.Value(_contentController.text),
+                    createdAt: drift.Value(_format.format(_date)),
+                    deadLine: drift.Value(_deadLineController.text),
                   );
                   _notifier.insertTodoData(_newTodo);
                   Navigator.pop(context);

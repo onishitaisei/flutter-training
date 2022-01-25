@@ -18,7 +18,7 @@ class TodoRepository {
   }
 
   // Todoを削除
-  Future deleteTodoData(int index) async {
-    return await database.deleteTodoData(index);
+  Future deleteTodoData(int id) async {
+    return await database.deleteTodoData(id);
   }
 }

@@ -39,8 +39,8 @@ class TodoStateNotifier extends StateNotifier<TodoClientState> {
     await getTodoData();
   }
 
-  Future deleteTodoData(int index) async {
-    await _repository.deleteTodoData(index);
+  Future deleteTodoData(int id) async {
+    await _repository.deleteTodoData(id);
     getTodoData();
   }
 }
