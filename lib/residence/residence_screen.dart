@@ -9,8 +9,7 @@ import 'package:training/mvvm/state/residence_client_state.dart';
 class ResidenceScreen extends ConsumerWidget {
   ResidenceScreen({Key? key}) : super(key: key);
   final _whiteColor = const Color(0xffFFFFFF);
-  final _footerUnselectedIconColor =
-      const Color(0xffCECECE); // ボトムナビゲーションのアクティブではないアイコンの色
+  final _footerUnselectedIconColor = const Color(0xffCECECE);
   final _backgroundColor = const Color(0xffFAF8F5);
   final _primaryColor = const Color(0xff5BADA1);
   final _mainBtnColor = const Color(0xffC9C9C9);
@@ -46,7 +45,7 @@ class ResidenceScreen extends ConsumerWidget {
           height: 30,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20.0),
+            borderRadius: BorderRadius.circular(20),
             color: const Color(0xffE9EFEE),
           ),
           child: Text(
@@ -65,13 +64,13 @@ class ResidenceScreen extends ConsumerWidget {
           alignment: Alignment.topRight,
           children: [
             Padding(
-              padding: const EdgeInsets.all(5.0),
+              padding: const EdgeInsets.all(5),
               child: Container(
                 width: 120,
                 height: 30,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20.0),
+                  borderRadius: BorderRadius.circular(20),
                   color: const Color(0xffF3F3F3),
                 ),
                 child: const Text(
@@ -84,15 +83,15 @@ class ResidenceScreen extends ConsumerWidget {
               ),
             ),
             const CircleAvatar(
+              radius: 10,
+              backgroundColor: Color(0xffE2554A),
+              foregroundColor: Colors.white,
               child: Text(
                 '1',
                 style: TextStyle(
                   fontSize: 15,
                 ),
               ),
-              radius: 10,
-              backgroundColor: Color(0xffE2554A),
-              foregroundColor: Colors.white,
             )
           ],
         ),
@@ -105,17 +104,16 @@ class ResidenceScreen extends ConsumerWidget {
       Container(
         width: 50,
         padding: const EdgeInsets.only(
-          right: 15.0,
+          right: 15,
         ),
         child: CircleAvatar(
-          // flatingActionbuttonだと影を削除する方法がわからなかったので、CircleAvatarを使用しました。
+          radius: 10,
+          backgroundColor: _primaryColor,
+          foregroundColor: Colors.white,
           child: const Icon(
             Icons.add,
             size: 25,
           ),
-          radius: 10,
-          backgroundColor: _primaryColor,
-          foregroundColor: Colors.white,
         ),
       )
     ];
@@ -171,10 +169,10 @@ class ResidenceScreen extends ConsumerWidget {
   Widget _buildHeaderPropertyConditions() {
     return Padding(
       padding: const EdgeInsets.only(
-        top: 13.0,
-        right: 13.0,
-        left: 13.0,
-        bottom: 5.0,
+        top: 13,
+        right: 13,
+        left: 13,
+        bottom: 5,
       ),
       child: Row(
         children: [
@@ -219,11 +217,11 @@ class ResidenceScreen extends ConsumerWidget {
       width: _mediaSize.width * 0.93,
       height: _mediaSize.height * 0.09,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: BorderRadius.circular(10),
         color: _backgroundColor,
       ),
       child: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -305,7 +303,7 @@ class ResidenceScreen extends ConsumerWidget {
           itemBuilder: (BuildContext context, int index) {
             return Column(
               children: [
-                index == 0 ? _buildPropertyConditions(_mediaSize) : Container(),
+                index == 0 ? _buildPropertyConditions(_mediaSize) : SizedBox.shrink(),
                 Padding(
                   padding: const EdgeInsets.only(
                     top: 12.0,
@@ -355,6 +353,7 @@ class ResidenceScreen extends ConsumerWidget {
     );
   }
 
+
   Widget _buildItemImage(Size _mediaSize, index,
       List<ResidenceInformation> _residenceInformations) {
     return SizedBox(
@@ -365,7 +364,7 @@ class ResidenceScreen extends ConsumerWidget {
             width: _mediaSize.width * 0.5,
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10.0),
+                topLeft: Radius.circular(10),
               ),
               color: Color(0xffD8D9D8),
             ),
@@ -399,14 +398,11 @@ class ResidenceScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildItemContent(
-      index, List<ResidenceInformation> _residenceInformations) {
-    final formatter = NumberFormat("#,###"); // 三桁ごとにカンマで区切るフォーマット
-    final result = formatter.format(
-      _residenceInformations[index].price,
-    );
+  Widget _buildItemContent(int index) {
+    final formatter = NumberFormat('#,###'); // 三桁ごとにカンマで区切るフォーマット
+    final result = formatter.format(_createDummyData[index].price); // ダミーデータを加工
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -506,7 +502,7 @@ class ResidenceScreen extends ConsumerWidget {
             border: Border.all(
               color: _mainBtnColor,
             ),
-            borderRadius: BorderRadius.circular(10.0),
+            borderRadius: BorderRadius.circular(10),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -604,8 +600,8 @@ class ResidenceScreen extends ConsumerWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.only(
-                  right: 5.0,
-                  left: 3.0,
+                  right: 5,
+                  left: 3,
                 ),
                 child: Icon(
                   Icons.chat_bubble_outline,
@@ -614,15 +610,15 @@ class ResidenceScreen extends ConsumerWidget {
                 ),
               ),
               const CircleAvatar(
+                radius: 10,
+                backgroundColor: Color(0xffE2554A),
+                foregroundColor: Colors.white,
                 child: Text(
                   '1',
                   style: TextStyle(
                     fontSize: 15,
                   ),
                 ),
-                radius: 10,
-                backgroundColor: Color(0xffE2554A),
-                foregroundColor: Colors.white,
               )
             ],
           ),
@@ -637,7 +633,6 @@ class ResidenceScreen extends ConsumerWidget {
           label: 'マイページ',
         ),
       ],
-
       selectedItemColor: _primaryColor,
       selectedLabelStyle: const TextStyle(
         fontWeight: FontWeight.bold,
@@ -645,8 +640,7 @@ class ResidenceScreen extends ConsumerWidget {
       unselectedItemColor: Colors.grey[600],
       selectedFontSize: 13,
       unselectedFontSize: 10,
-      type: BottomNavigationBarType
-          .fixed, // bottomnavigationが4つ以上の時は見えなくなってしまうため、type: BottomNavigationBarType.fixed,を追加
+      type: BottomNavigationBarType.fixed,
     );
   }
 }
