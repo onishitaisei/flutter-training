@@ -224,7 +224,7 @@ class ToDoApp extends ConsumerWidget {
               child: const Text("保存"),
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
-                  var _newTodo = TodosCompanion(
+                  final _newTodo = TodosCompanion(
                     // idはDrift側で自動生成
                     title: drift.Value(_titleController.text),
                     content: drift.Value(_contentController.text),
