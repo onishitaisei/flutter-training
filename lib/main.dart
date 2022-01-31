@@ -7,6 +7,7 @@ import 'flutter_tutorial_screen.dart';
 
 import 'mvvm/qiita_client_screen.dart';
 import 'residence/residence_screen.dart';
+import 'todo/todo_app.dart';
 import 'youtube/youtube_screen.dart';
 
 void main() {
@@ -124,11 +125,21 @@ class Home extends StatelessWidget {
                 Navigator.push<Widget>(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const QiitaClientScreen(),
-                  ),
+                      builder: (context) => const QiitaClientScreen()),
                 );
               },
               child: const Text('Qiita'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ToDoApp(),
+                  ),
+                );
+              },
+              child: const Text('DriftTodo'),
             ),
           ],
         ),

@@ -1,5 +1,10 @@
 include: package:pedantic_mono/analysis_options.yaml
 
+analyzer:
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+
 linter:
   rules:
     sort_pub_dependencies: false
