@@ -6,7 +6,7 @@ import 'async_await/async_screen.dart';
 import 'flutter_tutorial_screen.dart';
 
 import 'mvvm/qiita_client_screen.dart';
-import 'residence/residence_screen.dart';
+// import 'residence/residence_screen.dart';
 import 'todo/todo_app.dart';
 import 'youtube/youtube_screen.dart';
 
@@ -87,17 +87,17 @@ class Home extends StatelessWidget {
               },
               child: const Text('Youtube'),
             ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push<void>(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ResidenceScreen(),
-                  ),
-                );
-              },
-              child: const Text('Residence'),
-            ),
+            // ElevatedButton(
+            //   onPressed: () {
+            //     Navigator.push<void>(
+            //       context,
+            //       MaterialPageRoute(
+            //         builder: (context) => ResidenceScreen(),
+            //       ),
+            //     );
+            //   },
+            //   child: const Text('Residence'),
+            // ),
             ElevatedButton(
               onPressed: () {
                 Navigator.push<void>(

@@ -16,7 +16,7 @@ class _QiitaApiClient implements QiitaApiClient {
   String? baseUrl;
 
   @override
-  Future<List<QiitaItem>> fetchQiitaItems(String tag) async {
+  Future<List<QiitaItem>> fetchQiitaItems(tag) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -27,7 +27,7 @@ class _QiitaApiClient implements QiitaApiClient {
                 .compose(_dio.options, '/tags/$tag/items',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = _result.data!
+    var value = _result.data!
         .map((dynamic i) => QiitaItem.fromJson(i as Map<String, dynamic>))
         .toList();
     return value;
